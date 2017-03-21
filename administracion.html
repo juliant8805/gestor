@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Perfil</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="src/bootstrap/css/bootstrap.css">
+        <style>
+            #autocompletar{
+                z-index: 2;
+            }
+            #tel{
+                margin-right:16px;	
+            }
+            .btn span.glyphicon {    			
+                opacity: 0;				
+            }
+            .btn.active span.glyphicon {				
+                opacity: 1;				
+            }
+            .table {
+                width: 10%;
+                margin-bottom: 10px;
+            }
+            table,thead,tr,tbody,th,td {
+                text-align: center;
+            }
+        </style>
+        <script src="sql/js_sql.js"></script>
+    </head>
+    <body>
+        <script>
+            window.onload = function () {
+                //alert("dd");
+                var ca = document.cookie.split('=');
+                //alert(ca);
+                var select = select_query("SELECT * FROM usuario WHERE usuario ='" + ca[0] + "' AND contrasena ='" + ca[1] + "' AND estado='t' AND tecnologia='t';");
+                //console.log(select);
+                if (select === null) {
+                    //alert("ad");
+                    location.href = "barranquilla.html?ig=error";
+                }
+            };
+        </script>
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#crear" data-toggle="tab">Crear Usuario</a></li>
+            <li><a href="#modificacion" data-toggle="tab">Modificación de Usuarios</a></li>
+            <a href="barranquilla.html"><img src="imagenes/limpiar.png" align="right" title="Salir" style="height: 30px;"></a>
+        </ul>
+
+        <div class="tab-content">
+
+            <div class="tab-pane fade in active" id="crear">
+                <div class="col-xs-12"><h2>Creación de Usuario</h2></div>
+
+                <br /><br />
+                <form class="form-horizontal" method="post" action="" onsubmit="guardar()">
+                    <!--<div class="form-group">
+                        <label class="col-sm-2 control-label" for="formGroup">Nombre de Usuario</label>
+                        <div class="col-sm-2">
+                            <input class="form-control" type="text" id="formGroup" value="Roberto" disabled>input no editable
+                        </div>
+                    </div>-->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="formGroup">Nombres y Apellidos</label>
+                        <div class="col-sm-4">
+                            <input class="form-control" type="text" id="nombre" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="formGroup">Cargo</label>
+                        <div class="col-sm-2">
+                            <input class="form-control" type="text" id="cargo">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="formGroup">Correo electrónico</label>
+                        <div class="input-group col-sm-2">
+                            <span class="input-group-addon">@</span>
+                            <input class="form-control" type="email" id="email" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="formGroup">Dependencia</label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="dependencia">
+                                <option>Planeación</option>
+                                <option>Catastro</option>
+                                <option>Hacienda</option>
+                                <option>GESSTOR</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="formGroup">Fecha de expiración</label>
+                        <div class="col-sm-2">
+                            <input class="form-control" type="date" id="fecha" required="required">
+                        </div>
+                    </div>
+                    <!--<div class="form-group">
+                        <label class="col-sm-2 control-label" for="formGroup">Información biográfica</label>
+                        <div class="col-sm-4">
+                            <textarea class="form-control" rows="4"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="formGroup">Estado</label>
+                        <div class="col-sm-4">
+                            <select class="form-control">
+                                <option>En línea</option>
+                                <option>Ocupado</option>
+                                <option>Ausente</option>
+                                <option>Desconectado</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="formGroup">Alias</label>
+                        <div class="col-sm-4">
+                            <input class="form-control" type="text" id="formGroup">
+                            <span class="help-block">Este nombre sera mostrado a los usuarios, ocultando el verdadero nombre.</span>
+                        </div>
+                    </div>-->
+                    <!--
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="formGroup">Cuenta</label>
+                        <div class="col-sm-4">
+                            <label class="radio-inline">
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked> Activar
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> Desactivar
+                            </label>
+                        </div>
+                    </div>-->
+                    <div class="col-xs-12"><h2>Permisos</h2></div>
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered">
+                            <tr>
+                                <th colspan="2">GESTION CATASTRAL</th>
+                                <th colspan="2">SUI</th>
+                                <th rowspan="2">PLANEACION</th>
+                                <th rowspan="2">INDUSTRIA Y COMERCIO</th>
+                                <th rowspan="2">TECNOLOGIA</th>
+                                <th rowspan="2">GESSTOR</th>
+                            </tr>
+                            <tr>
+                                <th>CONSULTA</th>
+                                <th>ADMINISTRADOR</th>
+                                <th>CONSULTA</th>
+                                <th>ADMINISTRADOR</th>
+                                <!--<th>CONSULTA</th>
+                                <th>ADMINISTRADOR</th>-->
+                            </tr>
+                            <tbody>
+                                <!-- Aplicadas en las filas -->
+                                <tr class="active">
+                                    <td>
+                                        <div class="btn-group" data-toggle="buttons">
+                                            <label id="catastro" class="btn btn-primary">
+                                                <input type="checkbox" autocomplete="off">
+                                                <span class="glyphicon glyphicon-ok"></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" data-toggle="buttons">
+                                            <label id="catastroAdm" class="btn btn-success">
+                                                <input type="checkbox" autocomplete="off">
+                                                <span class="glyphicon glyphicon-ok"></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" data-toggle="buttons">
+                                            <label id="hacienda" class="btn btn-primary">
+                                                <input type="checkbox" autocomplete="off">
+                                                <span class="glyphicon glyphicon-ok"></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" data-toggle="buttons">
+                                            <label id="haciendaAdm" class="btn btn-success">
+                                                <input type="checkbox" autocomplete="off">
+                                                <span class="glyphicon glyphicon-ok"></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" data-toggle="buttons">
+                                            <label id="planeacion" class="btn btn-primary">
+                                                <input type="checkbox" autocomplete="off">
+                                                <span class="glyphicon glyphicon-ok"></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" data-toggle="buttons">
+                                            <label id="planeacionAdm" class="btn btn-success">
+                                                <input type="checkbox" autocomplete="off">
+                                                <span class="glyphicon glyphicon-ok"></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" data-toggle="buttons">
+                                            <label id="tecnologia" class="btn btn-warning">
+                                                <input type="checkbox" autocomplete="off">
+                                                <span class="glyphicon glyphicon-ok"></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" data-toggle="buttons">
+                                            <label id="gestor" class="btn btn-danger">
+                                                <input type="checkbox" autocomplete="off">
+                                                <span class="glyphicon glyphicon-ok"></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <label class="col-sm-2 control-label" for="formGroup"></label>
+                    <div class="col-sm-4">
+                        <button type="submit" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-floppy-saved"></span> Guardar</button>
+                        <!--<button type="button" class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-remove-circle"></span> Cancelar</button>-->
+                        <!--<button type="submit" class="btn btn-primary btn-block btn-large" onclick="setCookie()">Ingresar</button>-->
+                    </div>
+                </form>
+
+
+            </div>
+            <div class="tab-pane fade" id="modificacion">
+                <div class="col-xs-12"><h2>Modificación de Usuario</h2></div>
+                <br /><br />
+                <form class="form-horizontal" method="post" action="" onsubmit="actualizar()">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="formGroup">Usuario</label>
+                        <div class="col-sm-2">
+                            <input class="form-control ui-autocomplete-input" type="text" id="usu" onkeyup="usuario()">
+                        </div>
+                    </div>
+                    <div id="group" hidden="hidden">
+                        <!--<div class="form-group">
+                            <label class="col-sm-2 control-label" for="formGroup">Nombres y Apellidos</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" type="text" id="e_nombre1">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="formGroup">Dirección</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" type="text" id="e_apellido1">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="formGroup" id="tel">Teléfono</label>
+                            <div class="input-group col-sm-3">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-phone"></span></span>
+                                <input class="form-control" type="text" id="e_apellido2">
+                            </div>
+                        </div>-->
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="formGroup">Cargo</label>
+                            <div class="col-sm-2">
+                                <input class="form-control" type="text" id="e_cargo">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="formGroup" id="tel">Correo electrónico</label>
+                            <div class="input-group col-sm-3">
+                                <span class="input-group-addon">@</span>
+                                <input class="form-control" type="text" id="e_email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="formGroup">Dependencia</label>
+                            <div class="col-sm-2">
+                                <select class="form-control" id="e_dependencia">
+                                    <option>Planeación</option>
+                                    <option>Catastro</option>
+                                    <option>Hacienda</option>
+                                    <option>GESSTOR</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="formGroup">Fecha de expiración</label>
+                            <div class="col-sm-2">
+                                <input class="form-control" type="date" id="e_fecha" required="required">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="formGroup">Cuenta</label>
+                            <div class="col-sm-4">
+                                <label class="radio-inline">
+                                    <input type="radio" name="inlineRadioOptions" id="rad1" value="activar"> Activar
+                                    <!--<input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked> Activar-->
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="inlineRadioOptions" id="rad2" value="desactivar"> Desactivar
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-xs-12"><h2>Permisos</h2></div>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered">
+                                <tr>
+                                    <th colspan="2">GESTION CATASTRAL</th>
+                                    <th colspan="2">SUI</th>
+                                    <th rowspan="2">PLANEACION</th>
+                                    <th rowspan="2">INDUSTRIA Y COMERCIO</th>
+                                    <th rowspan="2">TECNOLOGIA</th>
+                                    <th rowspan="2">GESSTOR</th>
+                                </tr>
+                                <tr>
+                                    <th>CONSULTA</th>
+                                    <th>ADMINISTRADOR</th>
+                                    <th>CONSULTA</th>
+                                    <th>ADMINISTRADOR</th>
+                                    <!--<th>CONSULTA</th>
+                                    <th>ADMINISTRADOR</th>-->
+                                </tr>
+                                <tbody>
+                                    <!-- Aplicadas en las filas -->
+                                    <tr class="active">
+                                        <td>
+                                            <div class="btn-group" data-toggle="buttons">
+                                                <label id ="cat" class="btn btn-primary">
+                                                    <input type="checkbox" autocomplete="off">
+                                                    <span class="glyphicon glyphicon-ok"></span>
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group" data-toggle="buttons">
+                                                <label id ="catA" class="btn btn-success">
+                                                    <input type="checkbox" autocomplete="off">
+                                                    <span class="glyphicon glyphicon-ok"></span>
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group" data-toggle="buttons">
+                                                <label id ="hac" class="btn btn-primary">
+                                                    <input type="checkbox" autocomplete="off">
+                                                    <span class="glyphicon glyphicon-ok"></span>
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group" data-toggle="buttons">
+                                                <label id ="hacA" class="btn btn-success">
+                                                    <input type="checkbox" autocomplete="off">
+                                                    <span class="glyphicon glyphicon-ok"></span>
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group" data-toggle="buttons">
+                                                <label id ="pla" class="btn btn-primary">
+                                                    <input type="checkbox" autocomplete="off">
+                                                    <span class="glyphicon glyphicon-ok"></span>
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group" data-toggle="buttons">
+                                                <label id ="plaA" class="btn btn-success">
+                                                    <input type="checkbox" autocomplete="off">
+                                                    <span class="glyphicon glyphicon-ok"></span>
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group" data-toggle="buttons">
+                                                <label id="tec" class="btn btn-warning">
+                                                    <input type="checkbox" autocomplete="off">
+                                                    <span class="glyphicon glyphicon-ok"></span>
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group" data-toggle="buttons">
+                                                <label id ="ges" class="btn btn-danger">
+                                                    <input type="checkbox" autocomplete="off">
+                                                    <span class="glyphicon glyphicon-ok"></span>
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <label class="col-sm-2 control-label" for="formGroup"></label>
+                    <div id="button" hidden="hidden" class="col-sm-4">
+                        <button type="submit" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-floppy-saved"></span> Guardar</button>
+                        <!--<button type="button" class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-remove-circle"></span> Cancelar</button>-->
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!--<div class="form-group">
+            <label class="col-sm-2 control-label" for="formGroup">Mostrar Información</label>
+            <div class="col-sm-4">
+                <label class="checkbox-inline">
+                    <input type="checkbox" id="inlineCheckbox1" value="option1" checked disabled> Nombre
+                </label>
+                <label class="checkbox-inline">
+                    <input type="checkbox" id="inlineCheckbox2" value="option2"> Biografía
+                </label>
+                <label class="checkbox-inline">
+                    <input type="checkbox" id="inlineCheckbox3" value="option3"> Teléfono
+                </label>
+            </div>
+        </div>-->
+        <script>
+            function actualizar() {
+
+                //var nom = document.getElementById('nombre1').value.split(' ');
+                //var nomg = nom[0] + "." + nom[nom.length - 1];
+                //console.log(nomg + "2017");
+                //var contrasena = hex_md5(nomg + "2017");
+                if (document.getElementById('cat').className === 'btn btn-primary') {
+                    var catastro = 'f';
+                } else {
+                    var catastro = 't';
+                }
+                if (document.getElementById('catA').className === 'btn btn-success') {
+                    var catastroadm = 'f';
+                } else {
+                    var catastroadm = 't';
+                }
+                if (document.getElementById('hac').className === 'btn btn-primary') {
+                    var hacienda = 'f';
+                } else {
+                    var hacienda = 't';
+                }
+                if (document.getElementById('hacA').className === 'btn btn-success') {
+                    var haciendaadm = 'f';
+                } else {
+                    var haciendaadm = 't';
+                }
+                if (document.getElementById('pla').className === 'btn btn-primary') {
+                    var planeacion = 'f';
+                } else {
+                    var planeacion = 't';
+                }
+                if (document.getElementById('plaA').className === 'btn btn-success') {
+                    var planeacionadm = 'f';
+                } else {
+                    var planeacionadm = 't';
+                }
+                if (document.getElementById('tec').className === 'btn btn-warning') {
+                    var tecnologia = 'f';
+                } else {
+                    var tecnologia = 't';
+                }
+                if (document.getElementById('ges').className === 'btn btn-danger') {
+                    var gestor = 'f';
+                } else {
+                    var gestor = 't';
+                }
+                /*console.log("catastro"+catastro);
+                 console.log("catastroadm"+catastroadm);
+                 console.log("hacienda"+hacienda);
+                 console.log("haciendaadm"+haciendaadm);
+                 console.log("planeacion"+planeacion);
+                 console.log("planeacionadm"+planeacionadm);
+                 console.log("tecnologia"+tecnologia);
+                 console.log("gestor"+gestor);
+                 console.log(document.getElementById('inlineRadio1').checked);*/
+                var arrayResult = update_query("UPDATE usuario SET cargo='" + document.getElementById('e_cargo').value + "',email='" + document.getElementById('e_email').value + "', catastro='" + catastro + "', catastro_adm='" + catastroadm + "', sui='" + hacienda + "', sui_adm='" + haciendaadm + "', planeacion='" + planeacion + "', planeacion_adm='" + planeacionadm + "', tecnologia='" + tecnologia + "', gestor='" + gestor + "', estado='" + document.getElementById('rad1').checked + "', dependencia='" + document.getElementById('e_dependencia').value + "', fechaexp='" + document.getElementById('e_fecha').value + "' WHERE usuario='" + document.getElementById('usu').value + "';");
+                //var arrayResult = update_query("INSERT INTO usuario (nombre1,nombre2,apellido1,apellido2,email,usuario,contrasena,catastro,catastro_adm,hacienda,hacienda_adm,planeacion,planeacion_adm,tecnologia,gestor,estado) VALUES('" + document.getElementById('nombre1').value + "','" + document.getElementById('nombre2').value + "','" + document.getElementById('apellido1').value + "','" + document.getElementById('apellido2').value + "','" + document.getElementById('email').value + "','" + nomg + "','" + contrasena + "','" + catastro + "','" + catastroadm + "','" + hacienda + "','" + haciendaadm + "','" + planeacion + "','" + planeacionadm + "','" + tecnologia + "','" + gestor + "','" + document.getElementById('inlineRadio1').checked + "');");
+                //console.log(arrayResult);
+                //var arrayResult = update_query("UPDATE u_terreno SET simbol='0';UPDATE u_terreno SET simbol = '100' WHERE area<100;UPDATE u_terreno SET simbol = '100-1.000' WHERE area BETWEEN 100 AND 1000;UPDATE u_terreno SET simbol = '1.000-10.000' WHERE area BETWEEN 1000 AND 10000;UPDATE u_terreno SET simbol = '10.000' WHERE area > 10000;");
+            }
+            function guardar() {
+                var nom = document.getElementById('nombre').value.split(' ');
+                var nomg = nom[0] + "." + nom[nom.length - 1];
+                //console.log(nomg + "2017");
+                var cont = nomg + "2017"
+                var contrasena = hex_md5(cont);
+                if (document.getElementById('catastro').className === 'btn btn-primary') {
+                    var catastro = 'f';
+                } else {
+                    var catastro = 't';
+                }
+                if (document.getElementById('catastroAdm').className === 'btn btn-success') {
+                    var catastroadm = 'f';
+                } else {
+                    var catastroadm = 't';
+                }
+                if (document.getElementById('hacienda').className === 'btn btn-primary') {
+                    var hacienda = 'f';
+                } else {
+                    var hacienda = 't';
+                }
+                if (document.getElementById('haciendaAdm').className === 'btn btn-success') {
+                    var haciendaadm = 'f';
+                } else {
+                    var haciendaadm = 't';
+                }
+                if (document.getElementById('planeacion').className === 'btn btn-primary') {
+                    var planeacion = 'f';
+                } else {
+                    var planeacion = 't';
+                }
+                if (document.getElementById('planeacionAdm').className === 'btn btn-success') {
+                    var planeacionadm = 'f';
+                } else {
+                    var planeacionadm = 't';
+                }
+                if (document.getElementById('tecnologia').className === 'btn btn-warning') {
+                    var tecnologia = 'f';
+                } else {
+                    var tecnologia = 't';
+                }
+                if (document.getElementById('gestor').className === 'btn btn-danger') {
+                    var gestor = 'f';
+                } else {
+                    var gestor = 't';
+                }
+                /*console.log("catastro"+catastro);
+                 console.log("catastroadm"+catastroadm);
+                 console.log("hacienda"+hacienda);
+                 console.log("haciendaadm"+haciendaadm);
+                 console.log("planeacion"+planeacion);
+                 console.log("planeacionadm"+planeacionadm);
+                 console.log("tecnologia"+tecnologia);
+                 console.log("gestor"+gestor);
+                 console.log(document.getElementById('inlineRadio1').checked);*/
+                var arrayResult = update_query("INSERT INTO usuario (nombre,cargo,email,usuario,contrasena,catastro,catastro_adm,sui,sui_adm,planeacion,planeacion_adm,tecnologia,gestor,estado,dependencia,fechaexp) VALUES('" + document.getElementById('nombre').value + "','" + document.getElementById('cargo').value + "','" + document.getElementById('email').value + "','" + nomg + "','" + contrasena + "','" + catastro + "','" + catastroadm + "','" + hacienda + "','" + haciendaadm + "','" + planeacion + "','" + planeacionadm + "','" + tecnologia + "','" + gestor + "','t','" + document.getElementById('dependencia').value + "','" + document.getElementById('fecha').value + "');");
+                //console.log(arrayResult);
+                if (arrayResult) {
+                    var urls = "./mail/envio_mail.php";
+                    var req = new ajaxRequest();
+                    var url = urls + "?c=" + document.getElementById('email').value + "&u=" + nomg + "&p=" + cont;
+                    //console.log(url);
+                    req.open("GET", url, false);
+                    req.send();
+                } else {
+                    alert("El usuario ya existe");
+                }
+            }
+            function usuario() {
+                var elemento = document.getElementById('usu');
+                var posicion = elemento.getBoundingClientRect();
+                try {
+                    var eliminar = document.getElementById('autocompletar');
+                    eliminar.parentNode.removeChild(eliminar);
+                } catch (error) {
+                }
+                ;
+
+                var select = select_query("SELECT usuario FROM usuario WHERE usuario LIKE '" + document.getElementById("usu").value + "%';");
+                //console.log(select);
+                //if (select.length > 5) {
+                var iDiv = document.createElement('div');
+                iDiv.id = 'autocompletar';
+                iDiv.style = "overflow:auto;top:" + posicion.bottom + "px;left:" + posicion.left + "px;width:" + posicion.width + "px; height:200px;position:absolute; border:1px solid #ebebeb";
+                //console.log(document.getElementById('autocompletar'));
+                //var html = '';
+                //ahora creamos el contenido que va dentro del div sera un ul con la respuesta
+                //html += '<ul id="lista">';
+                var ul = document.createElement('ul');
+                ul.id = 'lista';
+                //ul.className="list-group";
+                ul.classList.add('list-group');
+                select.forEach(function (entry) {
+                    //console.log(entry[0]);
+                    var li = document.createElement("li");
+                    //li.value=entry[0];
+                    //li.data-codigo=entry[0];
+                    //li.innerHTML=entry[0]==''?'(nada)':entry[0];
+                    //var li= '<li data-codigo="' + entry[0] + '"><a href="javascript:;">' + entry[0] + '</a></li>';
+                    var a = document.createElement("a");
+                    a.id = "a" + entry[0];
+                    a.href = "#";
+                    //a.onclick="auto();return false;";
+                    a.addEventListener("click", function () {
+                        auto(a.id);
+                    }, false);
+                    a.classList.add('list-group-item');
+                    a.classList.add('list-group-item-action');
+                    a.classList.add('list-group-item-success');
+                    a.value = entry[0];
+                    a.innerHTML = entry[0];
+                    li.appendChild(a);
+                    ul.appendChild(li);
+                });
+                //console.log(ul);
+                iDiv.appendChild(ul);
+                //console.log(iDiv);
+                document.body.appendChild(iDiv);
+            }
+            function auto(id) {
+                document.getElementById('usu').disabled = true;
+                //alert(id);
+                //console.log(document.getElementById('a').innerHTML);
+                document.getElementById('usu').value = document.getElementById(id).innerHTML;
+                var eliminar = document.getElementById('autocompletar');
+                eliminar.parentNode.removeChild(eliminar);
+                var select = select_query("SELECT * FROM usuario WHERE usuario = '" + document.getElementById("usu").value + "';");
+                //console.log(select);
+                document.getElementById('group').style.display = 'block';
+                document.getElementById('button').style.display = 'block';
+                //document.getElementById('e_nombre1').value = select["0"][0];
+                //document.getElementById('e_apellido1').value = select["0"][2];
+                //document.getElementById('e_apellido2').value = select["0"][3];
+                document.getElementById('e_cargo').value = select["0"][1];
+                document.getElementById('e_email').value = select["0"][2];
+                document.getElementById('e_fecha').value = select["0"][15];
+                if (select["0"][14] === "Planeación") {
+                    document.getElementById("e_dependencia").value = "Planeación";
+                } else if (select["0"][14] === "Catastro") {
+                    document.getElementById("e_dependencia").value = "Catastro";
+                } else if (select["0"][14] === "Hacienda") {
+                    document.getElementById("e_dependencia").value = "Hacienda";
+                } else if (select["0"][14] === "GESSTOR") {
+                    document.getElementById("e_dependencia").value = "GESSTOR";
+                }
+                if (select["0"][13] === "t") {
+                    document.getElementById("rad1").checked = true;
+                } else {
+                    document.getElementById("rad2").checked = true;
+                }
+                if (select["0"][5] === "t") {
+                    document.getElementById("cat").className = "btn btn-primary active";
+                } else {
+                    document.getElementById("cat").className = "btn btn-primary";
+                }
+                if (select["0"][6] === "t") {
+                    document.getElementById("catA").className = "btn btn-success active";
+                } else {
+                    document.getElementById("catA").className = "btn btn-success";
+                }
+                if (select["0"][7] === "t") {
+                    document.getElementById("hac").className = "btn btn-primary active";
+                } else {
+                    document.getElementById("hac").className = "btn btn-primary";
+                }
+                if (select["0"][8] === "t") {
+                    document.getElementById("hacA").className = "btn btn-success active";
+                } else {
+                    document.getElementById("hacA").className = "btn btn-success";
+                }
+                if (select["0"][9] === "t") {
+                    document.getElementById("pla").className = "btn btn-primary active";
+                } else {
+                    document.getElementById("pla").className = "btn btn-primary";
+                }
+                if (select["0"][10] === "t") {
+                    document.getElementById("plaA").className = "btn btn-success active";
+                } else {
+                    document.getElementById("plaA").className = "btn btn-success";
+                }
+                if (select["0"][11] === "t") {
+                    document.getElementById("tec").className = "btn btn-warning active";
+                } else {
+                    document.getElementById("tec").className = "btn btn-warning";
+                }
+                if (select["0"][12] === "t") {
+                    document.getElementById("ges").className = "btn btn-danger active";
+                } else {
+                    document.getElementById("ges").className = "btn btn-danger";
+                }
+                //document.getElementById('e_nombre1').value = select["0"]["0"];
+                //document.getElementById('e_nombre1').value = select["0"]["0"];
+            }
+        </script>
+        <script src="src/jquery/jquery.min.js"></script>
+        <script src="src/bootstrap/js/bootstrap.js"></script>
+        <script src="js/index.js"></script>
+        <script src="js/md5.inc.js"></script>
+    </body>
+</html>

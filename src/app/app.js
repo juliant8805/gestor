@@ -1,0 +1,626 @@
+// ========= config section ================================================
+var url = 'http://35.184.3.4:8080/geoserver/ows?';
+var featurePrefix = 'preproduccion';
+var featureType = ['u_terreno', 'estacionestransmetro', 'puntos_aaa', 'ladosmanzana', 'consolidado_campo'];
+var featureNS = 'http://barranquilla.co';
+var srsName = 'EPSG:4326';
+var geometryName = 'geom';
+var geometryType = 'MultiPolygon';
+var fields = ['*'];
+var infoFormat = 'application/vnd.ogc.gml/3.1.1';
+var center = [-8327000, 1230000];
+var zoom = 12;
+// =========================================================================
+// override the axis orientation for WMS GetFeatureInfo
+var proj = new ol.proj.Projection({
+    code: 'http://www.opengis.net/gml/srs/epsg.xml#4326',
+    axis: 'enu'
+});
+//ol.proj.addEquivalentProjections([ol.proj.get('EPSG:4326'), proj]);
+// create a GML format to read WMS GetFeatureInfo response
+//var format = new ol.format.GML({featureNS: featureNS, featureType: featureType});
+//var format1 = new ol.format.GML({featureNS: featureNS, featureType: featureType1});
+var format = [];
+var wmsSource = [];
+for (var i = 0; i <= featureType.length - 1; i++)
+{
+    format[i] = new ol.format.GML({featureNS: featureNS, featureType: featureType[i]});
+    wmsSource[i] = new ol.source.TileWMS({
+        url: url,
+        params: {
+            'LAYERS': featurePrefix + ':' + featureType[i],
+            'TILED': true
+        },
+        serverType: 'geoserver'
+    });
+}
+;
+// create a new popup with a close box
+// the popup will draw itself in the popup div container
+// autoPan means the popup will pan the map if it's not visible (at the edges of the map).
+var popup = new app.Popup({
+    element: document.getElementById('popup'),
+    closeBox: true,
+    autoPan: true
+});
+// the tiled WMS source for our local GeoServer layer
+/*
+ var wmsSource = new ol.source.TileWMS({
+ url : url,
+ params : {
+ 'LAYERS' : featurePrefix + ':' + featureType1,
+ 'TILED' : true
+ },
+ serverType : 'geoserver'
+ });*/
+// create a vector layer to contain the feature to be highlighted
+/*var highlight = new ol.layer.Vector({
+ image: new ol.style.Icon({
+ anchor: [0.5, 1],
+ opacity: 1,
+ scale: 0.3,
+ src: './imagenes/ubicacion.png'
+ }),
+ source: new ol.source.Vector()
+ });*/
+
+var highlight = new ol.layer.Vector({
+    style: new ol.style.Style({
+        stroke: new ol.style.Stroke({
+            color: '#00FFFF',
+            width: 3
+        })
+    }),
+    source: new ol.source.Vector()
+});
+
+/*var highlightfeatures = new ol.layer.Vector({
+ style : new ol.style.Style({
+ stroke : new ol.style.Stroke({
+ color : '#00FFFF',
+ width : 3
+ })
+ }),
+ source : new ol.source.Vector()
+ });*/
+
+
+// when the popup is closed, clear the highlight
+/*$(popup).on('close', function () {
+ highlight.getSource().clear();
+ });*/
+// create the OpenLayers Map object
+// we add a layer switcher to the map with two groups:
+// 1. background, which will use radio buttons
+// 2. default (overlays), which will use checkboxes
+var measuring = false;
+measureControl = function (opt_options) {
+    var options = opt_options || {};
+    var button = document.createElement('button');
+    button.innerHTML = '<img src="../gesstor/imagenes/measure-control.png" />';
+    var this_ = this;
+    var handleMeasure = function (e) {
+        if (!measuring) {
+            this_.getMap().addInteraction(draw);
+            measuring = true;
+        } else {
+            this_.getMap().removeInteraction(draw);
+            measuring = false;
+        }
+    };
+    button.addEventListener('click', handleMeasure, false);
+    button.addEventListener('touchstart', handleMeasure, false);
+    var element = document.createElement('div');
+    element.className = 'measure-control ol-unselectable ol-control';
+    element.appendChild(button);
+    ol.control.Control.call(this, {
+        element: element,
+        target: options.target
+    });
+};
+ol.inherits(measureControl, ol.control.Control);
+var mousePositionControl = new ol.control.MousePosition({
+    coordinateFormat: ol.coordinate.createStringXY(4),
+    projection: 'EPSG:4326',
+    className: 'custom-mouse-position',
+    target: document.getElementById('mouse-position'),
+    undefinedHTML: '&nbsp;'
+});
+map = new ol.Map({
+    controls: ol.control.defaults().extend([new ol.control.ScaleLine(), new ol.control.ZoomToExtent({
+            extent: [-8360194.483519, 1214264.520807, -8302594.687951, 1245861.102880]
+        }), new measureControl(),
+        new ol.control.OverviewMap({
+            className: 'ol-overviewmap ol-custom-overviewmap',
+            layers: [new ol.layer.Tile({
+                    source: new ol.source.OSM({
+                        'url': 'http://{a-c}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png'
+                    })
+                })],
+            collapseLabel: '\u00BB',
+            label: '\u00AB',
+            collapsed: true
+        })]).extend([mousePositionControl]),
+    // add the popup as a map overlay
+    overlays: [popup],
+    // render the map in the 'map' div
+    target: document.getElementById('map'),
+    // use the Canvas renderer
+    renderer: 'canvas',
+    layers: [layerBase, layerPot, layerPuntosFotocontrol, layerEstratificacionOficial, layerprediosexentos2016, layermetrotel, layerindustriaycomercio, layerSUI, layerCatastro, layerSitios, highlight],
+    view: new ol.View({
+        center: center,
+        zoom: zoom,
+        extent: [-8360194.483519, 1214264.520807, -8302594.687951, 1245861.102880],
+        maxZoom: 21, minZoom: 12
+    })
+});
+
+map.getLayerGroup().set('name', 'CAPAS');
+// register a single click listener on the map and show a popup
+// based on WMS GetFeatureInfo
+map.on('singleclick', function (evt) {
+    document.getElementById("panel_atributos_alineamiento").style.display = "none";
+    document.getElementById("botonocultarpanelatributos").style.display = "none";
+
+    var viewResolution = map.getView().getResolution();
+    var url = wmsSource[0].getGetFeatureInfoUrl(
+            evt.coordinate, viewResolution, map.getView().getProjection(),
+            {'INFO_FORMAT': infoFormat}
+    );
+    var url2 = wmsSource[1].getGetFeatureInfoUrl(
+            evt.coordinate, viewResolution, map.getView().getProjection(),
+            {'INFO_FORMAT': infoFormat}
+    );
+    var url3 = wmsSource[2].getGetFeatureInfoUrl(
+            evt.coordinate, viewResolution, map.getView().getProjection(),
+            {'INFO_FORMAT': infoFormat}
+    );
+    var url4 = wmsSource[4].getGetFeatureInfoUrl(
+            evt.coordinate, viewResolution, map.getView().getProjection(),
+            {'INFO_FORMAT': infoFormat}
+    );
+    
+        
+    if (url) {
+        $.ajax({
+            url: url,
+            success: function (data) {
+                var features = format[0].readFeatures(data);
+                if (features && features.length >= 1 && features[0]) {
+                    var feature = features[0];
+                    var values = feature.getProperties();
+                    var ph = values.ph;
+                    var codigo = "'" + values.codigo + "'";
+                    var direccion = select_query("select direccion from sec08001 where codigo = " + codigo + "");
+                    document.getElementById("panel_atributos_puntos_aaa").style.display = "none";
+                    //var sinduplicados = direccion;
+                    if (ph >= 800) {
+                        document.getElementById("botonocultarpanelatributos").style.display = "none";
+                        document.getElementById("mensaje").style.display = "none";
+                        document.getElementById("panel_atributos").style.display = "none";
+                        document.getElementById("panel_atributos_ph").style.display = "block";
+                        document.getElementById("botonminimizarph").style.display = "block";
+                        document.getElementById("panel_atributos_sui").style.display = "none";
+                        document.getElementById("botonminimizarsui").style.display = "none";
+                        document.getElementById("botonmaximizarsui").style.display = "none";
+                        document.getElementById("statistics").style.display = "none";
+
+
+                        //var longitud = sinduplicados.length;
+
+                        for (i = 0; i < direccion.length; i++) {
+                            var tablaph = ("<table max-width=20 border=1>");
+                            for (i = 0; i < direccion.length; i++) {
+                                console.log(direccion[i]);
+                                tablaph += ("<tr>");
+                                tablaph += ("<td><b>" + direccion[i] + "</b></td>");
+                                tablaph += ("</tr>");
+                            }
+                            tablaph += ("</table>");
+                            document.getElementById('coddireccionph').innerHTML = tablaph;
+                        }
+
+                        document.getElementById('codnumeroph').innerHTML = direccion.length;
+                        document.getElementById('imgstreetph').href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
+
+
+                        var c = feature.values_.geom.flatCoordinates.length - 1;
+                        for (var i = 0; i <= c; i = i + 3) {
+                            var a = feature.values_.geom.flatCoordinates[i];
+                            feature.values_.geom.flatCoordinates[i] = feature.values_.geom.flatCoordinates[i + 1];
+                            feature.values_.geom.flatCoordinates[i + 1] = a;
+                        }
+                        feature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
+
+                        highlightfeatures.setStyle(PredioStyle);
+                        var markerSourceph = highlightfeatures.getSource();
+                        markerSourceph.clear();
+                        markerSourceph.addFeature(feature);
+
+                    } else {
+                        document.getElementById("botonmaximizarph").style.display = "none";
+                        document.getElementById("panel_atributos_ph").style.display = "none";
+                        document.getElementById('codmanzana').innerHTML = values.manzana_co;
+                        document.getElementById('codcatastral').innerHTML = values.codigo;
+                        document.getElementById('coddireccion').innerHTML = direccion[0];
+                        document.getElementById('codestratrificacionmunicipio').innerHTML = values.estratific;
+                        document.getElementById('codremosion').innerHTML = values.remosion;
+                        document.getElementById('codinundacion').innerHTML = values.inundacion;
+                        document.getElementById('codclasificaciondelsuelo').innerHTML = values.tipo;
+                        document.getElementById('img1').href = "./fotografias/" + values.codigo + "/1.png";
+                        document.getElementById('im1').src = "./fotografias/" + values.codigo + "/1.png";
+                        document.getElementById('img2').href = "./fotografias/" + values.codigo + "/2.png";
+                        document.getElementById('im2').src = "./fotografias/" + values.codigo + "/2.png";
+                        document.getElementById('img3').href = "./fotografias/" + values.codigo + "/3.png";
+                        document.getElementById('im3').src = "./fotografias/" + values.codigo + "/3.png";
+                        document.getElementById('imgstreet').href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
+                        document.getElementById("panel_atributos").style.display = "block";
+                        document.getElementById("tablaatributos").style.display = "block";
+                        document.getElementById("botonocultarpanelatributos").style.display = "block";
+                        document.getElementById("statistics").style.display = "none";
+
+                        var c = feature.values_.geom.flatCoordinates.length - 1;
+                        for (var i = 0; i <= c; i = i + 3) {
+                            var a = feature.values_.geom.flatCoordinates[i];
+                            feature.values_.geom.flatCoordinates[i] = feature.values_.geom.flatCoordinates[i + 1];
+                            feature.values_.geom.flatCoordinates[i + 1] = a;
+                        }
+                        feature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
+                        highlightfeatures.setStyle(PredioStyle);
+                        var markerSourcenoph = highlightfeatures.getSource();
+                        markerSourcenoph.clear();
+                        markerSourcenoph.addFeature(feature);
+                    }
+                }
+            }
+        });
+    }
+
+    if (url2) {
+        //alert("3");
+        if (infoFormat === 'text/html') {
+            popup.setPosition(evt.coordinate);
+            popup.setContent('<iframe seamless frameborder="0" src="' + url2 + '"></iframe>');
+            popup.show();
+        } else {
+            $.ajax({
+                url: url2,
+                success: function (data) {
+                    var features = format[1].readFeatures(data);
+                    //highlight.getSource().clear();
+                    if (features && features.length >= 1 && features[0]) {
+                        var feature = features[0];
+                        var html = '<br/><table class="table table-striped table-bordered table-condensed"><tr><td colspan="2"><b>TRANSMETRO</b></td></tr>';
+                        var values = feature.getProperties();
+                        var hasContent = false;
+                        html += '<tr><td><b>Nombre</b></td><td>' + values.nombre + '</td></tr>';
+                        html += '<tr><td><b>Información</b></td><td>' + '<a href="http://www.transmetro.gov.co/estaciones/' + values.link + '" target="_blank"><img src="./imagenes/rutastransmetro.png" >' + '</td></tr>';
+                        html += '<tr><td><b>Ver en:</b></td><td>' + '<a href="street_view.html?coordenadas=' + values.geom.flatCoordinates + '" target="marco" onclick="open_streetview()"><img src="./imagenes/streetview.png">' + '</td></tr></table>';
+                        hasContent = true;
+                        for (var key in values) {
+                            if (key !== 'the_geom' && key !== 'boundedBy') {
+                                //html += '<tr><td>' + key + '</td><td>' + values[key] + '</td></tr>';
+                                hasContent = true;
+                            }
+                        }
+                        if (hasContent === true) {
+                            popup.setPosition(evt.coordinate);
+                            popup.setContent(html);
+                            popup.show();
+                        }
+                        //feature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
+                        highlight.getSource().addFeature(feature);
+                    }
+                }
+            });
+        }
+    } else {
+        //alert("4");
+        popup.hide();
+    }
+    if (url3) {
+
+        $.ajax({
+            url: url3,
+            success: function (data) {
+                var features = format[2].readFeatures(data);
+                var feature = features[0];
+
+                var values = feature.getProperties();
+                document.getElementById("botonminimizarpuntosaaa").style.display = "block";
+                document.getElementById("botonmaximizarpuntosaaa").style.display = "none";
+                document.getElementById("statistics").style.display = "none";
+                document.getElementById("botonocultarstatistics").style.display = "none";
+                document.getElementById('coddireccionpuntosaaa').innerHTML = values.dir_origin;
+                document.getElementById('imgstreetpuntosaaa').href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
+                document.getElementById("panel_atributos_puntos_aaa").style.display = "block";
+                document.getElementById("tablaatributospuntosaaa").style.display = "block";
+                //document.getElementById("botonocultarpanelatributospuntosaaa").style.display = "block";
+
+
+                var c = feature.values_.geom.flatCoordinates.length - 1;
+                for (var i = 0; i <= c; i = i + 3) {
+                    var a = feature.values_.geom.flatCoordinates[i];
+                    feature.values_.geom.flatCoordinates[i] = feature.values_.geom.flatCoordinates[i + 1];
+                    feature.values_.geom.flatCoordinates[i + 1] = a;
+                }
+                feature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
+
+                highlight.setStyle(PuntoStyle);
+                var markerSourcepuntosaaa = highlight.getSource();
+                markerSourcepuntosaaa.clear();
+                markerSourcepuntosaaa.addFeature(feature);
+
+
+            }
+        });
+    }
+    if (url4) {
+        //console.log(url4);
+        $.ajax({
+            url: url4,
+            success: function (data) {
+                //console.log(data);
+                var features = format[4].readFeatures(data);
+                //console.log(features);
+                if (features && features.length >= 1 && features[0]) {
+                    var feature = features[0];
+                    //var html = '<br/><table class="table table-striped table-bordered table-condensed"><tr><td colspan="2"><b>TRANSMETRO</b></td></tr>';
+                    var values = feature.getProperties();
+                    //console.log(values);
+                    var table = document.getElementById("tblatt");
+                    table.innerHTML = "";
+                    //var select = select_query("SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_name LIKE 'temp_%'");
+                    //console.log(select);
+                    var row = table.insertRow(0);
+                    var cell1 = row.insertCell(0);
+                    //var cell2 = row.insertCell(1);
+                    cell1.colSpan = 2;
+                    cell1.innerHTML = "<b>INFORMACION LOTE</b>";
+                    var select = [];
+                    var sel = [];
+                    var imag = [];
+                    var stv = [];
+                    var ig = [];
+                    select[0] = "<b>Direccion</b>";
+                    select[1] = "<b>Propietario</b>";
+                    select[2] = "<b>Tipo de Predio</b>";
+                    select[3] = "<b>Destino Economico</b>";
+                    select[4] = "<b>Via de Acceso</b>";
+                    select[5] = "<b>Foco de Contaminacion</b>";
+                    select[6] = "<b>Fecha de Captura</b>";
+                    select[7] = "<b>Fotografias</b>";
+                    sel[0] = values.direccion;
+                    sel[1] = values.propietari;
+                    sel[2] = values.tipo_predi;
+                    sel[3] = values.destino_ec;
+                    sel[4] = values.via_acceso;
+                    sel[5] = values.foco_conta;
+                    sel[6] = values.fecha_capt;
+                    sel[7] = document.createElement("a");
+                    sel[7].id = "img1";
+                    sel[7].style = "width: 30px; height: 50px;";
+                    sel[7].target = "marco";
+                    sel[7].setAttribute("onclick","open_streetview()");
+                    //sel[7].onclick = "open_streetview()";
+                    sel[7].href = "./fotografias/" + values.cod_predia + "/1.jpg";
+                    imag[7] = document.createElement("img");
+                    imag[7].id = "im1";
+                    imag[7].className = "pequeña";
+                    imag[7].src = "./fotografias/" + values.cod_predia + "/1.jpg";
+                    
+                    stv[7] = document.createElement("a");
+                    stv[7].id = "imgstreet";
+                    //stv[7].style = "width: 30px; height: 50px;";
+                    stv[7].target = "marco";
+                    
+                    //stv[7].onclick = "open_streetview()";
+                    stv[7].href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
+                    
+                    //stv[7].addEventListener("click", open_streetview, false);
+                    stv[7].setAttribute("onclick","open_streetview()");
+                    
+                    ig[7] = document.createElement("img");
+                    //ig[7].id = "im1";
+                    //ig[7].className = "pequeña";
+                    ig[7].src = "./imagenes/streetview.png";
+                    
+                    //<a id="img1" style="width: 30px; height: 50px;"target="marco" onclick="open_streetview()"/><img id="im1" class="pequeña">
+                    //document.getElementById('img1').href = "./fotografias/" + values.codigo + "/1.png";
+                    //document.getElementById('im1').src = "./fotografias/" + values.codigo + "/1.png";
+                    //element1.type = "checkbox";
+                    //cell2.innerHTML = " VALIDAR ";
+                    //filas=table.getRowCount();
+                    //html += '<tr><td><b>Ver en:</b></td><td>' + '<a href="street_view.html?coordenadas=' + values.geom.flatCoordinates + '" target="marco" onclick="open_streetview()"><img src="./imagenes/streetview.png">' + '</td></tr></table>';
+                    //console.log(sel[7]);
+                    //console.log(imag[7]);
+                    for (i = 0; i < select.length; i++) {
+                        row = table.insertRow(i+1);
+                        cell1 = row.insertCell(0);
+                        cell2 = row.insertCell(1);
+                        cell1.innerHTML = select[i];
+                        
+                        if (i === 7){
+                            cell2.appendChild(sel[i]);
+                            //cell2.appendChild(imag[i]);
+                            sel[i].appendChild(imag[i]);
+                            cell2.appendChild(stv[i]);
+                            //cell2.appendChild(ig[i]);
+                            stv[i].appendChild(ig[i]);
+                            
+                            //document.getElementById("ig").onclick=open_streetview();
+                        }else{
+                            cell2.innerHTML = sel[i];
+                        }
+                    }
+                    document.getElementById("panel_atr").style.display = "block";
+                }
+                /*
+                 //var hasContent = false;
+                 html += '<tr><td><b>Nombre</b></td><td>' + values.nombre + '</td></tr>';
+                 html += '<tr><td><b>Información</b></td><td>' + '<a href="http://www.transmetro.gov.co/estaciones/' + values.link + '" target="_blank"><img src="./imagenes/rutastransmetro.png" >' + '</td></tr>';
+                 html += '<tr><td><b>Ver en:</b></td><td>' + '<a href="street_view.html?coordenadas=' + values.geom.flatCoordinates + '" target="marco" onclick="open_streetview()"><img src="./imagenes/streetview.png">' + '</td></tr></table>';
+                 /*hasContent = true;
+                 for (var key in values) {
+                 if (key !== 'the_geom' && key !== 'boundedBy') {
+                 //html += '<tr><td>' + key + '</td><td>' + values[key] + '</td></tr>';
+                 hasContent = true;
+                 }
+                 }*/
+                //feature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
+                // highlight.getSource().addFeature(feature);
+                //}
+            }
+        });
+        //}
+    }
+});
+
+/*map.getView().on('propertychange', function(e) {
+ switch (e.key) {
+ case 'resolution':
+ //console.log(map.getView().getZoom());
+ if (map.getView().getZoom()>=12){
+ ortofotourbana.setVisible(true);            
+ }else{
+ ortofotourbana.setVisible(false);
+ }
+ //.get["[[Scopes]]"]["0"].zoom
+ break;
+ }
+ });*/
+
+
+//herramienta medir
+
+
+var sketch;
+var helpTooltipElement;
+var helpTooltip;
+var measureTooltipElement;
+var measureTooltip;
+var continueLineMsg = 'Click to continue drawing the line';
+var source = new ol.source.Vector();
+var draw; // global so we can remove it later
+function addInteraction() {
+    var type = 'LineString';
+    draw = new ol.interaction.Draw({
+        source: source,
+        type: /** @type {ol.geom.GeometryType} */ (type),
+        style: new ol.style.Style({
+            fill: new ol.style.Fill({
+                color: 'rgba(255, 255, 255, 0.2)'
+            }),
+            stroke: new ol.style.Stroke({
+                color: 'rgba(0, 0, 0, 0.5)',
+                lineDash: [10, 10],
+                width: 2
+            }),
+            image: new ol.style.Circle({
+                radius: 5,
+                stroke: new ol.style.Stroke({
+                    color: 'rgba(0, 0, 0, 0.7)'
+                }),
+                fill: new ol.style.Fill({
+                    color: 'rgba(255, 255, 255, 0.2)'
+                })
+            })
+        })
+    });
+    //map.addInteraction(draw);
+
+    createMeasureTooltip();
+    createHelpTooltip();
+
+    var listener;
+    draw.on('drawstart',
+            function (evt) {
+                // set sketch
+                sketch = evt.feature;
+
+                /** @type {ol.Coordinate|undefined} */
+                var tooltipCoord = evt.coordinate;
+
+                listener = sketch.getGeometry().on('change', function (evt) {
+                    var geom = evt.target;
+                    var output;
+                    output = formatLength(/** @type {ol.geom.LineString} */ (geom));
+                    tooltipCoord = geom.getLastCoordinate();
+                    measureTooltipElement.innerHTML = output;
+                    measureTooltip.setPosition(tooltipCoord);
+                });
+            }, this);
+
+    draw.on('drawend',
+            function (evt) {
+                measureTooltipElement.className = 'tooltip tooltip-static';
+                measureTooltip.setOffset([0, -7]);
+                // unset sketch
+                sketch = null;
+                // unset tooltip so that a new one can be created
+                measureTooltipElement = null;
+                createMeasureTooltip();
+                ol.Observable.unByKey(listener);
+            }, this);
+}
+
+
+/**
+ * Creates a new help tooltip
+ */
+function createHelpTooltip() {
+    if (helpTooltipElement) {
+        helpTooltipElement.parentNode.removeChild(helpTooltipElement);
+    }
+    helpTooltipElement = document.createElement('div');
+    helpTooltipElement.className = 'tooltip hidden';
+    helpTooltip = new ol.Overlay({
+        element: helpTooltipElement,
+        offset: [15, 0],
+        positioning: 'center-left'
+    });
+    map.addOverlay(helpTooltip);
+}
+
+
+/**
+ * Creates a new measure tooltip
+ */
+function createMeasureTooltip() {
+    if (measureTooltipElement) {
+        measureTooltipElement.parentNode.removeChild(measureTooltipElement);
+    }
+    measureTooltipElement = document.createElement('div');
+    measureTooltipElement.className = 'tooltip tooltip-measure';
+    measureTooltip = new ol.Overlay({
+        element: measureTooltipElement,
+        offset: [0, -15],
+        positioning: 'bottom-center'
+    });
+    map.addOverlay(measureTooltip);
+}
+
+
+var wgs84Sphere = new ol.Sphere(6378137);
+
+/**
+ * format length output
+ * @param {ol.geom.LineString} line
+ * @return {string}
+ */
+var formatLength = function (line) {
+    var length;
+    length = Math.round(line.getLength() * 100) / 100;
+    var output;
+    if (length > 100) {
+        output = (Math.round(length / 1000 * 100) / 100) +
+                ' ' + 'km';
+    } else {
+        output = (Math.round(length * 100) / 100) +
+                ' ' + 'm';
+    }
+    return output;
+};
+
+addInteraction();

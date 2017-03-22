@@ -413,7 +413,7 @@ map.on('singleclick', function (evt) {
                     stv[7] = document.createElement("a");
                     stv[7].id = "imgstreet";
                     //stv[7].style = "width: 30px; height: 50px;";
-                    stv[7].target = "marco";
+                    //stv[7].target = "marco";
                     
                     //stv[7].onclick = "open_streetview()";
                     stv[7].href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;

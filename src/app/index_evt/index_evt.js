@@ -344,11 +344,17 @@ function cerrar_menu() {
     document.getElementById('transicion_capas').style.display = 'none';
     document.getElementById('herramientas').style.display = 'none';
 }
+$(document).ready(function () {
+	$('#marco').load(function () {
+            $(this).contents().find("img").css({'height':'970px','width':'572px'});
+		//$(this).contents().find("img").css({'background-color':'red','font-weight':'bolder','color':'white'});
+	});
+});
 function open_streetview() {
     document.getElementById('marco').style.display = 'block';
     //console.log(document);
     console.log(document.getElementsByTagName('iframe').marco);
-    console.log(document.getElementsByTagName('iframe').marco.getElementsByTagName('img'));
+    console.log(window.frames.marco);
 
     //console.log(window.frames["marco"].document);
     //console.log(document.getElementById('marco').getElementsByTagName('html'));
@@ -391,7 +397,7 @@ window.onclick = function (event) {
 };
 
 function marcado() {
-    if (document.getElementById("termin").checked == true) {
+    if (document.getElementById("termin").checked === true) {
         document.getElementById('completo').style.display = 'none';
     } else {
         alert("Debes aceptar los términos y condiciones");

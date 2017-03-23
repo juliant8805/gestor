@@ -24,9 +24,16 @@ var streetmap = new ol.layer.Tile({
     name: 'Street Map'
 });
 
-var bing = new ol.layer.Tile({
+var bingarranque = new ol.layer.Tile({
     visible: true,
     minResolution:20,
+    source: new ol.source.XYZ({
+        url: "http://35.184.3.4/bing/{z}/{x}/{y}.jpg"
+    }), name: 'Bing Arranque'
+});
+
+var bing = new ol.layer.Tile({
+    visible: false,
     source: new ol.source.BingMaps({
         key: 'LAx1oGVyN8TZwSTH1RC1~hnxyYFGev93MbI6hBUQOZQ~AjSJCfyU_TmBIhT5SRRpRIOBHVnA0zTKFRKEVuP-XHE3LAMKr-1ZcqtTq4YTRLds',
         imagerySet: 'Aerial'
@@ -494,7 +501,7 @@ var layerPot = new ol.layer.Group({
     name: 'POT'
 });
 var layerBase = new ol.layer.Group({
-    layers: [bing, streetmap, ortofotourbana, bing],
+    layers: [bing, streetmap, ortofotourbana, bingarranque],
     name: 'Capas Base'
 });
 /*var consol = new ol.layer.Group({

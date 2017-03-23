@@ -1,7 +1,7 @@
 // ========= config section ================================================
 var url = 'http://35.184.3.4:8080/geoserver/ows?';
 var featurePrefix = 'preproduccion';
-var featureType = ['u_terreno', 'estacionestransmetro', 'puntos_aaa', 'ladosmanzana', 'consolidado_campo'];
+var featureType = ['u_terreno', 'estacionestransmetro', 'puntos_aaa', 'consolidado_campo'];
 var featureNS = 'http://barranquilla.co';
 var srsName = 'EPSG:4326';
 var geometryName = 'geom';
@@ -140,7 +140,8 @@ map = new ol.Map({
             collapseLabel: '\u00BB',
             label: '\u00AB',
             collapsed: true
-        })]).extend([mousePositionControl]),
+        })
+    ]).extend([mousePositionControl]),
     // add the popup as a map overlay
     overlays: [popup],
     // render the map in the 'map' div
@@ -160,9 +161,10 @@ map.getLayerGroup().set('name', 'CAPAS');
 // register a single click listener on the map and show a popup
 // based on WMS GetFeatureInfo
 map.on('singleclick', function (evt) {
+    document.getElementById("panel_atr").style.display = "none";
+    document.getElementById("tablaatributos").style.display = "none";
     document.getElementById("panel_atributos_alineamiento").style.display = "none";
     document.getElementById("botonocultarpanelatributos").style.display = "none";
-
     var viewResolution = map.getView().getResolution();
     var url = wmsSource[0].getGetFeatureInfoUrl(
             evt.coordinate, viewResolution, map.getView().getProjection(),
@@ -176,194 +178,20 @@ map.on('singleclick', function (evt) {
             evt.coordinate, viewResolution, map.getView().getProjection(),
             {'INFO_FORMAT': infoFormat}
     );
-    var url4 = wmsSource[4].getGetFeatureInfoUrl(
+    var url1 = wmsSource[3].getGetFeatureInfoUrl(
             evt.coordinate, viewResolution, map.getView().getProjection(),
             {'INFO_FORMAT': infoFormat}
     );
     
-        
-    if (url) {
-        $.ajax({
-            url: url,
-            success: function (data) {
-                var features = format[0].readFeatures(data);
-                if (features && features.length >= 1 && features[0]) {
-                    var feature = features[0];
-                    var values = feature.getProperties();
-                    var ph = values.ph;
-                    var codigo = "'" + values.codigo + "'";
-                    var direccion = select_query("select direccion from sec08001 where codigo = " + codigo + "");
-                    document.getElementById("panel_atributos_puntos_aaa").style.display = "none";
-                    //var sinduplicados = direccion;
-                    if (ph >= 800) {
-                        document.getElementById("botonocultarpanelatributos").style.display = "none";
-                        document.getElementById("mensaje").style.display = "none";
-                        document.getElementById("panel_atributos").style.display = "none";
-                        document.getElementById("panel_atributos_ph").style.display = "block";
-                        document.getElementById("botonminimizarph").style.display = "block";
-                        document.getElementById("panel_atributos_sui").style.display = "none";
-                        document.getElementById("botonminimizarsui").style.display = "none";
-                        document.getElementById("botonmaximizarsui").style.display = "none";
-                        document.getElementById("statistics").style.display = "none";
-
-
-                        //var longitud = sinduplicados.length;
-
-                        for (i = 0; i < direccion.length; i++) {
-                            var tablaph = ("<table max-width=20 border=1>");
-                            for (i = 0; i < direccion.length; i++) {
-                                console.log(direccion[i]);
-                                tablaph += ("<tr>");
-                                tablaph += ("<td><b>" + direccion[i] + "</b></td>");
-                                tablaph += ("</tr>");
-                            }
-                            tablaph += ("</table>");
-                            document.getElementById('coddireccionph').innerHTML = tablaph;
-                        }
-
-                        document.getElementById('codnumeroph').innerHTML = direccion.length;
-                        document.getElementById('imgstreetph').href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
-
-
-                        var c = feature.values_.geom.flatCoordinates.length - 1;
-                        for (var i = 0; i <= c; i = i + 3) {
-                            var a = feature.values_.geom.flatCoordinates[i];
-                            feature.values_.geom.flatCoordinates[i] = feature.values_.geom.flatCoordinates[i + 1];
-                            feature.values_.geom.flatCoordinates[i + 1] = a;
-                        }
-                        feature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
-
-                        highlightfeatures.setStyle(PredioStyle);
-                        var markerSourceph = highlightfeatures.getSource();
-                        markerSourceph.clear();
-                        markerSourceph.addFeature(feature);
-
-                    } else {
-                        document.getElementById("botonmaximizarph").style.display = "none";
-                        document.getElementById("panel_atributos_ph").style.display = "none";
-                        document.getElementById('codmanzana').innerHTML = values.manzana_co;
-                        document.getElementById('codcatastral').innerHTML = values.codigo;
-                        document.getElementById('coddireccion').innerHTML = direccion[0];
-                        document.getElementById('codestratrificacionmunicipio').innerHTML = values.estratific;
-                        document.getElementById('codremosion').innerHTML = values.remosion;
-                        document.getElementById('codinundacion').innerHTML = values.inundacion;
-                        document.getElementById('codclasificaciondelsuelo').innerHTML = values.tipo;
-                        document.getElementById('img1').href = "./fotografias/" + values.codigo + "/1.png";
-                        document.getElementById('im1').src = "./fotografias/" + values.codigo + "/1.png";
-                        document.getElementById('img2').href = "./fotografias/" + values.codigo + "/2.png";
-                        document.getElementById('im2').src = "./fotografias/" + values.codigo + "/2.png";
-                        document.getElementById('img3').href = "./fotografias/" + values.codigo + "/3.png";
-                        document.getElementById('im3').src = "./fotografias/" + values.codigo + "/3.png";
-                        document.getElementById('imgstreet').href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
-                        document.getElementById("panel_atributos").style.display = "block";
-                        document.getElementById("tablaatributos").style.display = "block";
-                        document.getElementById("botonocultarpanelatributos").style.display = "block";
-                        document.getElementById("statistics").style.display = "none";
-
-                        var c = feature.values_.geom.flatCoordinates.length - 1;
-                        for (var i = 0; i <= c; i = i + 3) {
-                            var a = feature.values_.geom.flatCoordinates[i];
-                            feature.values_.geom.flatCoordinates[i] = feature.values_.geom.flatCoordinates[i + 1];
-                            feature.values_.geom.flatCoordinates[i + 1] = a;
-                        }
-                        feature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
-                        highlightfeatures.setStyle(PredioStyle);
-                        var markerSourcenoph = highlightfeatures.getSource();
-                        markerSourcenoph.clear();
-                        markerSourcenoph.addFeature(feature);
-                    }
-                }
-            }
-        });
-    }
-
-    if (url2) {
-        //alert("3");
-        if (infoFormat === 'text/html') {
-            popup.setPosition(evt.coordinate);
-            popup.setContent('<iframe seamless frameborder="0" src="' + url2 + '"></iframe>');
-            popup.show();
-        } else {
-            $.ajax({
-                url: url2,
-                success: function (data) {
-                    var features = format[1].readFeatures(data);
-                    //highlight.getSource().clear();
-                    if (features && features.length >= 1 && features[0]) {
-                        var feature = features[0];
-                        var html = '<br/><table class="table table-striped table-bordered table-condensed"><tr><td colspan="2"><b>TRANSMETRO</b></td></tr>';
-                        var values = feature.getProperties();
-                        var hasContent = false;
-                        html += '<tr><td><b>Nombre</b></td><td>' + values.nombre + '</td></tr>';
-                        html += '<tr><td><b>Información</b></td><td>' + '<a href="http://www.transmetro.gov.co/estaciones/' + values.link + '" target="_blank"><img src="./imagenes/rutastransmetro.png" >' + '</td></tr>';
-                        html += '<tr><td><b>Ver en:</b></td><td>' + '<a href="street_view.html?coordenadas=' + values.geom.flatCoordinates + '" target="marco" onclick="open_streetview()"><img src="./imagenes/streetview.png">' + '</td></tr></table>';
-                        hasContent = true;
-                        for (var key in values) {
-                            if (key !== 'the_geom' && key !== 'boundedBy') {
-                                //html += '<tr><td>' + key + '</td><td>' + values[key] + '</td></tr>';
-                                hasContent = true;
-                            }
-                        }
-                        if (hasContent === true) {
-                            popup.setPosition(evt.coordinate);
-                            popup.setContent(html);
-                            popup.show();
-                        }
-                        //feature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
-                        highlight.getSource().addFeature(feature);
-                    }
-                }
-            });
-        }
-    } else {
-        //alert("4");
-        popup.hide();
-    }
-    if (url3) {
-
-        $.ajax({
-            url: url3,
-            success: function (data) {
-                var features = format[2].readFeatures(data);
-                var feature = features[0];
-
-                var values = feature.getProperties();
-                document.getElementById("botonminimizarpuntosaaa").style.display = "block";
-                document.getElementById("botonmaximizarpuntosaaa").style.display = "none";
-                document.getElementById("statistics").style.display = "none";
-                document.getElementById("botonocultarstatistics").style.display = "none";
-                document.getElementById('coddireccionpuntosaaa').innerHTML = values.dir_origin;
-                document.getElementById('imgstreetpuntosaaa').href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
-                document.getElementById("panel_atributos_puntos_aaa").style.display = "block";
-                document.getElementById("tablaatributospuntosaaa").style.display = "block";
-                //document.getElementById("botonocultarpanelatributospuntosaaa").style.display = "block";
-
-
-                var c = feature.values_.geom.flatCoordinates.length - 1;
-                for (var i = 0; i <= c; i = i + 3) {
-                    var a = feature.values_.geom.flatCoordinates[i];
-                    feature.values_.geom.flatCoordinates[i] = feature.values_.geom.flatCoordinates[i + 1];
-                    feature.values_.geom.flatCoordinates[i + 1] = a;
-                }
-                feature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
-
-                highlight.setStyle(PuntoStyle);
-                var markerSourcepuntosaaa = highlight.getSource();
-                markerSourcepuntosaaa.clear();
-                markerSourcepuntosaaa.addFeature(feature);
-
-
-            }
-        });
-    }
-    if (url4) {
+    if (url1) {
         //console.log(url4);
         $.ajax({
-            url: url4,
+            url: url1,
+            beforeSend: function () {
+                putgif();
+            },
             success: function (data) {
-                //console.log(data);
-                var features = format[4].readFeatures(data);
-                //console.log(features);
+                var features = format[3].readFeatures(data);
                 if (features && features.length >= 1 && features[0]) {
                     var feature = features[0];
                     //var html = '<br/><table class="table table-striped table-bordered table-condensed"><tr><td colspan="2"><b>TRANSMETRO</b></td></tr>';
@@ -402,81 +230,206 @@ map.on('singleclick', function (evt) {
                     sel[7].id = "img1";
                     sel[7].style = "width: 30px; height: 50px;";
                     sel[7].target = "marco";
-                    sel[7].setAttribute("onclick","open_streetview()");
-                    //sel[7].onclick = "open_streetview()";
-                    sel[7].href = "./fotografias/" + values.cod_predia + "/1.jpg";
+                    sel[7].setAttribute("onclick", "open_streetview()");
+                    sel[7].href = "http://35.184.3.4/gesstor/fotografias/" + values.cod_predia + "/1.jpg";
                     imag[7] = document.createElement("img");
                     imag[7].id = "im1";
                     imag[7].className = "pequeña";
-                    imag[7].src = "./fotografias/" + values.cod_predia + "/1.jpg";
-                    
+                    imag[7].src = "http://35.184.3.4/gesstor/fotografias/" + values.cod_predia + "/1.jpg";
                     stv[7] = document.createElement("a");
                     stv[7].id = "imgstreet";
-                    //stv[7].style = "width: 30px; height: 50px;";
-                    //stv[7].target = "marco";
-                    
-                    //stv[7].onclick = "open_streetview()";
-                    stv[7].href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
-                    
-                    //stv[7].addEventListener("click", open_streetview, false);
-                    stv[7].setAttribute("onclick","open_streetview()");
-                    
+                     stv[7].href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
+                    stv[7].setAttribute("onclick", "open_streetview()");
                     ig[7] = document.createElement("img");
-                    //ig[7].id = "im1";
-                    //ig[7].className = "pequeña";
                     ig[7].src = "./imagenes/streetview.png";
-                    
-                    //<a id="img1" style="width: 30px; height: 50px;"target="marco" onclick="open_streetview()"/><img id="im1" class="pequeña">
-                    //document.getElementById('img1').href = "./fotografias/" + values.codigo + "/1.png";
-                    //document.getElementById('im1').src = "./fotografias/" + values.codigo + "/1.png";
-                    //element1.type = "checkbox";
-                    //cell2.innerHTML = " VALIDAR ";
-                    //filas=table.getRowCount();
-                    //html += '<tr><td><b>Ver en:</b></td><td>' + '<a href="street_view.html?coordenadas=' + values.geom.flatCoordinates + '" target="marco" onclick="open_streetview()"><img src="./imagenes/streetview.png">' + '</td></tr></table>';
-                    //console.log(sel[7]);
-                    //console.log(imag[7]);
                     for (i = 0; i < select.length; i++) {
-                        row = table.insertRow(i+1);
+                        row = table.insertRow(i + 1);
                         cell1 = row.insertCell(0);
                         cell2 = row.insertCell(1);
                         cell1.innerHTML = select[i];
-                        
-                        if (i === 7){
+                        if (i === 7) {
                             cell2.appendChild(sel[i]);
-                            //cell2.appendChild(imag[i]);
                             sel[i].appendChild(imag[i]);
                             cell2.appendChild(stv[i]);
-                            //cell2.appendChild(ig[i]);
                             stv[i].appendChild(ig[i]);
-                            
-                            //document.getElementById("ig").onclick=open_streetview();
-                        }else{
+                        } else {
                             cell2.innerHTML = sel[i];
                         }
                     }
                     document.getElementById("panel_atr").style.display = "block";
                 }
-                /*
-                 //var hasContent = false;
-                 html += '<tr><td><b>Nombre</b></td><td>' + values.nombre + '</td></tr>';
-                 html += '<tr><td><b>Información</b></td><td>' + '<a href="http://www.transmetro.gov.co/estaciones/' + values.link + '" target="_blank"><img src="./imagenes/rutastransmetro.png" >' + '</td></tr>';
-                 html += '<tr><td><b>Ver en:</b></td><td>' + '<a href="street_view.html?coordenadas=' + values.geom.flatCoordinates + '" target="marco" onclick="open_streetview()"><img src="./imagenes/streetview.png">' + '</td></tr></table>';
-                 /*hasContent = true;
-                 for (var key in values) {
-                 if (key !== 'the_geom' && key !== 'boundedBy') {
-                 //html += '<tr><td>' + key + '</td><td>' + values[key] + '</td></tr>';
-                 hasContent = true;
-                 }
-                 }*/
-                //feature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
-                // highlight.getSource().addFeature(feature);
-                //}
+            },
+            complete: function(){
+                quitgif();
             }
         });
-        //}
+        
+    }
+    if (url) {
+        $.ajax({
+            url: url,
+            success: function (data) {
+                var features = format[0].readFeatures(data);
+                if (features && features.length >= 1 && features[0]) {
+                    var feature = features[0];
+                    var values = feature.getProperties();
+                    var ph = values.ph;
+                    var codigo = "'" + values.codigo + "'";
+                    //console.log(codigo);
+                    var direccion = select_query("select direccion from sec08001 where codigo = " + codigo + "");
+                    if (direccion ===null){
+                        var direccion = [];
+                        direccion[0]= "Sin Direccion";
+                        //console.log(direccion);
+                    }
+                    document.getElementById("panel_atributos_puntos_aaa").style.display = "none";
+                    //var sinduplicados = direccion;
+                    //console.log(values);
+                    if (ph >= 800) {
+                        document.getElementById("botonocultarpanelatributos").style.display = "none";
+                        document.getElementById("mensaje").style.display = "none";
+                        document.getElementById("panel_atributos").style.display = "none";
+                        document.getElementById("panel_atributos_ph").style.display = "block";
+                        document.getElementById("botonminimizarph").style.display = "block";
+                        document.getElementById("panel_atributos_sui").style.display = "none";
+                        document.getElementById("botonminimizarsui").style.display = "none";
+                        document.getElementById("botonmaximizarsui").style.display = "none";
+                        document.getElementById("statistics").style.display = "none";
+                        //var longitud = sinduplicados.length;
+
+                        for (i = 0; i < direccion.length; i++) {
+                            var tablaph = ("<table max-width=20 border=1>");
+                            for (i = 0; i < direccion.length; i++) {
+                                tablaph += ("<tr>");
+                                tablaph += ("<td><b>" + direccion[i] + "</b></td>");
+                                tablaph += ("</tr>");
+                            }
+                            tablaph += ("</table>");
+                            document.getElementById('coddireccionph').innerHTML = tablaph;
+                        }
+
+                        document.getElementById('codnumeroph').innerHTML = direccion.length;
+                        document.getElementById('imgstreetph').href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
+                        var c = feature.values_.geom.flatCoordinates.length - 1;
+                        for (var i = 0; i <= c; i = i + 3) {
+                            var a = feature.values_.geom.flatCoordinates[i];
+                            feature.values_.geom.flatCoordinates[i] = feature.values_.geom.flatCoordinates[i + 1];
+                            feature.values_.geom.flatCoordinates[i + 1] = a;
+                        }
+                        feature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
+                        highlightfeatures.setStyle(PredioStyle);
+                        var markerSourceph = highlightfeatures.getSource();
+                        markerSourceph.clear();
+                        markerSourceph.addFeature(feature);
+                    } else if (ph < 800) {
+                        document.getElementById("botonmaximizarph").style.display = "none";
+                        document.getElementById("panel_atributos_ph").style.display = "none";
+                        document.getElementById('codmanzana').innerHTML = values.manzana_co;
+                        document.getElementById('codcatastral').innerHTML = values.codigo;
+                        document.getElementById('coddireccion').innerHTML = direccion[0];
+                        document.getElementById('codestratrificacionmunicipio').innerHTML = values.estratific;
+                        document.getElementById('codremosion').innerHTML = values.remosion;
+                        document.getElementById('codinundacion').innerHTML = values.inundacion;
+                        document.getElementById('codclasificaciondelsuelo').innerHTML = values.tipo;
+                        document.getElementById('img1').href = "./fotografias/" + values.codigo + "/1.png";
+                        document.getElementById('im1').src = "./fotografias/" + values.codigo + "/1.png";
+                        document.getElementById('img2').href = "./fotografias/" + values.codigo + "/2.png";
+                        document.getElementById('im2').src = "./fotografias/" + values.codigo + "/2.png";
+                        document.getElementById('img3').href = "./fotografias/" + values.codigo + "/3.png";
+                        document.getElementById('im3').src = "./fotografias/" + values.codigo + "/3.png";
+                        document.getElementById('imgstreet').href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
+                        document.getElementById("panel_atributos").style.display = "block";
+                        document.getElementById("tablaatributos").style.display = "block";
+                        document.getElementById("botonocultarpanelatributos").style.display = "block";
+                        document.getElementById("statistics").style.display = "none";
+                        var c = feature.values_.geom.flatCoordinates.length - 1;
+                        for (var i = 0; i <= c; i = i + 3) {
+                            var a = feature.values_.geom.flatCoordinates[i];
+                            feature.values_.geom.flatCoordinates[i] = feature.values_.geom.flatCoordinates[i + 1];
+                            feature.values_.geom.flatCoordinates[i + 1] = a;
+                        }
+                        feature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
+                        highlightfeatures.setStyle(PredioStyle);
+                        var markerSourcenoph = highlightfeatures.getSource();
+                        markerSourcenoph.clear();
+                        markerSourcenoph.addFeature(feature);
+                    }
+                }
+            }
+        });
+    }
+    if (url2) {
+        if (infoFormat === 'text/html') {
+            popup.setPosition(evt.coordinate);
+            popup.setContent('<iframe seamless frameborder="0" src="' + url2 + '"></iframe>');
+            popup.show();
+        } else {
+            $.ajax({
+                url: url2,
+                success: function (data) {
+                    var features = format[1].readFeatures(data);
+                    if (features && features.length >= 1 && features[0]) {
+                        var feature = features[0];
+                        //console.log(feature);
+                        var html = '<br/><table class="table table-striped table-bordered table-condensed"><tr><td colspan="2"><b>TRANSMETRO</b></td></tr>';
+                        var values = feature.getProperties();
+                        var hasContent = false;
+                        html += '<tr><td><b>Nombre</b></td><td>' + values.nombre + '</td></tr>';
+                        html += '<tr><td><b>Información</b></td><td>' + '<a href="http://www.transmetro.gov.co/estaciones/' + values.link + '" target="_blank"><img src="./imagenes/rutastransmetro.png" >' + '</td></tr>';
+                        html += '<tr><td><b>Ver en:</b></td><td>' + '<a href="street_view.html?coordenadas=' + values.geom.flatCoordinates + '" target="marco" onclick="open_streetview()"><img src="./imagenes/streetview.png">' + '</td></tr></table>';
+                        hasContent = true;
+                        for (var key in values) {
+                            if (key !== 'the_geom' && key !== 'boundedBy') {
+                                //html += '<tr><td>' + key + '</td><td>' + values[key] + '</td></tr>';
+                                hasContent = true;
+                            }
+                        }
+                        if (hasContent === true) {
+                            popup.setPosition(evt.coordinate);
+                            popup.setContent(html);
+                            popup.show();
+                        }
+                        //feature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
+                        highlight.getSource().addFeature(feature);
+                    }
+                }
+            });
+        }
+    }
+    if (url3) {
+        $.ajax({
+            url: url3,
+            success: function (data) {;
+                var features = format[2].readFeatures(data);
+                if (features && features.length >= 1 && features[0]) {
+                    var feature = features[0];
+                    //console.log("url3= " + feature);
+                    var values = feature.getProperties();
+                    document.getElementById("botonminimizarpuntosaaa").style.display = "block";
+                    document.getElementById("botonmaximizarpuntosaaa").style.display = "none";
+                    document.getElementById("statistics").style.display = "none";
+                    document.getElementById("botonocultarstatistics").style.display = "none";
+                    document.getElementById('coddireccionpuntosaaa').innerHTML = values.dir_origin;
+                    document.getElementById('imgstreetpuntosaaa').href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
+                    document.getElementById("panel_atributos_puntos_aaa").style.display = "block";
+                    document.getElementById("tablaatributospuntosaaa").style.display = "block";
+                    //document.getElementById("botonocultarpanelatributospuntosaaa").style.display = "block";
+                    var c = feature.values_.geom.flatCoordinates.length - 1;
+                    for (var i = 0; i <= c; i = i + 3) {
+                        var a = feature.values_.geom.flatCoordinates[i];
+                        feature.values_.geom.flatCoordinates[i] = feature.values_.geom.flatCoordinates[i + 1];
+                        feature.values_.geom.flatCoordinates[i + 1] = a;
+                    }
+                    feature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
+                    highlight.setStyle(PuntoStyle);
+                    var markerSourcepuntosaaa = highlight.getSource();
+                    markerSourcepuntosaaa.clear();
+                    markerSourcepuntosaaa.addFeature(feature);
+                }
+            }
+        });
     }
 });
-
 /*map.getView().on('propertychange', function(e) {
  switch (e.key) {
  case 'resolution':
@@ -491,10 +444,7 @@ map.on('singleclick', function (evt) {
  }
  });*/
 
-
 //herramienta medir
-
-
 var sketch;
 var helpTooltipElement;
 var helpTooltip;
@@ -529,19 +479,15 @@ function addInteraction() {
         })
     });
     //map.addInteraction(draw);
-
     createMeasureTooltip();
     createHelpTooltip();
-
     var listener;
     draw.on('drawstart',
             function (evt) {
                 // set sketch
                 sketch = evt.feature;
-
                 /** @type {ol.Coordinate|undefined} */
                 var tooltipCoord = evt.coordinate;
-
                 listener = sketch.getGeometry().on('change', function (evt) {
                     var geom = evt.target;
                     var output;
@@ -551,7 +497,6 @@ function addInteraction() {
                     measureTooltip.setPosition(tooltipCoord);
                 });
             }, this);
-
     draw.on('drawend',
             function (evt) {
                 measureTooltipElement.className = 'tooltip tooltip-static';
@@ -564,7 +509,6 @@ function addInteraction() {
                 ol.Observable.unByKey(listener);
             }, this);
 }
-
 
 /**
  * Creates a new help tooltip
@@ -583,7 +527,6 @@ function createHelpTooltip() {
     map.addOverlay(helpTooltip);
 }
 
-
 /**
  * Creates a new measure tooltip
  */
@@ -601,9 +544,7 @@ function createMeasureTooltip() {
     map.addOverlay(measureTooltip);
 }
 
-
 var wgs84Sphere = new ol.Sphere(6378137);
-
 /**
  * format length output
  * @param {ol.geom.LineString} line
@@ -614,13 +555,10 @@ var formatLength = function (line) {
     length = Math.round(line.getLength() * 100) / 100;
     var output;
     if (length > 100) {
-        output = (Math.round(length / 1000 * 100) / 100) +
-                ' ' + 'km';
+        output = (Math.round(length / 1000 * 100) / 100) + ' ' + 'km';
     } else {
-        output = (Math.round(length * 100) / 100) +
-                ' ' + 'm';
+        output = (Math.round(length * 100) / 100) + ' ' + 'm';
     }
     return output;
 };
-
 addInteraction();

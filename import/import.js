@@ -148,8 +148,11 @@ function validate() {
         row = table.insertRow(i);
         cell1 = row.insertCell(0);
         cell2 = row.insertCell(1);
-        cell1.innerHTML = select[i - 1][0];
-
+        cell1.target = "marco";
+        cell1.innerHTML = select[i - 1][0].link("http://35.184.3.4:8080/geoserver/preproduccion/wms?service=WMS&version=1.1.0&request=GetMap&layers=preproduccion:"+select[i - 1][0]+"&styles=&bbox=-74.878721,10.9183800000001,-74.7586219999999,11.0510640000001&width=695&height=768&srs=EPSG:4326&format=application/openlayers");
+        cell1.getElementsByTagName("a")["0"].target = "_blank";
+        //console.log(cell1.getElementsByTagName("a"));
+        console.log(cell1);
         var element1 = document.createElement("input");
         element1.type = "checkbox";
         cell2.appendChild(element1);

@@ -89,7 +89,7 @@ function password() {
     var ca = document.cookie.split('=');
     //hex_md5(document.getElementById("p").value);
     var select = select_query("SELECT * FROM usuario WHERE usuario ='" + ca[0] + "' AND contrasena ='" + hex_md5(document.getElementById('password').value) + "';");
-    console.log(select);
+    //console.log(select);
     if (select === null) {
         alert("Contraseña incorrecta");
     } else if (document.getElementById("newpassword").value === document.getElementById("cpassword").value) {
@@ -352,16 +352,7 @@ $(document).ready(function () {
 });
 function open_streetview() {
     document.getElementById('marco').style.display = 'block';
-    //console.log(document);
-    console.log(document.getElementsByTagName('iframe').marco);
-    console.log(window.frames.marco);
-
-    //console.log(window.frames["marco"].document);
-    //console.log(document.getElementById('marco').getElementsByTagName('html'));
-    //document.getElementsByTagName('marco')[1].getElementsByTagName('li')
-    //var algo = document.getElementById('marco');
     document.getElementById('botoncerrarstreetview').style.display = 'block';
-    //document.getElementById('map').style.width = '70%';
 
 }/*
  function close_streetview() {

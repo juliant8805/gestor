@@ -148,7 +148,7 @@ map = new ol.Map({
     target: document.getElementById('map'),
     // use the Canvas renderer
     renderer: 'canvas',
-    layers: [layerBase, layerPot, layerPuntosFotocontrol, layerEstratificacionOficial, layerprediosexentos2016, layermetrotel, layerindustriaycomercio, layerSUI, layerCatastro, layerSitios, highlight],
+    layers: [layerPot, layerPuntosFotocontrol, layerEstratificacionOficial, layerprediosexentos2016, layermetrotel, layerindustriaycomercio, layerSUI, layerCatastro, layerSitios, layerBase, highlight],
     view: new ol.View({
         center: center,
         zoom: zoom,
@@ -286,17 +286,17 @@ map.on('singleclick', function (evt) {
                     //var sinduplicados = direccion;
                     //console.log(values);
                     if (ph >= 800) {
-                        document.getElementById("botonocultarpanelatributos").style.display = "none";
-                        document.getElementById("mensaje").style.display = "none";
-                        document.getElementById("panel_atributos").style.display = "none";
-                        document.getElementById("panel_atributos_ph").style.display = "block";
-                        document.getElementById("botonminimizarph").style.display = "block";
-                        document.getElementById("panel_atributos_sui").style.display = "none";
-                        document.getElementById("botonminimizarsui").style.display = "none";
-                        document.getElementById("botonmaximizarsui").style.display = "none";
-                        document.getElementById("statistics").style.display = "none";
-                        //var longitud = sinduplicados.length;
-
+                        var table = document.getElementById("tblatt");
+                        table.innerHTML = "";
+                        var row = table.insertRow(0);
+                        var cell1 = row.insertCell(0);
+                        cell1.colSpan = 2;
+                        cell1.innerHTML = "<b>PROPIEDAD HORIZONTAL</b>";
+                        var select = [];
+                        var sel = [];
+                        var imag = [];
+                        var stv = [];
+                        var ig = [];
                         for (i = 0; i < direccion.length; i++) {
                             var tablaph = ("<table max-width=20 border=1>");
                             for (i = 0; i < direccion.length; i++) {
@@ -304,12 +304,33 @@ map.on('singleclick', function (evt) {
                                 tablaph += ("<td><b>" + direccion[i] + "</b></td>");
                                 tablaph += ("</tr>");
                             }
-                            tablaph += ("</table>");
-                            document.getElementById('coddireccionph').innerHTML = tablaph;
+                            tablaph += ("</table>");     
                         }
+                        select[0] = "<b>Direcciones</b>";
+                        select[1] = "<b>Street View</b>";
+                        sel[0] = tablaph; 
+                        stv[1] = document.createElement("a");
+                        stv[1].id = "imgstreet";
+                        stv[1].target = "marco";
+                        stv[1].href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
+                        stv[1].setAttribute("onclick","open_streetview()");
+                        ig[1] = document.createElement("img");
+                        ig[1].src = "./imagenes/streetview.png";
 
-                        document.getElementById('codnumeroph').innerHTML = direccion.length;
-                        document.getElementById('imgstreetph').href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
+                     for (i = 0; i < select.length; i++) {
+                        row = table.insertRow(i+1);
+                        cell1 = row.insertCell(0);
+                        cell2 = row.insertCell(1);
+                        cell1.innerHTML = select[i];
+                        if (i === 1){
+                            cell2.appendChild(stv[i]);
+                            stv[i].appendChild(ig[i]);
+                        }else{
+                            cell2.innerHTML = sel[i];
+                        }
+                    }
+                        document.getElementById("panel_atr").style.display = "block";
+                        document.getElementById("botonminimizar").style.display = "block";
                         var c = feature.values_.geom.flatCoordinates.length - 1;
                         for (var i = 0; i <= c; i = i + 3) {
                             var a = feature.values_.geom.flatCoordinates[i];
@@ -322,26 +343,72 @@ map.on('singleclick', function (evt) {
                         markerSourceph.clear();
                         markerSourceph.addFeature(feature);
                     } else if (ph < 800) {
-                        document.getElementById("botonmaximizarph").style.display = "none";
-                        document.getElementById("panel_atributos_ph").style.display = "none";
-                        document.getElementById('codmanzana').innerHTML = values.manzana_co;
-                        document.getElementById('codcatastral').innerHTML = values.codigo;
-                        document.getElementById('coddireccion').innerHTML = direccion[0];
-                        document.getElementById('codestratrificacionmunicipio').innerHTML = values.estratific;
-                        document.getElementById('codremosion').innerHTML = values.remosion;
-                        document.getElementById('codinundacion').innerHTML = values.inundacion;
-                        document.getElementById('codclasificaciondelsuelo').innerHTML = values.tipo;
-                        document.getElementById('img1').href = "./fotografias/" + values.codigo + "/1.png";
-                        document.getElementById('im1').src = "./fotografias/" + values.codigo + "/1.png";
-                        document.getElementById('img2').href = "./fotografias/" + values.codigo + "/2.png";
-                        document.getElementById('im2').src = "./fotografias/" + values.codigo + "/2.png";
-                        document.getElementById('img3').href = "./fotografias/" + values.codigo + "/3.png";
-                        document.getElementById('im3').src = "./fotografias/" + values.codigo + "/3.png";
-                        document.getElementById('imgstreet').href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
-                        document.getElementById("panel_atributos").style.display = "block";
-                        document.getElementById("tablaatributos").style.display = "block";
-                        document.getElementById("botonocultarpanelatributos").style.display = "block";
-                        document.getElementById("statistics").style.display = "none";
+                        var table = document.getElementById("tblatt");
+                        table.innerHTML = "";
+                        var row = table.insertRow(0);
+                        var cell1 = row.insertCell(0);
+                        cell1.colSpan = 2;
+                        cell1.innerHTML = "<b>INFORMACION DEL PREDIO</b>";
+                        var select = [];
+                        var sel = [];
+                        var imag = [];
+                        var stv = [];
+                        var ig = [];
+                        var codfoto = values.codigo_ant.substring(0,17);     
+                        select[0] = "<b>Codigo Manzana</b>";
+                        select[1] = "<b>Codigo Catastral Nuevo</b>";
+                        select[2] = "<b>Codigo Catastral Anterior</b>";
+                        select[3] = "<b>Dirección</b>"; 
+                        select[4] = "<b>Estratificación Oficial</b>"; 
+                        select[5] = "<b>Remoción en Masa</b>";
+                        select[6] = "<b>Amenaza de Inundación</b>";
+                        select[7] = "<b>Fotografias</b>";
+                        sel[0] = values.manzana_co;
+                        sel[1] = values.codigo;
+                        sel[2] = values.codigo_ant;
+                        sel[3] = direccion[0];
+                        sel[4] = values.estratific;
+                        sel[5] = values.remosion;
+                        sel[6] = values.inundacion;
+                        sel[7] = document.createElement("a");
+                        sel[7].id = "img1";
+                        sel[7].style = "width: 30px; height: 50px;";
+                        sel[7].target = "marco";
+                        sel[7].setAttribute("onclick","open_streetview()");
+                        sel[7].href = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";
+                        imag[7] = document.createElement("img");
+                        imag[7].id = "im1";
+                        imag[7].className = "pequeña";
+                        imag[7].src = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";         
+                        stv[7] = document.createElement("a");
+                        stv[7].id = "imgstreet1";
+                        //stv[7].target = "marco";
+                        stv[7].href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
+                        stv[7].setAttribute("onclick","open_streetview()");  
+                        ig[7] = document.createElement("img");
+                        ig[7].src = "./imagenes/streetview.png";
+                    
+                     for (i = 0; i < select.length; i++) {
+                        row = table.insertRow(i+1);
+                        cell1 = row.insertCell(0);
+                        cell2 = row.insertCell(1);
+                        cell1.innerHTML = select[i];
+                        
+                        if (i === 7){
+                            cell2.appendChild(sel[i]);
+                            //cell2.appendChild(imag[i]);
+                            sel[i].appendChild(imag[i]);
+                            cell2.appendChild(stv[i]);
+                            //cell2.appendChild(ig[i]);
+                            stv[i].appendChild(ig[i]);
+                            
+                        }else{
+                            cell2.innerHTML = sel[i];
+                        }
+                    }
+                    document.getElementById("panel_atr").style.display = "block";
+                    document.getElementById("botonminimizar").style.display = "block";
+
                         var c = feature.values_.geom.flatCoordinates.length - 1;
                         for (var i = 0; i <= c; i = i + 3) {
                             var a = feature.values_.geom.flatCoordinates[i];

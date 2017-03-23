@@ -1093,29 +1093,14 @@ select{
 }
 #panel_atr{
     position:absolute;
-    width: 26em;
-    height: 25em;
-    top:6em;
+    max-width:30em;
+    max-height:32em;
+    top:8em;
     left:0em;  
     font-size:11px;
-}
-#panel_atributos_alineamiento{
-    position:absolute;
-    width: 20em;
-    height: 25em;
-    top:12em;
-    left:0em;  
-    font-size:12px;
-}
-#panel_atributos_predioshasusos{
-    position:absolute;
-    width: 35em;
-    height: 45em;
-    top:10em;
-    left:0em;  
-    font-size:10px;
     overflow:scroll;
 }
+
 #panel_atributos_ph{
     position:absolute;
     max-width: 35em;
@@ -1189,14 +1174,7 @@ select{
     width: 2em;
     opacity: 0.9;
 }
-#botonminimizarhasusos{
-    position: absolute;
-    top:0em;
-    right: 0em;
-    height: 2em;
-    width: 2em;
-    opacity: 0.9;
-}
+
 #botonmaximizar{
     position: absolute;
     top:40%;
@@ -1204,13 +1182,7 @@ select{
     height: 3em;
     width: 3em;
 }
-#botonmaximizarhasusos{
-    position: absolute;
-    top:40%;
-    left: 0em;
-    height: 3em;
-    width: 3em;
-}
+
 #botonminimizarph{
     position: absolute;
     top:0em;

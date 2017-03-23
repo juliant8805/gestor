@@ -217,6 +217,9 @@ function herramientas() {
 
 function limpiar_consulta() {
     globalstyle = "sinconsulta";
+    manzana.setVisible(true);
+    construcciones.setVisible(true);
+    unidades.setVisible(true);
     document.getElementById('botoncerrarstreetview').style.display = 'none';
     document.getElementById('botonmostrarstreetview').style.display = 'none';
     document.getElementById('mensaje').style.display = 'none';

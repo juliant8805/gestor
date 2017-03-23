@@ -20,7 +20,7 @@ var ortofotourbana = new ol.layer.Tile({
 });
 var streetmap = new ol.layer.Tile({
     source: new ol.source.OSM(),
-    visible: true,
+    visible: false,
     name: 'Street Map'
 });
 
@@ -53,22 +53,9 @@ var predio = new ol.layer.Tile({
         params: {LAYERS: 'preproduccion:u_terreno', STYLES: ''}
     }), name: 'Predios'
 });
-//console.log(predio);
-var construccion = new ol.layer.Tile({
-    //title : 'Predios',
-    extent: [-8327292.022321, 1232500.154157, -8325566.164885, 1233464.624518],
-    visible: true,
-    //minResolution:0.000280044661523,
-    //maxResolution:0.960833233684,
-    source: new ol.source.TileWMS({
-        url: 'http://35.184.3.4:8080/geoserver/preproduccion/wms',
-        params: {LAYERS: 'preproduccion:construcciones', STYLES: ''}
-    }), name: 'Construcciones'
-});
+
 var manzana = new ol.layer.Tile({
-    visible: false,
-    //minResolution: 0.000280044661523,
-    //maxResolution: 1.92194651203,
+    visible: true,
     source: new ol.source.TileWMS({
         url: 'http://35.184.3.4:8080/geoserver/preproduccion/wms',
         params: {LAYERS: 'preproduccion:u_manzana', STYLES: ''}
@@ -399,7 +386,7 @@ var predios_exentos_2016 = new ol.layer.Tile({
 });
 
 var vias = new ol.layer.Tile({
-    visible: false,
+    visible: true,
     source: new ol.source.TileWMS({
         url: 'http://35.184.3.4:8080/geoserver/preproduccion/wms',
         params: {LAYERS: 'preproduccion:vias', STYLES: ''}
@@ -451,9 +438,27 @@ var consolidado = new ol.layer.Tile({
     
 });
 
+var construcciones = new ol.layer.Tile({
+    visible: true,
+    source: new ol.source.TileWMS({
+        url: 'http://35.184.3.4:8080/geoserver/preproduccion/wms',
+        params: {LAYERS: 'preproduccion:u_construccion', STYLES: ''}
+    }), name: 'Construcciones'
+    
+});
+
+var unidades = new ol.layer.Tile({
+    visible: true,
+    source: new ol.source.TileWMS({
+        url: 'http://35.184.3.4:8080/geoserver/preproduccion/wms',
+        params: {LAYERS: 'preproduccion:u_unidad', STYLES: ''}
+    }), name: 'Unidades'
+    
+});
+
 //CAPS GROUP
 var layerCatastro = new ol.layer.Group({
-    layers: [predio, manzana, vias, consolidado, highlightfeatures],
+    layers: [predio, manzana, vias, consolidado, construcciones, unidades, highlightfeatures],
     name: 'Catastro'
 });
 var layerSitios = new ol.layer.Group({

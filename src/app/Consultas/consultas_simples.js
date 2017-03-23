@@ -392,14 +392,12 @@ function addressSelect(event, ui) {
     var url = wmsSource[0].getGetFeatureInfoUrl(featureCenter, viewResolution, map.getView().getProjection(), {
         'INFO_FORMAT': infoFormat    
     });
-	var select = validacionusuarios();
-	try {
+	var select = validacionusuarios();	
 	if (select[0][9] === 't') {
-    if (url) {
         predio.setVisible(true);
-         document.getElementById("panel_atributos").style.display = "block";
+         /*document.getElementById("panel_atributos").style.display = "block";
          document.getElementById("tablaatributos").style.display = "block";
-         document.getElementById("botonocultarpanelatributos").style.display = "block";
+         document.getElementById("botonocultarpanelatributos").style.display = "block";*/
         $.ajax({
             url: url,
             success: function (data) {
@@ -409,32 +407,78 @@ function addressSelect(event, ui) {
                 if (features && features.length >= 1 && features[0]) {
                     var feature = features[0];
                     var values = feature.getProperties();
-                        document.getElementById('codmanzana').innerHTML=values.manzana_co;
-                        document.getElementById('codcatastral').innerHTML=values.codigo;  
-                        document.getElementById('coddireccion').innerHTML=ui.item.direccionoriginal;
-                        document.getElementById('codestratrificacionmunicipio').innerHTML=values.estratific; 
-                        document.getElementById('codremosion').innerHTML = values.remosion;
-                        document.getElementById('codinundacion').innerHTML = values.inundacion;
-                        document.getElementById('codclasificaciondelsuelo').innerHTML = values.tipo;   
-                        document.getElementById('img1').href="./fotografias/" + values.codigo + "/1.png";	
-                        document.getElementById('im1').src="./fotografias/" + values.codigo + "/1.png";
-                        document.getElementById('img2').href="./fotografias/" + values.codigo + "/2.png";
-                        document.getElementById('im2').src="./fotografias/" + values.codigo + "/2.png";
-                        document.getElementById('img3').href="./fotografias/" + values.codigo + "/3.png";
-                        document.getElementById('im3').src="./fotografias/" + values.codigo + "/3.png";
-                        document.getElementById('imgstreet').href="street_view.html?coordenadas=" + values.geom.flatCoordinates;
-                } 
+                    var table = document.getElementById("tblatt");
+                    table.innerHTML = "";
+                    var row = table.insertRow(0);
+                    var cell1 = row.insertCell(0);
+                    cell1.colSpan = 2;
+                    cell1.innerHTML = "<b>INFORMACION DEL PREDIO</b>";
+                    var select = [];
+                    var sel = [];
+                    var imag = [];
+                    var stv = [];
+                    var ig = [];
+                    var codfoto = values.codigo_ant.substring(0,17);  
+                    select[0] = "<b>Codigo Manzana</b>";
+                    select[1] = "<b>Codigo Catastral Nuevo</b>";
+                    select[2] = "<b>Codigo Catastral Anterior</b>";
+                    select[3] = "<b>Dirección</b>"; 
+                    select[4] = "<b>Estratificación Oficial</b>"; 
+                    select[5] = "<b>Remoción en Masa</b>";
+                    select[6] = "<b>Amenaza de Inundación</b>";
+                    select[7] = "<b>Fotografias</b>";
+                    //select[8] = "<b>Street View</b>";
+                    sel[0] = values.manzana_co;
+                    sel[1] = values.codigo;
+                    sel[2] = values.codigo_ant;
+                    sel[3] = ui.item.direccionoriginal;
+                    sel[4] = values.estratific;
+                    sel[5] = values.remosion;
+                    sel[6] = values.inundacion;
+                    sel[7] = document.createElement("a");
+                    sel[7].id = "img1";
+                    sel[7].style = "width: 30px; height: 50px;";
+                    sel[7].target = "marco";
+                    sel[7].setAttribute("onclick","open_streetview()");
+                    //sel[7].onclick = "open_streetview()";
+                    sel[7].href = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";
+                    imag[7] = document.createElement("img");
+                    imag[7].id = "im1";
+                    imag[7].className = "pequeña";
+                    imag[7].src = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";           
+                    stv[7] = document.createElement("a");
+                    stv[7].id = "imgstreet1";
+                    stv[7].target = "marco";
+                    stv[7].href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
+                    stv[7].setAttribute("onclick","open_streetview()");  
+                    ig[7] = document.createElement("img");
+                    ig[7].src = "./imagenes/streetview.png";
+                    
+                     for (i = 0; i < select.length; i++) {
+                        row = table.insertRow(i+1);
+                        cell1 = row.insertCell(0);
+                        cell2 = row.insertCell(1);
+                        cell1.innerHTML = select[i];
+                        
+                        if (i === 7){
+                            cell2.appendChild(sel[i]);
+                            //cell2.appendChild(imag[i]);
+                            sel[i].appendChild(imag[i]);
+                            cell2.appendChild(stv[i]);
+                            //cell2.appendChild(ig[i]);
+                            stv[i].appendChild(ig[i]);
+                            
+                        }else{
+                            cell2.innerHTML = sel[i];
+                        }
+                    }
+                    document.getElementById("panel_atr").style.display = "block";
+                    document.getElementById("botonminimizar").style.display = "block";      
+            }
             }
         });
-    } 
 	}
-	 } catch (err) {
-    };
-
-    try {
-	if (select[0][7] === 't') {
-       
-    if (url) {
+    if (select[0][7] === 't') {
         predio.setVisible(true);
         document.getElementById("panel_atributos_sui").style.display = "block";
         document.getElementById("tablaatributossui").style.display = "block";
@@ -503,10 +547,9 @@ function addressSelect(event, ui) {
                 } 
             }
         });
-    } 
+     
 	}
-	 } catch (err) {
-    };
+	 
     
 		
     try{
@@ -517,7 +560,7 @@ function addressSelect(event, ui) {
     catch(err){
         sinconsulta();
     }
-  
+ 
 }
 
 function PlaceSelect(event, ui) {
@@ -600,10 +643,10 @@ function ladomanzanaSelect(event, ui) {
     document.getElementById("tablaatributospredioshasusos").style.display = "none";
     document.getElementById("panel_atributos").style.display = "none";
     document.getElementById("tablaatributos").style.display = "none";
-    document.getElementById("panel_atributos_alineamiento").style.display = "block";
-    document.getElementById("tablaatributosalineamiento").style.display = "block";
-    document.getElementById("botonminimizar").style.display = "block";  
-	document.getElementById("botonmaximizarhasusos").style.display = "none";
+    //document.getElementById("panel_atributos_alineamiento").style.display = "block";
+    //document.getElementById("tablaatributosalineamiento").style.display = "block";
+    //document.getElementById("botonminimizar").style.display = "block";  
+	//document.getElementById("botonmaximizarhasusos").style.display = "none";
     document.getElementById('mensaje').style.display = 'none'; 
     predio.setVisible(true);
     var view = map.getView();  
@@ -622,24 +665,45 @@ function ladomanzanaSelect(event, ui) {
     var featureCenter = ol.extent.getCenter(ppExtent);
     view.setCenter(featureCenter);
     view.fitExtent(ppExtent, map.getSize());
-    var viewResolution = map.getView().getResolution();
+    var viewResolution = map.getView().getResolution();    
     var ladoman = feat.values_.lado_manza;
     predio.setVisible(true);
-    console.log(feat);
-    
-    
         $.ajax({
-            success: function (data) {
-                        document.getElementById('codladomanzana').innerHTML=feat.values_.codigo;
-                        document.getElementById('codmanzanaalineamiento').innerHTML=feat.values_.lado_manza;
-                        document.getElementById('codperfil').innerHTML=feat.values_.perfil;
-                        document.getElementById('codnombreperfil').innerHTML=feat.values_.nom_perfil;
-                        document.getElementById('codlblc').innerHTML=feat.values_.lb_lc;
-                        document.getElementById('imgstreetalineamiento').href="street_view.html?coordenadas=" + feat.values_.geometry.flatCoordinates;
-                
-                
-                       
-                                  
+            success: function (data) {  
+                var table = document.getElementById("tblatt");
+                table.innerHTML = "";
+                var row = table.insertRow(0);
+                var cell1 = row.insertCell(0);
+                 cell1.colSpan = 2;
+                    cell1.innerHTML = "<b>LADO DE MANZANA</b>";
+                    var select = [];
+                    var sel = [];
+                    select[0] = "<b>Codigo Manzana</b>";
+                    select[1] = "<b>Lado de Manzana</b>";
+                    select[2] = "<b>Perfil</b>";
+                    select[3] = "<b>Nombre de Perfil</b>";
+                    select[4] = "<b>Lb_Lc</b>";
+                    sel[0] = feat.values_.codigo;
+                    sel[1] = feat.values_.lado_manza;
+                    sel[2] = feat.values_.perfil;
+                    sel[3] = feat.values_.nom_perfil;
+                    sel[4] = feat.values_.lb_lc;
+                    for (i = 0; i < select.length; i++) {
+                        row = table.insertRow(i+1);
+                        cell1 = row.insertCell(0);
+                        cell2 = row.insertCell(1);
+                        cell1.innerHTML = select[i];
+                        if (i === 6){
+                            cell2.appendChild(sel[i]);
+                           
+                            cell2.appendChild(stv[i]);;
+                            stv[i].appendChild(ig[i]);
+                        }else{
+                            cell2.innerHTML = sel[i];
+                        }
+                    }
+                document.getElementById("panel_atr").style.display = "block";  
+                document.getElementById("botonminimizar").style.display = "block";  
             }
         });
     
@@ -650,11 +714,10 @@ function predioshasusosSelect(event, ui) {
     document.getElementById("tablaatributos").style.display = "none";
     document.getElementById("panel_atributos_alineamiento").style.display = "none";
     document.getElementById("tablaatributosalineamiento").style.display = "none";
-	document.getElementById("panel_atributos_predioshasusos").style.display = "block";
-    document.getElementById("tablaatributospredioshasusos").style.display = "block";
-    document.getElementById("botonminimizarhasusos").style.display = "block";  
+	//document.getElementById("panel_atributos_predioshasusos").style.display = "block";
+    //document.getElementById("tablaatributospredioshasusos").style.display = "block";
+    //document.getElementById("botonminimizarhasusos").style.display = "block";  
 	document.getElementById("botonmaximizar").style.display = "none";
-	
     document.getElementById('mensaje').style.display = 'none'; 
     predio.setVisible(true);
     var view = map.getView();  
@@ -688,20 +751,61 @@ function predioshasusosSelect(event, ui) {
                     var values = feature.getProperties();
 					var referencia = "'" + values.referencia + "'";
 					var grupo = select_query("SELECT actividad FROM predioshasusos where referencia =" + referencia + "");
+                    //var tablahasusos = ("<table max-width=20 border=1>"); 
+                    var table = document.getElementById("tblatt");
+                    table.innerHTML = "";
+                    var row = table.insertRow(0);
+                    var cell1 = row.insertCell(0);
+                    cell1.colSpan = 2;
+                    cell1.innerHTML = "<b>INFORMACION USOS</b>";
+                    var select = [];
+                    var sel = [];
+                    var imag = [];
+                    var stv = [];
+                    var ig = [];
                     var tablahasusos = ("<table max-width=20 border=1>"); 
-                    for (i = 0; i < grupo.length; i++){
+                     for (i = 0; i < grupo.length; i++){
 							tablahasusos +=	("<tr>"); 
 							tablahasusos +=	("<td><b>" + grupo[i] + "</b></td>");
 							tablahasusos +=	("</tr>");
 							} 
-							tablahasusos += ("</table>");
+							tablahasusos += ("</table>");           
+                    select[0] = "<b>Referencia Catastral</b>";
+                    select[1] = "<b>Usos Permitidos</b>";
+                    select[2] = "<b>Street View</b>";
+                    sel[0] = values.referencia;
+                    sel[1] = tablahasusos;
+                    stv[2] = document.createElement("a");
+                    stv[2].id = "imgstreet1";
+                    stv[2].target = "marco";
+                    stv[2].href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
+                    stv[2].setAttribute("onclick","open_streetview()");
                     
-				        
-                        document.getElementById('codreferencia').innerHTML=values.referencia;
-                        document.getElementById('codusospermitidos').innerHTML=tablahasusos;
-                        document.getElementById('imgstreethasusos').href="street_view.html?coordenadas=" + values.geom.flatCoordinates;
-                   
-                    //highlight.getSource().addFeature(feature);
+                    ig[2] = document.createElement("img");
+
+                    ig[2].src = "./imagenes/streetview.png";
+                    
+                     for (i = 0; i < select.length; i++) {
+                        row = table.insertRow(i+1);
+                        cell1 = row.insertCell(0);
+                        cell2 = row.insertCell(1);
+                        cell1.innerHTML = select[i];
+                        
+                        if (i === 2){
+                            //cell2.appendChild(sel[i]);
+                            //cell2.appendChild(imag[i]);
+                            //sel[i].appendChild(imag[i]);
+                            cell2.appendChild(stv[i]);
+                            //cell2.appendChild(ig[i]);
+                            stv[i].appendChild(ig[i]);
+                            
+                            //document.getElementById("ig").onclick=open_streetview();
+                        }else{
+                            cell2.innerHTML = sel[i];
+                        }
+                    }
+                    document.getElementById("panel_atr").style.display = "block";
+                    document.getElementById("botonminimizar").style.display = "block";
                 } 
             }
         });

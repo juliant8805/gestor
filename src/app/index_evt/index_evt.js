@@ -220,6 +220,7 @@ function limpiar_consulta() {
     manzana.setVisible(true);
     construcciones.setVisible(true);
     unidades.setVisible(true);
+    document.getElementById('panel_atr').style.display = 'none';
     document.getElementById('botoncerrarstreetview').style.display = 'none';
     document.getElementById('botonmostrarstreetview').style.display = 'none';
     document.getElementById('mensaje').style.display = 'none';
@@ -253,7 +254,6 @@ function limpiar_consulta() {
     layerespaciopublico.setVisible(false);
     estacionestransmetro.setVisible(false);
     viastransmasivo.setVisible(false);
-    manzana.setVisible(false);
     barrio.setVisible(false);
     localidad.setVisible(false);
     puntos_aaa.setVisible(false);
@@ -623,18 +623,21 @@ function mostrarstatistics() {
     document.getElementById('mensaje').style.display = 'none';
 }
 function ocultarpanelatributos() {
+    document.getElementById("panel_atr").style.display = "none";
+    document.getElementById("botonmaximizar").style.display = "block";
     document.getElementById("botonocultarpanelatributos").style.display = "none";
     document.getElementById("panel_atributos").style.display = "none";
     document.getElementById("tablaatributos").style.display = "none";
-    document.getElementById("botonmostrarpanelatributos").style.display = "block";
 }
 function mostrarpanelatributos() {
+     document.getElementById("panel_atr").style.display = "block";
+    document.getElementById("botonmaximizar").style.display = "none";
     document.getElementById("botonocultarstatistics").style.display = "none";
     document.getElementById("statistics").style.display = "none";
-    document.getElementById("panel_atributos").style.display = "block";
+    //document.getElementById("panel_atributos").style.display = "block";
     document.getElementById("tablaatributos").style.display = "block";
     document.getElementById("botonmostrarpanelatributos").style.display = "none";
-    document.getElementById("botonocultarpanelatributos").style.display = "block";
+    //document.getElementById("botonocultarpanelatributos").style.display = "block";
 }
 function ocultarpanelatributosalineamiento() {
     document.getElementById("botonminimizar").style.display = "none";

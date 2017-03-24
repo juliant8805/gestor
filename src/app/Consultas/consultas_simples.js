@@ -566,14 +566,61 @@ function addressSelect(event, ui) {
 function PlaceSelect(event, ui) {
     var view = map.getView();
     var feat = ui.item.feature;
-    //console.log(feat);
-    var geom = feat.getGeometry();
+    var values = feat.values_;
+    var geom = feat.getGeometry(); 
+    var coord=values.geometry.flatCoordinates; 
+    console.log(coord);
+    var transf = ol.proj.transform(coord, 'EPSG:3857', 'EPSG:4326');
+    console.log(transf);
+    var transf1 = (transf[1]);
+    var transf2 = (transf[0]);   
+    var transf = [transf[1],transf[0],0];
+    console.log(transf);
+    
     view.setCenter(geom.getFirstCoordinate());
     view.setZoom(18);
     highlight.setStyle(flagStyle);
     var markerSource = highlight.getSource();
     markerSource.clear();
     markerSource.addFeature(feat);
+    var table = document.getElementById("tblatt");
+    table.innerHTML = "";
+    var row = table.insertRow(0);
+    var cell1 = row.insertCell(0);
+    cell1.colSpan = 2;
+    cell1.innerHTML = "<b>INFORMACION SITIO</b>";
+    var select = [];
+    var sel = [];
+    var imag = [];
+    var stv = [];
+    var ig = [];
+    select[0] = "<b>Nombre</b>";
+    select[1] = "<b>Tipo</b>";
+    select[2] = "<b>Street View</b>";
+    sel[0] = values.address1;
+    sel[1] = values.tipo;
+    stv[2] = document.createElement("a");
+    stv[2].id = "imgstreetsitio";
+    stv[2].target = "marco";
+    stv[2].href = "street_view.html?coordenadas=" + transf;
+    //console.log(transf);
+    stv[2].setAttribute("onclick","open_streetview()"); 
+    ig[2] = document.createElement("img");
+    ig[2].src = "./imagenes/streetview.png";
+    for (i = 0; i < select.length; i++) {
+    row = table.insertRow(i+1);
+    cell1 = row.insertCell(0);
+    cell2 = row.insertCell(1);
+    cell1.innerHTML = select[i];                   
+    if (i === 2){
+     cell2.appendChild(stv[i]);
+     stv[i].appendChild(ig[i]);
+    }else{
+         cell2.innerHTML = sel[i];
+            }
+        }
+        document.getElementById("panel_atr").style.display = "block";
+        document.getElementById("botonminimizar").style.display = "block";    
 }
 function PoligonSelect(event, ui) {
     var view = map.getView();
@@ -714,9 +761,6 @@ function predioshasusosSelect(event, ui) {
     document.getElementById("tablaatributos").style.display = "none";
     document.getElementById("panel_atributos_alineamiento").style.display = "none";
     document.getElementById("tablaatributosalineamiento").style.display = "none";
-	//document.getElementById("panel_atributos_predioshasusos").style.display = "block";
-    //document.getElementById("tablaatributospredioshasusos").style.display = "block";
-    //document.getElementById("botonminimizarhasusos").style.display = "block";  
 	document.getElementById("botonmaximizar").style.display = "none";
     document.getElementById('mensaje').style.display = 'none'; 
     predio.setVisible(true);

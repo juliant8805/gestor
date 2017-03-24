@@ -238,7 +238,9 @@ map.on('singleclick', function (evt) {
                     imag[7].src = "http://35.184.3.4/gesstor/fotografias/" + values.cod_predia + "/1.jpg";
                     stv[7] = document.createElement("a");
                     stv[7].id = "imgstreet";
-                     stv[7].href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
+                    stv[7].target = "marco";
+                    stv[7].href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
+                    console.log(values.geom.flatCoordinates);
                     stv[7].setAttribute("onclick", "open_streetview()");
                     ig[7] = document.createElement("img");
                     ig[7].src = "./imagenes/streetview.png";
@@ -382,7 +384,7 @@ map.on('singleclick', function (evt) {
                         imag[7].src = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";         
                         stv[7] = document.createElement("a");
                         stv[7].id = "imgstreet1";
-                        //stv[7].target = "marco";
+                        stv[7].target = "marco";
                         stv[7].href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
                         stv[7].setAttribute("onclick","open_streetview()");  
                         ig[7] = document.createElement("img");

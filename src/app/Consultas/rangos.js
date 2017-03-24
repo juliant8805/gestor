@@ -28,6 +28,9 @@ function rango(style) {
     try {
         //rango de area de terreno
         if (style === "Rango Area Terreno") {
+            manzana.setVisible(false);
+            construcciones.setVisible(false);
+            unidades.setVisible(false);
             layerEstratificacionOficial.setVisible(false);
             layermetrotel.setVisible(false);
             layerindustriaycomercio.setVisible(false);
@@ -692,6 +695,9 @@ function rango(style) {
 
         //estratificacion oficial lineas
         else if (style === "estratificacion_oficial") {
+            manzana.setVisible(false);
+            construcciones.setVisible(false);
+            unidades.setVisible(false);
             layermetrotel.setVisible(false);
             predio.setVisible(true);
             layerSUI.setVisible(false);
@@ -1889,6 +1895,9 @@ function rango(style) {
         }
         //Nivel de Amenaza
         else if (style === "Tipo de Amenaza") {
+            manzana.setVisible(false);
+            construcciones.setVisible(false);
+            unidades.setVisible(false);
             layermetrotel.setVisible(false);
             layerSUI.setVisible(false);
             layerindustriaycomercio.setVisible(false);

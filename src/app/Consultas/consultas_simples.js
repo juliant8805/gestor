@@ -480,9 +480,9 @@ function addressSelect(event, ui) {
 	}
     if (select[0][7] === 't') {
         predio.setVisible(true);
-        document.getElementById("panel_atributos_sui").style.display = "block";
-        document.getElementById("tablaatributossui").style.display = "block";
-        document.getElementById("botonminimizarsui").style.display = "block";  
+        //document.getElementById("panel_atributos_sui").style.display = "block";
+        //document.getElementById("tablaatributossui").style.display = "block";
+        //document.getElementById("botonminimizarsui").style.display = "block";  
         $.ajax({
             url: url,
             success: function (data) {
@@ -530,7 +530,87 @@ function addressSelect(event, ui) {
                     if(estaseo==14){
                         estaseo = 'Oficial (14)';
                     };
-                        document.getElementById('codmanzanasui').innerHTML=values.manzana_co;
+                    
+                     var table = document.getElementById("tblatt");
+                    table.innerHTML = "";
+                    var row = table.insertRow(0);
+                    var cell1 = row.insertCell(0);
+                    cell1.colSpan = 2;
+                    cell1.innerHTML = "<b>INFORMACION DEL PREDIO</b>";
+                    var select = [];
+                    var sel = [];
+                    var imag = [];
+                    var stv = [];
+                    var ig = [];
+                    var codfoto = values.codigo_ant.substring(0,17);  
+                    select[0] = "<b>Codigo Manzana</b>";
+                    select[1] = "<b>Codigo Catastral Nuevo</b>";
+                    select[2] = "<b>Codigo Catastral Anterior</b>";
+                    select[3] = "<b>Dirección</b>"; 
+                    select[4] = "<b>Estratificación Oficial</b>"; 
+                    select[5] = "<b>Estratificación Acueducto</b>";
+                    select[6] = "<b>Estratificación Alcantarillado</b>";
+                    select[7] = "<b>Estratificación Aseo</b>";
+                    select[8] = "<b>Unidades Acueducto</b>";
+                    select[9] = "<b>Unidades Alcantarillado</b>";
+                    select[10] = "<b>Unidades Aseo</b>";
+                    select[11] = "<b>Tipo de Propiedad Prestadores</b>";           
+                    select[12] = "<b>Fotografias</b>";
+                    sel[0] = values.manzana_co;
+                    sel[1] = values.codigo;
+                    sel[2] = values.codigo_ant;
+                    sel[3] = ui.item.direccionoriginal;
+                    sel[4] = values.estratific;
+                    sel[5] = estacueducto;
+                    sel[6] = estalcantarillado;
+                    sel[7] = estaseo;
+                    sel[8] = values.unid_acu;
+                    sel[9] = values.unid_alc;
+                    sel[10] = values.unid_aseo;
+                    sel[11] = values.tipo_prop_prest;        
+                    sel[12] = document.createElement("a");
+                    sel[12].id = "img1";
+                    sel[12].style = "width: 30px; height: 50px;";
+                    sel[12].target = "marco";
+                    sel[12].setAttribute("onclick","open_streetview()");
+                    sel[12].href = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";
+                    imag[12] = document.createElement("img");
+                    imag[12].id = "im1";
+                    imag[12].className = "pequeña";
+                    imag[12].src = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";           
+                    stv[12] = document.createElement("a");
+                    stv[12].id = "imgstreet1";
+                    stv[12].target = "marco";
+                    stv[12].href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
+                    stv[12].setAttribute("onclick","open_streetview()");  
+                    ig[12] = document.createElement("img");
+                    ig[12].src = "./imagenes/streetview.png";
+                    
+                     for (i = 0; i < select.length; i++) {
+                        row = table.insertRow(i+1);
+                        cell1 = row.insertCell(0);
+                        cell2 = row.insertCell(1);
+                        cell1.innerHTML = select[i];
+                        
+                        if (i === 12){
+                            cell2.appendChild(sel[i]);
+                            //cell2.appendChild(imag[i]);
+                            sel[i].appendChild(imag[i]);
+                            cell2.appendChild(stv[i]);
+                            //cell2.appendChild(ig[i]);
+                            stv[i].appendChild(ig[i]);
+                            
+                        }else{
+                            cell2.innerHTML = sel[i];
+                        }
+                    }
+                    document.getElementById("panel_atr").style.display = "block";
+                    document.getElementById("botonminimizar").style.display = "block";      
+                    
+                    
+                    
+                    
+                        /*document.getElementById('codmanzanasui').innerHTML=values.manzana_co;
                         document.getElementById('codcatastralsui').innerHTML=values.codigo;  
                         document.getElementById('coddireccionsui').innerHTML=ui.item.direccionoriginal;
                         document.getElementById('codestratrificacionmunicipiosui').innerHTML=values.estratific;  
@@ -543,7 +623,10 @@ function addressSelect(event, ui) {
                         document.getElementById('im2_sui').src="./fotografias/" + values.codigo + "/2.png";
                         document.getElementById('img3_sui').href="./fotografias/" + values.codigo + "/3.png";
                         document.getElementById('im3_sui').src="./fotografias/" + values.codigo + "/3.png";
-                        document.getElementById('imgstreetsui').href="street_view.html?coordenadas=" + values.geom.flatCoordinates;  
+                        document.getElementById('imgstreetsui').href="street_view.html?coordenadas=" + values.geom.flatCoordinates;  */
+                    
+                    
+                    
                 } 
             }
         });

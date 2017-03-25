@@ -1852,7 +1852,8 @@ function rango(style) {
             estacionestransmetro.setVisible(false);
             viastransmasivo.setVisible(false);
             predio.setVisible(true);
-            if (document.getElementById("barrio").value === '' && document.getElementById("localidad").value === '' && document.getElementById("manzana").value === '') {
+            alert("No existe información para ejecutar esta consulta");
+           /* if (document.getElementById("barrio").value === '' && document.getElementById("localidad").value === '' && document.getElementById("manzana").value === '') {
                 var select = select_query("SELECT Count(*) FROM u_terreno;");
                 var param = [['Area de Reserva y Proteccion'], ['Sin Proteccion']];
                 var total1 = select_query("SELECT COUNT(uso_norma) FROM u_terreno where uso_norma = 'Area de Reserva y Proteccion'");
@@ -1891,7 +1892,7 @@ function rango(style) {
                 estdistica(select, style, param, totales);
                 var filtro = '"manzana_co=' + valor + '"';
                 predio.getSource().updateParams({'STYLES': style, 'CQL_FILTER': eval(filtro)});
-            }
+            }*/
         }
         //Nivel de Amenaza
         else if (style === "Tipo de Amenaza") {
@@ -2218,7 +2219,7 @@ function rango(style) {
         
         
         else if (style === "Estructura Ecologica Principal") {
-             alert ("Consulta en Construccion")/*
+             alert("No existe información para ejecutar esta consulta");/*
                 layerEstratificacionOficial.setVisible(false);
                 layermetrotel.setVisible(false);
                 layerindustriaycomercio.setVisible(false);
@@ -2281,24 +2282,28 @@ function rango(style) {
             layerEstratificacionOficial.setVisible(false);
             layermetrotel.setVisible(false);
             layerindustriaycomercio.setVisible(false);
-            predio.setVisible(false);
+            predio.setVisible(true);
             layerprediosexentos2016.setVisible(false);
             estacionestransmetro.setVisible(false);
             viastransmasivo.setVisible(false);
             layerSUI.setVisible(false);
             espacio_pubico.setVisible(true);
             layerespaciopublico.setVisible(true);
-            var select = select_query("SELECT TO_CHAR(SUM(area_has), '99G999.99') FROM espacio_publico WHERE tipo_trata <> '0';");
             var totalhec = select_query("SELECT (SUM(area_has))FROM espacio_publico WHERE tipo_trata <> 'Parque';");
+            var select = parseInt(totalhec[0][0]);
+            var select = [select+" Hectáreas"];
             var epublico = select_query("SELECT (SUM(area_has))FROM espacio_publico WHERE tipo_trata = 'Espacio Publico';");
+            var total1 = parseInt(epublico[0][0]);
             var epublicopropues = select_query("SELECT (SUM(area_has))FROM espacio_publico WHERE tipo_trata = 'Espacio Publico Propuesto';");
-            var epublicoparque = select_query("SELECT (SUM(area_has))FROM espacio_publico WHERE tipo_trata = 'Parque';");
-            var param = select_query("SELECT DISTINCT tipo_trata FROM espacio_publico;");
-            var totales = select_query("SELECT count(*) AS count FROM espacio_publico WHERE tipo_trata <> '0' GROUP BY tipo_trata;");
-            var porcentajes = new Array(epublico, epublicopropues);
+            var total2 = parseInt(epublicopropues[0][0]);
+            var totales = [[total1],[total2]];
+            var param = [['Espacio Público Existente (Hectáreas)'], ['Espacion Público Propuesto (Hectáreas)']];      
             espacio_pubico.getSource().updateParams({'STYLES': ''});
+            var titulo = "Espacio Público (hectáreas)";
+            estdistica(select, titulo, param, totales);
             map.getView().fitExtent(espacio_pubico.getExtent(), map.getSize());
             estadistica_espacio_publico(select, param, totales, porcentajes);
+            //parseInt(existente)
         }
         //document.getElementById('barra_busqueda_direccion').style.display = 'none';
         document.getElementById('barra_busqueda_matricula').style.display = 'none';

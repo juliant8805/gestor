@@ -1177,7 +1177,7 @@ select{
 
 #botonmaximizar{
     position: absolute;
-    top:40%;
+    bottom:7em;
     left: 0em;
     height: 3em;
     width: 3em;

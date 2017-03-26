@@ -137,7 +137,8 @@ function validate() {
     var table = document.getElementById("table");
     table.innerHTML = "";
     var select = select_query("SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_name LIKE 'temp_%'");
-    console.log(select);
+    var sel = [];
+    //console.log(select);
     var row = table.insertRow(0);
     var cell1 = row.insertCell(0);
     var cell2 = row.insertCell(1);
@@ -145,6 +146,7 @@ function validate() {
     cell2.innerHTML = " VALIDAR ";
     //filas=table.getRowCount();
     for (i = 1; i <= select.length; i++) {
+        sel[i] = select[i - 1][0];
         row = table.insertRow(i);
         cell1 = row.insertCell(0);
         cell2 = row.insertCell(1);
@@ -152,9 +154,11 @@ function validate() {
         cell1.innerHTML = select[i - 1][0].link("http://35.184.3.4:8080/geoserver/preproduccion/wms?service=WMS&version=1.1.0&request=GetMap&layers=preproduccion:"+select[i - 1][0]+"&styles=&bbox=-74.878721,10.9183800000001,-74.7586219999999,11.0510640000001&width=695&height=768&srs=EPSG:4326&format=application/openlayers");
         cell1.getElementsByTagName("a")["0"].target = "_blank";
         //console.log(cell1.getElementsByTagName("a"));
-        console.log(cell1);
+        //console.log(cell1);
         var element1 = document.createElement("input");
         element1.type = "checkbox";
+        element1.id = select[i - 1][0];
+        element1.setAttribute("onchange", "toggleSelect(" + sel + ")");
         cell2.appendChild(element1);
     }
     /*
@@ -164,4 +168,11 @@ function validate() {
      cell1.innerHTML = "Quiero insertar input text aaqui";
      cell2.innerHTML = "Aqui tambien";
      */
+}
+function toggleSelect(sel){
+    console.log(sel);
+    console.log(document.getElementById(sel[0]));
+    for (i = 0; i <= sel.length; i++) {
+        
+    }
 }

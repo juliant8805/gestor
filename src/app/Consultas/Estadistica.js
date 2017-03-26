@@ -211,6 +211,10 @@ function estdistica(select, titulo, param, totales) {
             color[i]='#198c19';
         }else if(param[i][0]==='Sin Prestador de Aseo'){
             color[i]='#FF0000';
+        }else if(param[i][0]==='Espacio Público Existente (Hectáreas)'){
+            color[i]='#56ab2c';
+        }else if(param[i][0]==='Espacion Público Propuesto (Hectáreas)'){
+            color[i]='#a3cccc';
         }
         
         

@@ -67,10 +67,10 @@ function detectarCarga() {
             document.getElementById("subirshape").style.display = "block";
             document.getElementById("alineamiento").style.display = "block";
             document.getElementById("Usos_Permitidos").style.display = "block";
-            //document.getElementById("espacio_publico").style.display = "block";
+            document.getElementById("espacio_publico").style.display = "block";
             document.getElementById("transmetro").style.display = "block";
             //document.getElementById("Conflicto Uso del Suelo").style.display = "block";
-            //document.getElementById("Area Proteccion Urbanistica").style.display = "block";
+            document.getElementById("Area Proteccion Urbanistica").style.display = "block";
             document.getElementById("estratificacion_oficial").style.display = "block";
             document.getElementById("Tipo de Amenaza").style.display = "block";
             document.getElementById("Estructura Ecologica Principal").style.display = "block";
@@ -543,7 +543,7 @@ function normalImage(id) {
     } else if (id === "Conflicto Uso del Suelo") {
         document.getElementById('Conflicto Uso del Suelo').style = "background:url('./imagenes/icono_uso_actual.png'); background-color:#86B12D; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
     } else if (id === "Area Proteccion Urbanistica") {
-        document.getElementById('Area Proteccion Urbanistica').style = "background:url('./imagenes/icono_proteccion_urbanistica.png'); background-color:#008E30; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
+        document.getElementById('Area Proteccion Urbanistica').style = "background:url('./imagenes/icono_proteccion_urbanistica.png'); background-color:#a6a6a6; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
     } else if (id === "Tipo de Zona") {
         document.getElementById('Tipo de Zona').style = "background:url('./imagenes/icono_zona_urbana.png');background-color:#006D1B; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
     } else if (id === "Tipo de Amenaza") {
@@ -555,7 +555,7 @@ function normalImage(id) {
             document.getElementById('Tipo de Amenaza').style = "background:url('./imagenes/icono_riesgo.png');background-color:#86B12D; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
         }
     } else if (id === "Estructura Ecologica Principal") {
-        document.getElementById('Estructura Ecologica Principal').style = "background:url('./imagenes/icono_estructura_ecologica.png'); background-color:#008E30; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
+        document.getElementById('Estructura Ecologica Principal').style = "background:url('./imagenes/icono_estructura_ecologica.png'); background-color:#a6a6a6; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
     } else if (id === "alineamiento") {
         document.getElementById('alineamiento').style = "background:url('./imagenes/alineamiento.png'); background-color:#006D1B; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
     } else if (id === "Usos_Permitidos") {

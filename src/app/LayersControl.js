@@ -20,17 +20,37 @@ var ortofotourbana = new ol.layer.Tile({
 });
 var streetmap = new ol.layer.Tile({
     source: new ol.source.OSM(),
-    visible: false,
+    visible: true,
+    minResolution:2,
+    maxResolution:20,
     name: 'Street Map'
 });
 
-var bingarranque = new ol.layer.Tile({
+
+var bingarranque = new ol.layer.Image({
+                            visible: true,
+                            minResolution:20,
+                            opacity: 1,
+                            title: "BING",    
+                            source: new ol.source.ImageStatic({
+                               url: "http://35.184.3.4/imagenes_base/Bing.png",
+                                projection: 'EPSG:3857',
+                                alwaysInRange: true,
+                                //imageSize: [1888, 940],
+                                imageExtent: [-8377346.467879, 1202426.862044, -8279545.277057, 1256384.963248]
+                            })
+                        });
+
+/*var terreno = new ol.layer.Tile({
     visible: true,
-    minResolution:20,
-    source: new ol.source.XYZ({
-        url: "http://35.184.3.4/bing/{z}/{x}/{y}.jpg"
-    }), name: 'Bing Arranque'
-});
+     minResolution:2,
+     maxResolution:20,
+     source: new ol.source.XYZ({
+        url: 'http://stamen-tiles-{a-c}.a.ssl.fastly.net/terrain-background/{z}/{x}/{y}.png',
+        
+    })
+});*/
+
 
 var bing = new ol.layer.Tile({
     visible: false,
@@ -502,11 +522,16 @@ var layerespaciopublico = new ol.layer.Group({
     name: 'Espacio Público'
 });
 var layerPot = new ol.layer.Group({
-    layers: [zonacentro, zonadeclaradaprado, zampariomagdalena, zampacienaga, zampa30, zampa50, viastransmasivo, viasruralpropuesta, tratamientosurbanisticos, rondariomagdalena, rondaarroyos30, rondaarroyos15, altatension, redalcantarillado, acueductoprimaria, proteccionrural, proteccionliteral, normativosuso, instrumentosplanificacion, perimetrourbano, parquespropuestosrural, parquespropuestos, perfilviasurbanaspropuestas, malecon, limitesdistrital, intercambiadores, espacio_pubico, estacionestransmetro, clasificacionsuelo, cienaga_mallorquin, ciclorutaspropuestas, arroyos, areareservaalcantarillado, areareservaacueducto, remosionenmasa, amenazainundacion, localidad, comuna, barrio, ladomanzana],
+    layers: [zonacentro, zonadeclaradaprado, zampariomagdalena, zampacienaga, zampa30, zampa50, viastransmasivo, viasruralpropuesta, tratamientosurbanisticos, rondariomagdalena, rondaarroyos30, rondaarroyos15, altatension, redalcantarillado, acueductoprimaria, proteccionrural, proteccionliteral, normativosuso, instrumentosplanificacion, perimetrourbano, parquespropuestosrural, parquespropuestos, perfilviasurbanaspropuestas, malecon, limitesdistrital, intercambiadores, espacio_pubico, estacionestransmetro, clasificacionsuelo, cienaga_mallorquin, ciclorutaspropuestas, arroyos, areareservaalcantarillado, areareservaacueducto, remosionenmasa, amenazainundacion, localidad, barrio, ladomanzana],
     name: 'POT'
 });
+var layerOrtofoto= new ol.layer.Group({
+    layers: [ortofotourbana],
+    name: 'Ortofoto Distrito 2016'
+});
+
 var layerBase = new ol.layer.Group({
-    layers: [bing, streetmap, ortofotourbana, bingarranque],
+    layers: [bing, streetmap, bingarranque],
     name: 'Capas Base'
 });
 /*var consol = new ol.layer.Group({

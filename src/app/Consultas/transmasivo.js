@@ -6,6 +6,7 @@ function transmasivo(style, capa) {
     layerSUI.setVisible(false);
     layerprediosexentos2016.setVisible(false);
     predio.setVisible(false);
+    construcciones.setVisible(false);
     manzana.setVisible(false);
     estacionestransmetro.setVisible(true);
     viastransmasivo.setVisible(true);

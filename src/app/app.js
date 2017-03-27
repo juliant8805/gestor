@@ -271,6 +271,7 @@ map.on('singleclick', function (evt) {
         $.ajax({
             url: url,
             success: function (data) {
+                //var select = validacionusuarios();	
                 var features = format[0].readFeatures(data);
                 if (features && features.length >= 1 && features[0]) {
                     var feature = features[0];
@@ -356,7 +357,8 @@ map.on('singleclick', function (evt) {
                         var imag = [];
                         var stv = [];
                         var ig = [];
-                        var codfoto = values.codigo_ant.substring(0,17);     
+                        var codfoto = values.codigo_ant.substring(0,17); 
+                        if (modulo=='planeacion'){
                         select[0] = "<b>Codigo Manzana</b>";
                         select[1] = "<b>Codigo Catastral Nuevo</b>";
                         select[2] = "<b>Codigo Catastral Anterior</b>";
@@ -389,14 +391,101 @@ map.on('singleclick', function (evt) {
                         stv[7].setAttribute("onclick","open_streetview()");  
                         ig[7] = document.createElement("img");
                         ig[7].src = "./imagenes/streetview.png";
-                    
+                        var campos=7;
+                        }
+                        else if(modulo=='sui'){
+                            
+                        var estacueducto = values.estrato_acueducto;
+                    var estalcantarillado = values.estrato_alcantarillado;
+                    var estaseo = values.estrato_aseo;
+                    if(estacueducto==11){
+                        estacueducto = 'Industria (11)';
+                    };
+                    if(estacueducto==12){
+                        estacueducto = 'Comercial (12)';
+                    };
+                    if(estacueducto==13){
+                        estacueducto = 'Especial (13)';
+                    };
+                    if(estacueducto==14){
+                        estacueducto = 'Oficial (14)';
+                    };
+                    if(estalcantarillado==11){
+                        estalcantarillado = 'Industria (11)';
+                    };
+                    if(estalcantarillado==12){
+                        estalcantarillado = 'Comercial (12)';
+                    };
+                    if(estalcantarillado==13){
+                        estalcantarillado = 'Especial (13)';
+                    };
+                    if(estalcantarillado==14){
+                        estalcantarillado = 'Oficial (14)';
+                    };
+                    if(estaseo==11){
+                        estaseo = 'Industria (11)';
+                    };
+                    if(estaseo==12){
+                        estaseo = 'Comercial (12)';
+                    };
+                    if(estaseo==13){
+                        estaseo = 'Especial (13)';
+                    };
+                    if(estaseo==14){
+                        estaseo = 'Oficial (14)';
+                    };
+                        
+                        select[0] = "<b>Codigo Manzana</b>";
+                        select[1] = "<b>Codigo Catastral Nuevo</b>";
+                        select[2] = "<b>Codigo Catastral Anterior</b>";
+                        select[3] = "<b>Dirección</b>"; 
+                        select[4] = "<b>Estratificación Oficial</b>"; 
+                        select[5] = "<b>Estratificación Acueducto</b>";
+                        select[6] = "<b>Estratificación Alcantarillado</b>";
+                        select[7] = "<b>Estratificación Aseo</b>";
+                        select[8] = "<b>Unidades Acueducto</b>";
+                        select[9] = "<b>Unidades Alcantarillado</b>";
+                        select[10] = "<b>Unidades Aseo</b>";
+                        select[11] = "<b>Tipo de Propiedad Prestadores</b>";           
+                        select[12] = "<b>Fotografias</b>";
+                        sel[0] = values.manzana_co;
+                        sel[1] = values.codigo;
+                        sel[2] = values.codigo_ant;
+                        sel[3] = direccion[0];
+                        sel[4] = values.estratific;
+                        sel[5] = estacueducto;
+                        sel[6] = estalcantarillado;
+                        sel[7] = estaseo;
+                        sel[8] = values.unid_acu;
+                        sel[9] = values.unid_alc;
+                        sel[10] = values.unid_aseo;
+                        sel[11] = values.tipo_prop_prest; 
+                        sel[12] = document.createElement("a");
+                        sel[12].id = "img3";
+                        sel[12].style = "width: 30px; height: 50px;";
+                        sel[12].target = "marco";
+                        sel[12].setAttribute("onclick","open_streetview()");
+                        sel[7].href = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";
+                        imag[12] = document.createElement("img");
+                        imag[12].id = "im3";
+                        imag[12].className = "pequeña";
+                        imag[12].src = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";         
+                        stv[12] = document.createElement("a");
+                        stv[12].id = "imgstreet1";
+                        stv[12].target = "marco";
+                        stv[12].href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
+                        stv[12].setAttribute("onclick","open_streetview()");  
+                        ig[12] = document.createElement("img");
+                        ig[12].src = "./imagenes/streetview.png";
+                        var campos=12;         
+                        }
                      for (i = 0; i < select.length; i++) {
                         row = table.insertRow(i+1);
                         cell1 = row.insertCell(0);
                         cell2 = row.insertCell(1);
                         cell1.innerHTML = select[i];
                         
-                        if (i === 7){
+                        if (i === campos){
                             cell2.appendChild(sel[i]);
                             //cell2.appendChild(imag[i]);
                             sel[i].appendChild(imag[i]);

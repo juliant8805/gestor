@@ -28,19 +28,19 @@ function estdistica(select, titulo, param, totales) {
         }else if(param[i][0]==='mayor a 10.000m2'){
             color[i]='#7fbf7f';
         }else if (param[i][0]==='Estrato 1'){
-            color[i]='#e31a1c';
+            color[i]='#FF8A8A';
         }else if(param[i][0]==='Estrato 2'){
-            color[i]='#ffff4c';
+            color[i]='#FFFF84';
         }else if(param[i][0]==='Estrato 3'){
-            color[i]='#7f7fff';
+            color[i]='#8FFEDD';
         }else if(param[i][0]==='Estrato 4'){
-            color[i]='#7fbf7f';
+            color[i]='#AAFD8E';
         }else if(param[i][0]==='Estrato 5'){
-            color[i]='#ffae19';
+            color[i]='#ffc966';
         }else if(param[i][0]==='Estrato 6'){
-            color[i]='#21cc65';
+            color[i]='#89FC63';
         } else if(param[i][0]==='Sin Estrato'){
-            color[i]='#fed3dd';
+            color[i]='#919092';
         }else if (param[i][0]==='1'){
             color[i]='#e31a1c';
         }else if(param[i][0]==='2'){
@@ -108,11 +108,11 @@ function estdistica(select, titulo, param, totales) {
         }else if(param[i][0]==='No Cuenta con Servicio de Aseo'){
             color[i]='#FF0000';
         }else if(param[i][0]==='Sin Direccion'){
-            color[i]='#FF0000';
+            color[i]='#FFA8A8';
         }else if(param[i][0]==='Nomenclatura Estandarizada'){
-            color[i]='#9999ff';
-        }else if(param[i][0]==='Nomenclatura no Estandarizada'){
-            color[i]='#ffff19';
+            color[i]='#b4b4e5';
+        }else if(param[i][0]==='Nomenclatura No Estandarizada'){
+            color[i]='#ffdb98';
         }else if(param[i][0]==='0-20'){
             color[i]='#e31a1c';
         }else if(param[i][0]==='21-40'){
@@ -148,19 +148,19 @@ function estdistica(select, titulo, param, totales) {
         }else if(param[i][0]==='Suelo Urbano'){
             color[i]='#00004c';
         }else if(param[i][0]==='Licuefacción'){
-            color[i]='#00FFFF';
-        }else if(param[i][0]==='Riego Muy Alto'){
-            color[i]='#0000FF';
-        }else if(param[i][0]==='Riego Alto'){
-            color[i]='#FF0000';
-        }else if(param[i][0]==='Riesgo Medio'){
-            color[i]='#FFFF00';
-        }else if(param[i][0]==='Riesgo Bajo'){
-            color[i]='#00FF00';
-        }else if(param[i][0]==='Sin Riesgo'){
-            color[i]='#e5e5ff';
+            color[i]='#FFA4FF';
+        }else if(param[i][0]==='Amenaza Muy Alta'){
+            color[i]='#FFFF84';
+        }else if(param[i][0]==='Amenaza Alta'){
+            color[i]='#AAFD8E';
+        }else if(param[i][0]==='Amenaza Media'){
+            color[i]='#BEFEEB';
+        }else if(param[i][0]==='Amenaza Baja'){
+            color[i]='#AAAAFF';
+        }else if(param[i][0]==='Revisar'){
+            color[i]='#8f8d90';
         }else if(param[i][0]==='ZRA'){
-            color[i]='#2EFE9A';
+            color[i]='#CD85FE';
         }else if(param[i][0]==='ZEE'){
             color[i]='#298A08';
         }else if(param[i][0]==='ZUMR'){
@@ -180,37 +180,39 @@ function estdistica(select, titulo, param, totales) {
         }else if(param[i][0]==='Corredor Ecologico'){
             color[i]='#003300';
         }else if(param[i][0]==='Riesgo de Inund. Bajo'){
-            color[i]='#00FF00';
+            color[i]='#AAFD8E';
         }else if(param[i][0]==='Riesgo de Inund. Medio'){
-            color[i]='#FFFF00';
+            color[i]='#FFFF84';
         }else if(param[i][0]==='Riego de Inund. Alto'){
-            color[i]='#FF0000';
+            color[i]='#FF9797';
         }else if(param[i][0]==='Predios Coincidentes'){
-            color[i]='#4c4cff';
+            color[i]='#A5A5FF';
         }else if(param[i][0]==='Predios En base catastral y no en AAA'){
-            color[i]='#ffff00';
+            color[i]='#FFFF7F';
         }else if(param[i][0]==='Registros En AAA y no Catastro'){
             color[i]='#00cc00';
-        }else if(param[i][0]==='Direcciones Nuevas AAA'){
+        }else if(param[i][0]==='Registros AAA sin codigo catastral'){
             color[i]='#FF0000';
         }else if(param[i][0]==='Estratos Coincidentes'){
-            color[i]='#4ca64c';
-        }else if(param[i][0]==='Diferencia de Estratos'){
-            color[i]='#FF0000';
-        }else if(param[i][0]==='(11),(12),(13),(14)'){
-            color[i]='#ffff7f';
+            color[i]='#b5e4a5';
+        }else if(param[i][0]==='Estrato Prestador Mas Alto'){
+            color[i]='#FFA8A8';
+        }else if(param[i][0]==='Estrato Prestador Mas Bajo'){
+            color[i]='#A5A5FF';
+        }else if(param[i][0]==='Especial o Sin Inf.'){
+            color[i]='#a2a0a3';
         }else if(param[i][0]==='Existe Prestador de Acueducto'){
-            color[i]='#1919ff';
+            color[i]='#b7b7ff';
         }else if(param[i][0]==='Sin Prestador de Acueducto'){
-            color[i]='#FF0000';
+            color[i]='#FFA8A8';
         }else if(param[i][0]==='Existe Prestador de Alcantarillado'){
-            color[i]='#ffa500';
+            color[i]='#b7b7ff';
         }else if(param[i][0]==='Sin Prestador de Alcantarillado'){
-            color[i]='#FF0000';
+            color[i]='#FFA8A8';
         }else if(param[i][0]==='Existe Prestador de Aseo'){
-            color[i]='#198c19';
+            color[i]='#b7b7ff';
         }else if(param[i][0]==='Sin Prestador de Aseo'){
-            color[i]='#FF0000';
+            color[i]='#FFA8A8';
         }else if(param[i][0]==='Espacio Público Existente (Hectáreas)'){
             color[i]='#56ab2c';
         }else if(param[i][0]==='Espacion Público Propuesto (Hectáreas)'){

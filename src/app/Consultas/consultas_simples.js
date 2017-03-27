@@ -392,8 +392,8 @@ function addressSelect(event, ui) {
     var url = wmsSource[0].getGetFeatureInfoUrl(featureCenter, viewResolution, map.getView().getProjection(), {
         'INFO_FORMAT': infoFormat    
     });
-	var select = validacionusuarios();	
-	if (select[0][9] === 't') {
+	//var select = validacionusuarios();	
+	if (modulo === 'planeacion') {
         predio.setVisible(true);
          /*document.getElementById("panel_atributos").style.display = "block";
          document.getElementById("tablaatributos").style.display = "block";
@@ -478,7 +478,7 @@ function addressSelect(event, ui) {
             }
         });
 	}
-    if (select[0][7] === 't') {
+    if (modulo === 'sui') {
         predio.setVisible(true);
         //document.getElementById("panel_atributos_sui").style.display = "block";
         //document.getElementById("tablaatributossui").style.display = "block";
@@ -492,8 +492,8 @@ function addressSelect(event, ui) {
                     var feature = features[0];
                     var values = feature.getProperties();
                     var estacueducto = values.estrato_acueducto;
-                    var estalcantarillado = values.estrato_acueducto;
-                    var estaseo = values.estrato_acueducto;
+                    var estalcantarillado = values.estrato_alcantarillado;
+                    var estaseo = values.estrato_aseo;
                     if(estacueducto==11){
                         estacueducto = 'Industria (11)';
                     };

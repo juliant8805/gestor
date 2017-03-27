@@ -21,8 +21,8 @@ var ortofotourbana = new ol.layer.Tile({
 var streetmap = new ol.layer.Tile({
     source: new ol.source.OSM(),
     visible: true,
-    minResolution:2,
-    maxResolution:20,
+    /*minResolution:2,
+    maxResolution:20,*/
     name: 'Street Map'
 });
 
@@ -41,15 +41,6 @@ var bingarranque = new ol.layer.Image({
                             })
                         });
 
-/*var terreno = new ol.layer.Tile({
-    visible: true,
-     minResolution:2,
-     maxResolution:20,
-     source: new ol.source.XYZ({
-        url: 'http://stamen-tiles-{a-c}.a.ssl.fastly.net/terrain-background/{z}/{x}/{y}.png',
-        
-    })
-});*/
 
 
 var bing = new ol.layer.Tile({
@@ -60,6 +51,7 @@ var bing = new ol.layer.Tile({
     }), name: 'Imagen Bing'
 });
 var predio = new ol.layer.Tile({
+    //preload: Infinity,
     //title : 'Predios',
     // extent: [-8327292.022321, 1232500.154157, -8325566.164885, 1233464.624518],
     extent: [-8342085.395410, 1222896.318514, -8314873.686686, 1237419.421485],
@@ -75,7 +67,7 @@ var predio = new ol.layer.Tile({
 });
 
 var manzana = new ol.layer.Tile({
-    visible: true,
+    visible: false,
     source: new ol.source.TileWMS({
         url: 'http://35.184.3.4:8080/geoserver/preproduccion/wms',
         params: {LAYERS: 'preproduccion:u_manzana', STYLES: ''}
@@ -406,7 +398,7 @@ var predios_exentos_2016 = new ol.layer.Tile({
 });
 
 var vias = new ol.layer.Tile({
-    visible: true,
+    visible: false,
     source: new ol.source.TileWMS({
         url: 'http://35.184.3.4:8080/geoserver/preproduccion/wms',
         params: {LAYERS: 'preproduccion:vias', STYLES: ''}
@@ -432,7 +424,7 @@ var ladomanzana = new ol.layer.Tile({
 });
 
 var sitios = new ol.layer.Tile({
-    visible: true,
+    visible: false,
     source: new ol.source.TileWMS({
         url: 'http://35.184.3.4:8080/geoserver/preproduccion/wms',
         params: {LAYERS: 'preproduccion:sitios', STYLES: ''}
@@ -468,7 +460,7 @@ var construcciones = new ol.layer.Tile({
 });
 
 var unidades = new ol.layer.Tile({
-    visible: true,
+    visible: false,
     source: new ol.source.TileWMS({
         url: 'http://35.184.3.4:8080/geoserver/preproduccion/wms',
         params: {LAYERS: 'preproduccion:u_unidad', STYLES: ''}
@@ -478,7 +470,7 @@ var unidades = new ol.layer.Tile({
 
 //CAPS GROUP
 var layerCatastro = new ol.layer.Group({
-    layers: [predio, manzana, vias, consolidado, construcciones, unidades, highlightfeatures],
+    layers: [manzana, predio, construcciones, unidades, vias, consolidado, highlightfeatures],
     name: 'Catastro'
 });
 var layerSitios = new ol.layer.Group({
@@ -527,7 +519,7 @@ var layerPot = new ol.layer.Group({
 });
 var layerOrtofoto= new ol.layer.Group({
     layers: [ortofotourbana],
-    name: 'Ortofoto Distrito 2016'
+    name: 'Ortofoto 2016 Distrito'
 });
 
 var layerBase = new ol.layer.Group({

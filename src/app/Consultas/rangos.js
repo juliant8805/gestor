@@ -23,6 +23,7 @@ var rangoarea = async function (x) { // async function expression assigned to a 
 function rango(style) {
     //console.log("2" + document.getElementById('carga2').style.display);
     globalstyle = style;
+    puntos_aaa.setVisible(false);
     document.getElementById('leyenda_transmetro').style.display = 'none';
     document.getElementById('mensaje').style.display = 'none';
     try {
@@ -463,13 +464,14 @@ function rango(style) {
             estacionestransmetro.setVisible(false);
             viastransmasivo.setVisible(false);
             layerSUI.setVisible(false);
+            construcciones.setVisible(false);
             predio.setVisible(true);
             puntos_aaa.setVisible(true);
             if (document.getElementById("barrio").value === '' && document.getElementById("localidad").value === '' && document.getElementById("manzana").value === '') {  
                 try{
                 var select = select_query("select sum(numeropredios) from u_terreno;");}catch(err){}
 				if (!select){select=select_query("SELECT COUNT(*) FROM localidades where nombre = 'nada'");}
-                var param = [['Predios Coincidentes'],  ['Predios En base catastral y no en AAA'], ['Direcciones Nuevas AAA'], ['Registros En AAA y no Catastro']];
+                var param = [['Predios Coincidentes'],  ['Predios En base catastral y no en AAA'], ['Registros AAA sin codigo catastral'], ['Registros En AAA y no Catastro']];
 				try{
                 var total1 = select_query("select sum(numeropredios) from u_terreno where presenteenaaa = 'Si'");}catch(err){}
 				if (!total1){total1=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
@@ -508,7 +510,7 @@ function rango(style) {
                 estdistica(select, style, param, totales);
                 var filtro = '"cod_barrio=' + valor + '"';
                 predio.getSource().updateParams({'STYLES': style, 'CQL_FILTER': eval(filtro)});
-                queryexport = style + ' G';
+                queryexport = style + ' B';
             } else if (document.getElementById("localidad").value !== '') {
                 var valor = "'" + values + "'";
                  try{
@@ -529,7 +531,7 @@ function rango(style) {
                 estdistica(select, style, param, totales);
                 var filtro = '"cod_loc=' + valor + '"';
                 predio.getSource().updateParams({'STYLES': style, 'CQL_FILTER': eval(filtro)});
-                queryexport = style + ' G';
+                queryexport = style + ' L';
             } else if (document.getElementById("manzana").value !== '') {
                 var valor = "'" + values + "'";
                  try{
@@ -550,7 +552,7 @@ function rango(style) {
                 estdistica(select, style, param, totales);
                 var filtro = '"manzana_co=' + valor + '"';
                 predio.getSource().updateParams({'STYLES': style, 'CQL_FILTER': eval(filtro)});
-                queryexport = style + ' G';
+                queryexport = style + ' M';
             }
         }
         //estratificion metrotel
@@ -845,297 +847,313 @@ function rango(style) {
             layerprediosexentos2016.setVisible(false);
             estacionestransmetro.setVisible(false);
             viastransmasivo.setVisible(false);
+            construcciones.setVisible(false);
             predio.setVisible(true);
             if (document.getElementById("oficial_vs_AAA").value === "Acueducto") {
-                if (document.getElementById("barrio").value === '' && document.getElementById("localidad").value === '' && document.getElementById("manzana").value === '') {
-                    var arrayResult = update_query("ALTER TABLE u_terreno DROP COLUMN simbol; ALTER TABLE u_terreno ADD COLUMN simbol character varying(20); UPDATE u_terreno SET simbol='Igual' where estrato_acueducto = estratific; UPDATE u_terreno SET simbol = 'Dif' where estrato_acueducto <> estratific; UPDATE u_terreno SET simbol = 'sincomp' where estrato_acueducto = '11' or estrato_acueducto = '12' or estrato_acueducto = '13' or estrato_acueducto = '14'");
+                if (document.getElementById("barrio").value === '' && document.getElementById("localidad").value === '' &&  document.getElementById("manzana").value === '') {
                     try{
                     var select = select_query("select sum(numeropredios) from u_terreno;");}catch(err){}
                     if (!select){select=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
-                    var param = [['Estratos Coincidentes'], ['Diferencia de Estratos'], ['(11),(12),(13),(14)']];
+                    var param = [['Estratos Coincidentes'], ['Estrato Prestador Mas Alto'], ['Estrato Prestador Mas Bajo'], ['Especial o Sin Inf.']];
                     try{
-                    var total1 = select_query("select sum(numeropredios) from u_terreno where estratific = estrato_acueducto");}catch(err){}
+                    var total1 = select_query("select sum(numeropredios) from u_terreno where dif_est_acued='Igual'");}catch(err){}
                     if (!total1){total1=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
                     try{
-                    var total2 = select_query("select sum(numeropredios) from u_terreno where estratific <> estrato_acueducto");}catch(err){}
+                    var total2 = select_query("select sum(numeropredios) from u_terreno where dif_est_acued = 'prest'");}catch(err){}
                     if (!total2){total2=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
                     try{
-                    var total3 = select_query("select sum(numeropredios) from u_terreno where estrato_acueducto = '11' or estrato_acueducto = '12' or estrato_acueducto = '13' or estrato_acueducto = '14'");}catch(err){}
+                    var total3 = select_query("select sum(numeropredios) from u_terreno where dif_est_acued = 'dist'");}catch(err){}
                     if (!total3){total3=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}  
-                    var totales = total1.concat(total2, total3);
-                    predio.getSource().updateParams({'STYLES': style});
+                    try{
+                    var total4 = select_query("select sum(numeropredios) from u_terreno where dif_est_acued = 'sincomp'");}catch(err){}
+                    if (!total4){total4=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}  
+                    var totales = total1.concat(total2, total3, total4);
+                    predio.getSource().updateParams({'STYLES': 	'Oficial vs AAA Acueducto'});
                     var titulo = "Est Oficial vs Est Acueducto";
                     estdistica(select, titulo, param, totales);
                     map.getView().fitExtent(predio.getExtent(), map.getSize());
-                    queryexport = style + ' G';
+                    queryexport = style + ' AcueductoG';
                  }
                  else if (document.getElementById("barrio").value !== '') {
                     var valor = "'" + values + "'";
-                    var arrayResult = update_query("ALTER TABLE u_terreno DROP COLUMN simbol; ALTER TABLE u_terreno ADD COLUMN simbol character varying(20); UPDATE u_terreno SET simbol='Igual' where estrato_acueducto = estratific and cod_barrio=" + valor + "; UPDATE u_terreno SET simbol = 'Dif' where estrato_acueducto <> estratific and cod_barrio=" + valor + "; UPDATE u_terreno SET simbol = 'sincomp' where (estrato_acueducto = '11' or estrato_acueducto = '12' or estrato_acueducto = '13' or estrato_acueducto = '14') and cod_barrio=" + valor + "");
                     try{
                     var select = select_query("select sum(numeropredios) from u_terreno where cod_barrio=" + valor + "");}catch(err){}
                     if (!select){select=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
-                    var param = [['Estratos Coincidentes'], ['Diferencia de Estratos'], ['(11),(12),(13),(14)']];
+                    var param = [['Estratos Coincidentes'], ['Estrato Prestador Mas Alto'], ['Estrato Prestador Mas Bajo'], ['Especial o Sin Inf.']];
                     try{
-                    var total1 = select_query("select sum(numeropredios) from u_terreno where estratific = estrato_acueducto and cod_barrio=" + valor + "");}catch(err){}
+                    var total1 = select_query("select sum(numeropredios) from u_terreno where cod_barrio=" + valor + " and dif_est_acued='Igual'");}catch(err){}
                     if (!total1){total1=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
                     try{
-                    var total2 = select_query("select sum(numeropredios) from u_terreno where estratific <> estrato_acueducto and cod_barrio=" + valor + "");}catch(err){}
+                    var total2 = select_query("select sum(numeropredios) from u_terreno where cod_barrio=" + valor + " and dif_est_acued = 'prest'");}catch(err){}
                     if (!total2){total2=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
                     try{
-                    var total3 = select_query("select sum(numeropredios) from u_terreno where (estrato_acueducto = '11' or estrato_acueducto = '12' or estrato_acueducto = '13' or estrato_acueducto = '14') and cod_barrio=" + valor + "");}catch(err){}
-                    if (!total3){total3=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}  
-                    var totales = total1.concat(total2, total3);
-                    var param = [['Estratos Coincidentes'], ['Diferencia de Estratos'], ['(11),(12),(13),(14)']];
+                    var total3 = select_query("select sum(numeropredios) from u_terreno where cod_barrio=" + valor + " and dif_est_acued = 'dist'");}catch(err){}
+                    if (!total3){total3=select_query("SELECT COUNT(nombre) FROM localidades where nombre='nada'");}  
+                    try{
+                    var total4 = select_query("select sum(numeropredios) from u_terreno where cod_barrio=" + valor + " and dif_est_acued = 'sincomp'");}catch(err){}
+                    if (!total4){total4=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}  
+                    var totales = total1.concat(total2, total3, total4);
                     var titulo = "Est Oficial vs Est Acueducto";
                     estdistica(select, titulo, param, totales);
                     var filtro = '"cod_barrio=' + valor + '"';
-                    predio.getSource().updateParams({'STYLES': style, 'CQL_FILTER': eval(filtro)});
-                    queryexport = style + ' B';
+                    predio.getSource().updateParams({'STYLES': 'Oficial vs AAA Acueducto', 'CQL_FILTER': eval(filtro)});
+                    queryexport = style + ' AcueductoB';
                 } else if (document.getElementById("localidad").value !== '') {
                     var valor = "'" + values + "'";
-                    var arrayResult = update_query("ALTER TABLE u_terreno DROP COLUMN simbol; ALTER TABLE u_terreno ADD COLUMN simbol character varying(20); UPDATE u_terreno SET simbol='Igual' where estrato_acueducto = estratific and cod_loc=" + valor + "; UPDATE u_terreno SET simbol = 'Dif' where estrato_acueducto <> estratific and cod_loc=" + valor + "; UPDATE u_terreno SET simbol = 'sincomp' where (estrato_acueducto = '11' or estrato_acueducto = '12' or estrato_acueducto = '13' or estrato_acueducto = '14') and cod_loc=" + valor + "");
                     try{
                     var select = select_query("select sum(numeropredios) from u_terreno where cod_loc=" + valor + "");}catch(err){}
                     if (!select){select=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
-                    var param = [['Estratos Coincidentes'], ['Diferencia de Estratos'], ['(11),(12),(13),(14)']];
+                    var param = [['Estratos Coincidentes'], ['Estrato Prestador Mas Alto'], ['Estrato Prestador Mas Bajo'], ['Especial o Sin Inf.']];
                     try{
-                    var total1 = select_query("select sum(numeropredios) from u_terreno where estratific = estrato_acueducto and cod_loc=" + valor + "");}catch(err){}
+                    var total1 = select_query("select sum(numeropredios) from u_terreno where cod_loc=" + valor + " and dif_est_acued='Igual'");}catch(err){}
                     if (!total1){total1=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
                     try{
-                    var total2 = select_query("select sum(numeropredios) from u_terreno where estratific <> estrato_acueducto and cod_loc=" + valor + "");}catch(err){}
+                    var total2 = select_query("select sum(numeropredios) from u_terreno where cod_loc=" + valor + " and dif_est_acued = 'prest'");}catch(err){}
                     if (!total2){total2=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
                     try{
-                    var total3 = select_query("select sum(numeropredios) from u_terreno where (estrato_acueducto = '11' or estrato_acueducto = '12' or estrato_acueducto = '13' or estrato_acueducto = '14') and cod_loc=" + valor + "");}catch(err){}
-                    if (!total3){total3=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}  
-                    var totales = total1.concat(total2, total3);
-                    var param = [['Estratos Coincidentes'], ['Diferencia de Estratos'], ['(11),(12),(13),(14)']];
+                    var total3 = select_query("select sum(numeropredios) from u_terreno where cod_loc=" + valor + " and dif_est_acued = 'dist'");}catch(err){}
+                    if (!total3){total3=select_query("SELECT COUNT(nombre) FROM localidades where nombre= 'nada'");}  
+                    try{
+                    var total4 = select_query("select sum(numeropredios) from u_terreno where cod_loc=" + valor + " and dif_est_acued = 'sincomp'");}catch(err){}
+                    if (!total4){total4=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}  
+                    var totales = total1.concat(total2, total3, total4);
                     var titulo = "Est Oficial vs Est Acueducto";
                     estdistica(select, titulo, param, totales);
                     var filtro = '"cod_loc=' + valor + '"';
-                    predio.getSource().updateParams({'STYLES': style, 'CQL_FILTER': eval(filtro)});
-                    queryexport = style + ' L';
+                    predio.getSource().updateParams({'STYLES': 'Oficial vs AAA Acueducto', 'CQL_FILTER': eval(filtro)});
+                    queryexport = style + ' AcueductoL';
                 } else if (document.getElementById("manzana").value !== '') {
                     var valor = "'" + values + "'";
-                    var arrayResult = update_query("ALTER TABLE u_terreno DROP COLUMN simbol; ALTER TABLE u_terreno ADD COLUMN simbol character varying(20); UPDATE u_terreno SET simbol='Igual' where estrato_acueducto = estratific and manzana_co=" + valor + "; UPDATE u_terreno SET simbol = 'Dif' where estrato_acueducto <> estratific and manzana_co=" + valor + "; UPDATE u_terreno SET simbol = 'sincomp' where estrato_acueducto = '11' or estrato_acueducto = '12' or estrato_acueducto = '13' or estrato_acueducto = '14' and manzana_co=" + valor + "");
                     try{
                     var select = select_query("select sum(numeropredios) from u_terreno where manzana_co=" + valor + "");}catch(err){}
                     if (!select){select=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
-                    var param = [['Estratos Coincidentes'], ['Diferencia de Estratos'], ['(11),(12),(13),(14)']];
+                    var param = [['Estratos Coincidentes'], ['Estrato Prestador Mas Alto'], ['Estrato Prestador Mas Bajo'], ['Especial o Sin Inf.']];
                     try{
-                    var total1 = select_query("select sum(numeropredios) from u_terreno where estratific = estrato_acueducto and manzana_co=" + valor + "");}catch(err){}
+                    var total1 = select_query("select sum(numeropredios) from u_terreno where manzana_co=" + valor + " and dif_est_acued='Igual'");}catch(err){}
                     if (!total1){total1=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
                     try{
-                    var total2 = select_query("select sum(numeropredios) from u_terreno where estratific <> estrato_acueducto and manzana_co=" + valor + "");}catch(err){}
+                    var total2 = select_query("select sum(numeropredios) from u_terreno where manzana_co=" + valor + " and dif_est_acued = 'prest'");}catch(err){}
                     if (!total2){total2=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
                     try{
-                    var total3 = select_query("select sum(numeropredios) from u_terreno where (estrato_acueducto = '11' or estrato_acueducto = '12' or estrato_acueducto = '13' or estrato_acueducto = '14') and manzana_co=" + valor + "");}catch(err){}
-                    if (!total3){total3=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}  
-                    var totales = total1.concat(total2, total3);
-                    var param = [['Estratos Coincidentes'], ['Diferencia de Estratos'], ['(11),(12),(13),(14)']];
+                    var total3 = select_query("select sum(numeropredios) from u_terreno where manzana_co=" + valor + " and dif_est_acued = 'dist'");}catch(err){}
+                    if (!total3){total3=select_query("SELECT COUNT(nombre) FROM localidades where nombre='nada'");}  
+                    try{
+                    var total4 = select_query("select sum(numeropredios) from u_terreno where manzana_co=" + valor + " and dif_est_acued = 'sincomp'");}catch(err){}
+                    if (!total4){total4=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}  
+                    var totales = total1.concat(total2, total3, total4);
                     var titulo = "Est Oficial vs Est Acueducto";
                     estdistica(select, titulo, param, totales);
                     var filtro = '"manzana_co=' + valor + '"';
-                    predio.getSource().updateParams({'STYLES': style, 'CQL_FILTER': eval(filtro)});
-                    queryexport = style + ' M';
+                    predio.getSource().updateParams({'STYLES': 'Oficial vs AAA Acueducto', 'CQL_FILTER': eval(filtro)});
+                    queryexport = style + ' AcueductoM';
                   } 
                 } 
                 else if (document.getElementById("oficial_vs_AAA").value === "Alcantarillado") {
                 if (document.getElementById("barrio").value === '' && document.getElementById("localidad").value === '' && document.getElementById("manzana").value === '') {
-                    var arrayResult = update_query("ALTER TABLE u_terreno DROP COLUMN simbol; ALTER TABLE u_terreno ADD COLUMN simbol character varying(20); UPDATE u_terreno SET simbol='Igual' where estrato_alcantarillado = estratific; UPDATE u_terreno SET simbol = 'Dif' where eestrato_alcantarillado <> estratific; UPDATE u_terreno SET simbol = 'sincomp' where estrato_alcantarillado = '11' or estrato_alcantarillado = '12' or estrato_alcantarillado = '13' or estrato_alcantarillado = '14'");
                     try{
                     var select = select_query("select sum(numeropredios) from u_terreno;");}catch(err){}
                     if (!select){select=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
-                    var param = [['Estratos Coincidentes'], ['Diferencia de Estratos'], ['(11),(12),(13),(14)']];
+                    var param = [['Estratos Coincidentes'], ['Estrato Prestador Mas Alto'], ['Estrato Prestador Mas Bajo'], ['Especial o Sin Inf.']];
                     try{
-                    var total1 = select_query("select sum(numeropredios) from u_terreno where estratific = estrato_alcantarillado");}catch(err){}
+                    var total1 = select_query("select sum(numeropredios) from u_terreno where dif_est_alc='Igual'");}catch(err){}
                     if (!total1){total1=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
                     try{
-                    var total2 = select_query("select sum(numeropredios) from u_terreno where estratific <> estrato_alcantarillado");}catch(err){}
+                    var total2 = select_query("select sum(numeropredios) from u_terreno where dif_est_alc = 'prest'");}catch(err){}
                     if (!total2){total2=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
                     try{
-                    var total3 = select_query("select sum(numeropredios) from u_terreno where estrato_alcantarillado = '11' or estrato_alcantarillado = '12' or estrato_alcantarillado = '13' or estrato_alcantarillado = '14'");}catch(err){}
+                    var total3 = select_query("select sum(numeropredios) from u_terreno where dif_est_alc = 'dist'");}catch(err){}
                     if (!total3){total3=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}  
-                    var totales = total1.concat(total2, total3);
-                    predio.getSource().updateParams({'STYLES': style});
+                    try{
+                    var total4 = select_query("select sum(numeropredios) from u_terreno where dif_est_alc = 'sincomp'");}catch(err){}
+                    if (!total4){total4=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}  
+                    var totales = total1.concat(total2, total3, total4);
+                    predio.getSource().updateParams({'STYLES': 	'Oficial vs AAA Alcantarillado'});
                     var titulo = "Est Oficial vs Est Alcantarillado";
                     estdistica(select, titulo, param, totales);
                     map.getView().fitExtent(predio.getExtent(), map.getSize());
-                    queryexport = style + ' G';
+                    queryexport = style + ' AlcantarilladoG';
                  }
                  else if (document.getElementById("barrio").value !== '') {
                     var valor = "'" + values + "'";
-                    var arrayResult = update_query("ALTER TABLE u_terreno DROP COLUMN simbol; ALTER TABLE u_terreno ADD COLUMN simbol character varying(20); UPDATE u_terreno SET simbol='Igual' where estrato_alcantarillado = estratific and cod_barrio=" + valor + "; UPDATE u_terreno SET simbol = 'Dif' where estrato_alcantarillado <> estratific and cod_barrio=" + valor + "; UPDATE u_terreno SET simbol = 'sincomp' where (estrato_alcantarillado = '11' or estrato_alcantarillado = '12' or estrato_alcantarillado = '13' or estrato_alcantarillado = '14') and cod_barrio=" + valor + "");
                     try{
                     var select = select_query("select sum(numeropredios) from u_terreno where cod_barrio=" + valor + "");}catch(err){}
                     if (!select){select=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
-                    var param = [['Estratos Coincidentes'], ['Diferencia de Estratos'], ['(11),(12),(13),(14)']];
+                    var param = [['Estratos Coincidentes'], ['Estrato Prestador Mas Alto'], ['Estrato Prestador Mas Bajo'], ['Especial o Sin Inf.']];
                     try{
-                    var total1 = select_query("select sum(numeropredios) from u_terreno where estratific = estrato_alcantarillado and cod_barrio=" + valor + "");}catch(err){}
+                    var total1 = select_query("select sum(numeropredios) from u_terreno where cod_barrio=" + valor + " and dif_est_alc='Igual'");}catch(err){}
                     if (!total1){total1=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
                     try{
-                    var total2 = select_query("select sum(numeropredios) from u_terreno where estratific <> estrato_alcantarillado and cod_barrio=" + valor + "");}catch(err){}
+                    var total2 = select_query("select sum(numeropredios) from u_terreno where cod_barrio=" + valor + " and dif_est_alc = 'prest'");}catch(err){}
                     if (!total2){total2=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
                     try{
-                    var total3 = select_query("select sum(numeropredios) from u_terreno where (estrato_alcantarillado = '11' or estrato_alcantarillado = '12' or estrato_alcantarillado = '13' or estrato_alcantarillado = '14') and cod_barrio=" + valor + "");}catch(err){}
-                    if (!total3){total3=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}  
-                    var totales = total1.concat(total2, total3);
-                    var param = [['Estratos Coincidentes'], ['Diferencia de Estratos'], ['(11),(12),(13),(14)']];
+                    var total3 = select_query("select sum(numeropredios) from u_terreno where cod_barrio=" + valor + " and dif_est_alc = 'dist'");}catch(err){}
+                    if (!total3){total3=select_query("SELECT COUNT(nombre) FROM localidades where nombre='nada'");}  
+                    try{
+                    var total4 = select_query("select sum(numeropredios) from u_terreno where cod_barrio=" + valor + " and dif_est_alc = 'sincomp'");}catch(err){}
+                    if (!total4){total4=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}  
+                    var totales = total1.concat(total2, total3, total4);
                     var titulo = "Est Oficial vs Est Alcantarillado";
                     estdistica(select, titulo, param, totales);
                     var filtro = '"cod_barrio=' + valor + '"';
-                    predio.getSource().updateParams({'STYLES': style, 'CQL_FILTER': eval(filtro)});
-                    queryexport = style + ' B';
+                    predio.getSource().updateParams({'STYLES': 'Oficial vs AAA Alcantarillado', 'CQL_FILTER': eval(filtro)});
+                   queryexport = style + ' AlcantarilladoB';
                 } else if (document.getElementById("localidad").value !== '') {
                     var valor = "'" + values + "'";
-                    var arrayResult = update_query("ALTER TABLE u_terreno DROP COLUMN simbol; ALTER TABLE u_terreno ADD COLUMN simbol character varying(20); UPDATE u_terreno SET simbol='Igual' where estrato_alcantarillado = estratific and cod_loc=" + valor + "; UPDATE u_terreno SET simbol = 'Dif' where estrato_alcantarillado <> estratific and cod_loc=" + valor + "; UPDATE u_terreno SET simbol = 'sincomp' where (estrato_alcantarillado = '11' or estrato_alcantarillado = '12' or estrato_alcantarillado = '13' or estrato_alcantarillado = '14') and cod_loc=" + valor + "");
                     try{
                     var select = select_query("select sum(numeropredios) from u_terreno where cod_loc=" + valor + "");}catch(err){}
                     if (!select){select=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
-                    var param = [['Estratos Coincidentes'], ['Diferencia de Estratos'], ['(11),(12),(13),(14)']];
+                    var param = [['Estratos Coincidentes'], ['Estrato Prestador Mas Alto'], ['Estrato Prestador Mas Bajo'], ['Especial o Sin Inf.']];
                     try{
-                    var total1 = select_query("select sum(numeropredios) from u_terreno where estratific = estrato_alcantarillado and cod_loc=" + valor + "");}catch(err){}
+                    var total1 = select_query("select sum(numeropredios) from u_terreno where cod_loc=" + valor + " and dif_est_alc='Igual'");}catch(err){}
                     if (!total1){total1=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
                     try{
-                    var total2 = select_query("select sum(numeropredios) from u_terreno where estratific <> estrato_alcantarillado and cod_loc=" + valor + "");}catch(err){}
+                    var total2 = select_query("select sum(numeropredios) from u_terreno where cod_loc=" + valor + " and dif_est_alc = 'prest'");}catch(err){}
                     if (!total2){total2=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
                     try{
-                    var total3 = select_query("select sum(numeropredios) from u_terreno where (estrato_alcantarillado = '11' or estrato_alcantarillado = '12' or estrato_alcantarillado = '13' or estrato_alcantarillado = '14') and cod_loc=" + valor + "");}catch(err){}
-                    if (!total3){total3=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}  
-                    var totales = total1.concat(total2, total3);
-                    var param = [['Estratos Coincidentes'], ['Diferencia de Estratos'], ['(11),(12),(13),(14)']];
+                    var total3 = select_query("select sum(numeropredios) from u_terreno where cod_loc=" + valor + " and dif_est_alc = 'dist'");}catch(err){}
+                    if (!total3){total3=select_query("SELECT COUNT(nombre) FROM localidades where nombre= 'nada'");}  
+                    try{
+                    var total4 = select_query("select sum(numeropredios) from u_terreno where cod_loc=" + valor + " and dif_est_alc = 'sincomp'");}catch(err){}
+                    if (!total4){total4=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}  
+                    var totales = total1.concat(total2, total3, total4);
                     var titulo = "Est Oficial vs Est Alcantarillado";
                     estdistica(select, titulo, param, totales);
                     var filtro = '"cod_loc=' + valor + '"';
-                    predio.getSource().updateParams({'STYLES': style, 'CQL_FILTER': eval(filtro)});
-                    queryexport = style + ' L';
+                    predio.getSource().updateParams({'STYLES': 'Oficial vs AAA Alcantarillado', 'CQL_FILTER': eval(filtro)});
+                    queryexport = style + ' AlcantarilladoL';
                 } else if (document.getElementById("manzana").value !== '') {
                     var valor = "'" + values + "'";
-                    var arrayResult = update_query("ALTER TABLE u_terreno DROP COLUMN simbol; ALTER TABLE u_terreno ADD COLUMN simbol character varying(20); UPDATE u_terreno SET simbol='Igual' where estrato_alcantarillado = estratific and manzana_co=" + valor + "; UPDATE u_terreno SET simbol = 'Dif' where estrato_alcantarillado <> estratific and manzana_co=" + valor + "; UPDATE u_terreno SET simbol = 'sincomp' where estrato_alcantarillado = '11' or estrato_alcantarillado = '12' or estrato_alcantarillado = '13' or estrato_alcantarillado = '14' and manzana_co=" + valor + "");
                     try{
                     var select = select_query("select sum(numeropredios) from u_terreno where manzana_co=" + valor + "");}catch(err){}
                     if (!select){select=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
-                    var param = [['Estratos Coincidentes'], ['Diferencia de Estratos'], ['(11),(12),(13),(14)']];
+                    var param = [['Estratos Coincidentes'], ['Estrato Prestador Mas Alto'], ['Estrato Prestador Mas Bajo'], ['Especial o Sin Inf.']];
                     try{
-                    var total1 = select_query("select sum(numeropredios) from u_terreno where estratific = estrato_alcantarillado and manzana_co=" + valor + "");}catch(err){}
+                    var total1 = select_query("select sum(numeropredios) from u_terreno where manzana_co=" + valor + " and dif_est_alc='Igual'");}catch(err){}
                     if (!total1){total1=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
                     try{
-                    var total2 = select_query("select sum(numeropredios) from u_terreno where estratific <> estrato_alcantarillado and manzana_co=" + valor + "");}catch(err){}
+                    var total2 = select_query("select sum(numeropredios) from u_terreno where manzana_co=" + valor + " and dif_est_alc = 'prest'");}catch(err){}
                     if (!total2){total2=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
                     try{
-                    var total3 = select_query("select sum(numeropredios) from u_terreno where (estrato_alcantarillado = '11' or estrato_alcantarillado = '12' or estrato_alcantarillado = '13' or estrato_alcantarillado = '14') and manzana_co=" + valor + "");}catch(err){}
-                    if (!total3){total3=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}  
-                    var totales = total1.concat(total2, total3);
-                    var param = [['Estratos Coincidentes'], ['Diferencia de Estratos'], ['(11),(12),(13),(14)']];
+                    var total3 = select_query("select sum(numeropredios) from u_terreno where manzana_co=" + valor + " and dif_est_alc = 'dist'");}catch(err){}
+                    if (!total3){total3=select_query("SELECT COUNT(nombre) FROM localidades where nombre='nada'");}  
+                    try{
+                    var total4 = select_query("select sum(numeropredios) from u_terreno where manzana_co=" + valor + " and dif_est_alc = 'sincomp'");}catch(err){}
+                    if (!total4){total4=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}  
+                    var totales = total1.concat(total2, total3, total4);
                     var titulo = "Est Oficial vs Est Alcantarillado";
                     estdistica(select, titulo, param, totales);
                     var filtro = '"manzana_co=' + valor + '"';
-                    predio.getSource().updateParams({'STYLES': style, 'CQL_FILTER': eval(filtro)});
-                    queryexport = style + ' M';
+                    predio.getSource().updateParams({'STYLES': 'Oficial vs AAA Alcantarillado', 'CQL_FILTER': eval(filtro)});
+                    queryexport = style + ' AlcantarilladoM';
                   } 
               } 
             else if (document.getElementById("oficial_vs_AAA").value === "Aseo") {
                 if (document.getElementById("barrio").value === '' && document.getElementById("localidad").value === '' && document.getElementById("manzana").value === '') {
-                    var arrayResult = update_query("ALTER TABLE u_terreno DROP COLUMN simbol; ALTER TABLE u_terreno ADD COLUMN simbol character varying(20); UPDATE u_terreno SET simbol='Igual' where estrato_aseo = estratific; UPDATE u_terreno SET simbol = 'Dif' where estrato_aseo <> estratific; UPDATE u_terreno SET simbol = 'sincomp' where estrato_aseo = '11' or estrato_aseo = '12' or estrato_aseo = '13' or estrato_aseo = '14'");
                     try{
                     var select = select_query("select sum(numeropredios) from u_terreno;");}catch(err){}
                     if (!select){select=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
-                    var param = [['Estratos Coincidentes'], ['Diferencia de Estratos'], ['(11),(12),(13),(14)']];
+                    var param = [['Estratos Coincidentes'], ['Estrato Prestador Mas Alto'], ['Estrato Prestador Mas Bajo'], ['Especial o Sin Inf.']];
                     try{
-                    var total1 = select_query("select sum(numeropredios) from u_terreno where estratific = estrato_aseo");}catch(err){}
+                    var total1 = select_query("select sum(numeropredios) from u_terreno where dif_est_aseo='Igual'");}catch(err){}
                     if (!total1){total1=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
                     try{
-                    var total2 = select_query("select sum(numeropredios) from u_terreno where estratific <> estrato_aseo");}catch(err){}
+                    var total2 = select_query("select sum(numeropredios) from u_terreno where dif_est_aseo = 'prest'");}catch(err){}
                     if (!total2){total2=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
                     try{
-                    var total3 = select_query("select sum(numeropredios) from u_terreno where estrato_aseo = '11' or estrato_aseo = '12' or estrato_aseo = '13' or estrato_aseo = '14'");}catch(err){}
+                    var total3 = select_query("select sum(numeropredios) from u_terreno where dif_est_aseo = 'dist'");}catch(err){}
                     if (!total3){total3=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}  
-                    var totales = total1.concat(total2, total3);
-                    predio.getSource().updateParams({'STYLES': style});
+                    try{
+                    var total4 = select_query("select sum(numeropredios) from u_terreno where dif_est_aseo = 'sincomp'");}catch(err){}
+                    if (!total4){total4=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}  
+                    var totales = total1.concat(total2, total3, total4);
+                    predio.getSource().updateParams({'STYLES': 	'Oficial vs AAA Aseo'});
                     var titulo = "Est Oficial vs Est Aseo";
                     estdistica(select, titulo, param, totales);
                     map.getView().fitExtent(predio.getExtent(), map.getSize());
-                    queryexport = style + ' G';
+                    queryexport = style + ' AseoG';
                  }
                  else if (document.getElementById("barrio").value !== '') {
                     var valor = "'" + values + "'";
-                    var arrayResult = update_query("ALTER TABLE u_terreno DROP COLUMN simbol; ALTER TABLE u_terreno ADD COLUMN simbol character varying(20); UPDATE u_terreno SET simbol='Igual' where estrato_aseo = estratific and cod_barrio=" + valor + "; UPDATE u_terreno SET simbol = 'Dif' where estrato_aseo <> estratific and cod_barrio=" + valor + "; UPDATE u_terreno SET simbol = 'sincomp' where (estrato_aseo = '11' or estrato_aseo = '12' or estrato_aseo = '13' or estrato_aseo = '14') and cod_barrio=" + valor + "");
                     try{
                     var select = select_query("select sum(numeropredios) from u_terreno where cod_barrio=" + valor + "");}catch(err){}
                     if (!select){select=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
-                    var param = [['Estratos Coincidentes'], ['Diferencia de Estratos'], ['(11),(12),(13),(14)']];
+                    var param = [['Estratos Coincidentes'], ['Estrato Prestador Mas Alto'], ['Estrato Prestador Mas Bajo'], ['Especial o Sin Inf.']];
                     try{
-                    var total1 = select_query("select sum(numeropredios) from u_terreno where estratific = estrato_aseo and cod_barrio=" + valor + "");}catch(err){}
+                    var total1 = select_query("select sum(numeropredios) from u_terreno where cod_barrio=" + valor + " and dif_est_aseo='Igual'");}catch(err){}
                     if (!total1){total1=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
                     try{
-                    var total2 = select_query("select sum(numeropredios) from u_terreno where estratific <> estrato_aseo and cod_barrio=" + valor + "");}catch(err){}
+                    var total2 = select_query("select sum(numeropredios) from u_terreno where cod_barrio=" + valor + " and dif_est_aseo = 'prest'");}catch(err){}
                     if (!total2){total2=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
                     try{
-                    var total3 = select_query("select sum(numeropredios) from u_terreno where (estrato_aseo = '11' or estrato_aseo = '12' or estrato_aseo = '13' or estrato_aseo = '14') and cod_barrio=" + valor + "");}catch(err){}
-                    if (!total3){total3=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}  
-                    var totales = total1.concat(total2, total3);
-                    var param = [['Estratos Coincidentes'], ['Diferencia de Estratos'], ['(11),(12),(13),(14)']];
+                    var total3 = select_query("select sum(numeropredios) from u_terreno where cod_barrio=" + valor + " and dif_est_aseo = 'dist'");}catch(err){}
+                    if (!total3){total3=select_query("SELECT COUNT(nombre) FROM localidades where nombre='nada'");}  
+                    try{
+                    var total4 = select_query("select sum(numeropredios) from u_terreno where cod_barrio=" + valor + " and dif_est_aseo = 'sincomp'");}catch(err){}
+                    if (!total4){total4=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}  
+                    var totales = total1.concat(total2, total3, total4);
                     var titulo = "Est Oficial vs Est Aseo";
                     estdistica(select, titulo, param, totales);
                     var filtro = '"cod_barrio=' + valor + '"';
-                    predio.getSource().updateParams({'STYLES': style, 'CQL_FILTER': eval(filtro)});
-                    queryexport = style + ' B';
+                    predio.getSource().updateParams({'STYLES': 'Oficial vs AAA Aseo', 'CQL_FILTER': eval(filtro)});
+                    queryexport = style + ' AseoB';
                 } else if (document.getElementById("localidad").value !== '') {
                     var valor = "'" + values + "'";
-                    var arrayResult = update_query("ALTER TABLE u_terreno DROP COLUMN simbol; ALTER TABLE u_terreno ADD COLUMN simbol character varying(20); UPDATE u_terreno SET simbol='Igual' where estrato_aseo = estratific and cod_loc=" + valor + "; UPDATE u_terreno SET simbol = 'Dif' where estrato_aseo <> estratific and cod_loc=" + valor + "; UPDATE u_terreno SET simbol = 'sincomp' where (estrato_aseo = '11' or estrato_aseo = '12' or estrato_aseo = '13' or estrato_aseo = '14') and cod_loc=" + valor + "");
                     try{
                     var select = select_query("select sum(numeropredios) from u_terreno where cod_loc=" + valor + "");}catch(err){}
                     if (!select){select=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
-                    var param = [['Estratos Coincidentes'], ['Diferencia de Estratos'], ['(11),(12),(13),(14)']];
+                    var param = [['Estratos Coincidentes'], ['Estrato Prestador Mas Alto'], ['Estrato Prestador Mas Bajo'], ['Especial o Sin Inf.']];
                     try{
-                    var total1 = select_query("select sum(numeropredios) from u_terreno where estratific = estrato_aseo and cod_loc=" + valor + "");}catch(err){}
+                    var total1 = select_query("select sum(numeropredios) from u_terreno where cod_loc=" + valor + " and dif_est_aseo='Igual'");}catch(err){}
                     if (!total1){total1=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
                     try{
-                    var total2 = select_query("select sum(numeropredios) from u_terreno where estratific <> estrato_aseo and cod_loc=" + valor + "");}catch(err){}
+                    var total2 = select_query("select sum(numeropredios) from u_terreno where cod_loc=" + valor + " and dif_est_aseo = 'prest'");}catch(err){}
                     if (!total2){total2=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
                     try{
-                    var total3 = select_query("select sum(numeropredios) from u_terreno where (estrato_aseo = '11' or estrato_aseo = '12' or estrato_aseo = '13' or estrato_aseo = '14') and cod_loc=" + valor + "");}catch(err){}
-                    if (!total3){total3=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}  
-                    var totales = total1.concat(total2, total3);
-                    var param = [['Estratos Coincidentes'], ['Diferencia de Estratos'], ['(11),(12),(13),(14)']];
+                    var total3 = select_query("select sum(numeropredios) from u_terreno where cod_loc=" + valor + " and dif_est_aseo = 'dist'");}catch(err){}
+                    if (!total3){total3=select_query("SELECT COUNT(nombre) FROM localidades where nombre= 'nada'");}  
+                    try{
+                    var total4 = select_query("select sum(numeropredios) from u_terreno where cod_loc=" + valor + " and dif_est_aseo = 'sincomp'");}catch(err){}
+                    if (!total4){total4=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}  
+                    var totales = total1.concat(total2, total3, total4);
                     var titulo = "Est Oficial vs Est Aseo";
                     estdistica(select, titulo, param, totales);
                     var filtro = '"cod_loc=' + valor + '"';
-                    predio.getSource().updateParams({'STYLES': style, 'CQL_FILTER': eval(filtro)});
-                    queryexport = style + ' L';
+                    predio.getSource().updateParams({'STYLES': 'Oficial vs AAA Aseo', 'CQL_FILTER': eval(filtro)});
+                    queryexport = style + ' AseoL';
                 } else if (document.getElementById("manzana").value !== '') {
                     var valor = "'" + values + "'";
-                    var arrayResult = update_query("ALTER TABLE u_terreno DROP COLUMN simbol; ALTER TABLE u_terreno ADD COLUMN simbol character varying(20); UPDATE u_terreno SET simbol='Igual' where estrato_aseo = estratific and manzana_co=" + valor + "; UPDATE u_terreno SET simbol = 'Dif' where estrato_aseo <> estratific and manzana_co=" + valor + "; UPDATE u_terreno SET simbol = 'sincomp' where estrato_aseo = '11' or estrato_aseo = '12' or estrato_aseo = '13' or estrato_aseo = '14' and manzana_co=" + valor + "");
                     try{
                     var select = select_query("select sum(numeropredios) from u_terreno where manzana_co=" + valor + "");}catch(err){}
                     if (!select){select=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
-                    var param = [['Estratos Coincidentes'], ['Diferencia de Estratos'], ['(11),(12),(13),(14)']];
+                    var param = [['Estratos Coincidentes'], ['Estrato Prestador Mas Alto'], ['Estrato Prestador Mas Bajo'], ['Especial o Sin Inf.']];
                     try{
-                    var total1 = select_query("select sum(numeropredios) from u_terreno where estratific = estrato_aseo and manzana_co=" + valor + "");}catch(err){}
+                    var total1 = select_query("select sum(numeropredios) from u_terreno where manzana_co=" + valor + " and dif_est_aseo='Igual'");}catch(err){}
                     if (!total1){total1=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
                     try{
-                    var total2 = select_query("select sum(numeropredios) from u_terreno where estratific <> estrato_aseo and manzana_co=" + valor + "");}catch(err){}
+                    var total2 = select_query("select sum(numeropredios) from u_terreno where manzana_co=" + valor + " and dif_est_aseo = 'prest'");}catch(err){}
                     if (!total2){total2=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
                     try{
-                    var total3 = select_query("select sum(numeropredios) from u_terreno where (estrato_aseo = '11' or estrato_aseo = '12' or estrato_aseo = '13' or estrato_aseo = '14') and manzana_co=" + valor + "");}catch(err){}
-                    if (!total3){total3=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}  
-                    var totales = total1.concat(total2, total3);
-                    var param = [['Estratos Coincidentes'], ['Diferencia de Estratos'], ['(11),(12),(13),(14)']];
+                    var total3 = select_query("select sum(numeropredios) from u_terreno where manzana_co=" + valor + " and dif_est_aseo = 'dist'");}catch(err){}
+                    if (!total3){total3=select_query("SELECT COUNT(nombre) FROM localidades where nombre='nada'");}  
+                    try{
+                    var total4 = select_query("select sum(numeropredios) from u_terreno where manzana_co=" + valor + " and dif_est_aseo = 'sincomp'");}catch(err){}
+                    if (!total4){total4=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}  
+                    var totales = total1.concat(total2, total3, total4);
                     var titulo = "Est Oficial vs Est Aseo";
                     estdistica(select, titulo, param, totales);
                     var filtro = '"manzana_co=' + valor + '"';
-                    predio.getSource().updateParams({'STYLES': style, 'CQL_FILTER': eval(filtro)});
-                    queryexport = style + ' M';
-                  }
+                    predio.getSource().updateParams({'STYLES': 'Oficial vs AAA Aseo', 'CQL_FILTER': eval(filtro)});
+                    queryexport = style + ' AseoM';
+                  } 
             }
-
-        
         }
 
 
         //Comparación USO Oficial y USO Prestadores AAA
         else if (style === "oficial_vs_AAA_uso") {
-            layermetrotel.setVisible(false);
+            
+            alert("No existe información para ejecutar esta consulta");
+            /*layermetrotel.setVisible(false);
             layerSUI.setVisible(false);
             layerindustriaycomercio.setVisible(false);
             layerEstratificacionOficial.setVisible(false);
@@ -1279,7 +1297,7 @@ function rango(style) {
                     var filtro = '"manzana_co=' + valor + '"';
                     predio.getSource().updateParams({'STYLES': 'Oficial vs AAA Uso Aseo', 'CQL_FILTER': eval(filtro)});
                 }
-            }
+            }*/
 
         }
 
@@ -1293,6 +1311,7 @@ function rango(style) {
             estacionestransmetro.setVisible(false);
             viastransmasivo.setVisible(false);
             predio.setVisible(true);
+            construcciones.setVisible(false);
             //acueducto
             if (document.getElementById("disponibilidad_AAA").value === "Acueducto") {
                 if (document.getElementById("barrio").value === '' && document.getElementById("localidad").value === '' && document.getElementById("manzana").value === '') {
@@ -1522,8 +1541,6 @@ function rango(style) {
              }
         }
         }
-
-
         //nomenclatura no estandarizada
         else if (style === "Nomenclatura Domiciliaria") {
             layerEstratificacionOficial.setVisible(false);
@@ -1535,50 +1552,79 @@ function rango(style) {
             viastransmasivo.setVisible(false);
             espacio_pubico.setVisible(false);
             layerespaciopublico.setVisible(false);
+            construcciones.setVisible(false);
             predio.setVisible(true);
             if (document.getElementById("barrio").value === '' && document.getElementById("localidad").value === '' && document.getElementById("manzana").value === '') {
-                var arrayResult = update_query("ALTER TABLE u_terreno DROP COLUMN simbol; ALTER TABLE u_terreno ADD COLUMN simbol character varying(20); UPDATE u_terreno SET simbol = 'Estandarizada' WHERE LEFT(direccion,1)IN('C','K','A','D','T');UPDATE u_terreno SET simbol = 'No Estandarizada' WHERE LEFT(direccion,1) NOT IN('C','K','A','D','T'); UPDATE u_terreno SET simbol = 'sin informacion' WHERE direccion ='sin informacion'");
-                var select = select_query("SELECT COUNT(simbol) FROM u_terreno;");
-                var param = [['Nomenclatura Estandarizada'], ['Nomenclatura no Estandarizada'], ['Sin Direccion']];
-                var total1 = select_query("SELECT COUNT(simbol) FROM u_terreno where simbol = 'Estandarizada'");
-                var total2 = select_query("SELECT COUNT(simbol) FROM u_terreno where simbol = 'No Estandarizada'");
-                var total3 = select_query("SELECT COUNT(simbol) FROM u_terreno where simbol = 'sin informacion'");
+                try{
+                var select = select_query("select sum(numeropredios) from u_terreno;");}catch(err){}
+				if (!select){select=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                var param = [['Nomenclatura Estandarizada'], ['Nomenclatura No Estandarizada'], ['Sin Direccion']];
+                try{
+                var total1 = select_query("select sum(numeropredios) from u_terreno where dir_no_estand = 'SI'");}catch(err){}
+				if (!total1){total1=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                try{
+                var total2 = select_query("select sum(numeropredios) from u_terreno where dir_no_estand = 'NO'");}catch(err){}
+				if (!total2){total2=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                try{
+                var total3 = select_query("select sum(numeropredios) from u_terreno where dir_no_estand = 'NN'");}catch(err){}
+				if (!total3){total3=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
                 var totales = total1.concat(total2, total3);
                 estdistica(select, style, param, totales);
                 predio.getSource().updateParams({'STYLES': 'Nomenclatura Domiciliaria'});
                 map.getView().fitExtent(predio.getExtent(), map.getSize());
             } else if (document.getElementById("barrio").value !== '') {
                 var valor = "'" + values + "'";
-                var arrayResult = update_query("ALTER TABLE u_terreno DROP COLUMN simbol; ALTER TABLE u_terreno ADD COLUMN simbol character varying(20); UPDATE u_terreno SET simbol = 'Estandarizada' WHERE LEFT(direccion,1)IN('C','K','A','D','T') and cod_barrio=" + valor + "; UPDATE u_terreno SET simbol = 'No Estandarizada' WHERE LEFT(direccion,1) NOT IN('C','K','A','D','T') and cod_barrio=" + valor + "; UPDATE u_terreno SET simbol = 'sin informacion' WHERE direccion ='sin informacion' and cod_barrio=" + valor + "");
-                var select = select_query("SELECT COUNT(simbol) FROM u_terreno where cod_barrio=" + valor + ";");
-                var param = [['Nomenclatura Estandarizada'], ['Nomenclatura no Estandarizada'], ['Sin Direccion']];
-                var total1 = select_query("SELECT COUNT(simbol) FROM u_terreno where simbol = 'Estandarizada' and cod_barrio=" + valor + "");
-                var total2 = select_query("SELECT COUNT(simbol) FROM u_terreno where simbol = 'No Estandarizada' and cod_barrio=" + valor + "");
-                var total3 = select_query("SELECT COUNT(simbol) FROM u_terreno where simbol = 'sin informacion' and cod_barrio=" + valor + "");
+                try{
+                var select = select_query("select sum(numeropredios) from u_terreno where cod_barrio=" + valor + ";");}catch(err){}
+				if (!select){select=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                var param = [['Nomenclatura Estandarizada'], ['Nomenclatura No Estandarizada'], ['Sin Direccion']];
+                try{
+                var total1 = select_query("select sum(numeropredios) from u_terreno where cod_barrio=" + valor + " and dir_no_estand = 'SI'");}catch(err){}
+				if (!total1){total1=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                try{
+                var total2 = select_query("select sum(numeropredios) from u_terreno where cod_barrio=" + valor + " and dir_no_estand = 'NO'");}catch(err){}
+				if (!total2){total2=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                try{
+                var total3 = select_query("select sum(numeropredios) from u_terreno where cod_barrio=" + valor + " and dir_no_estand = 'NN'");}catch(err){}
+				if (!total3){total3=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
                 var totales = total1.concat(total2, total3);
                 estdistica(select, style, param, totales);
                 var filtro = '"cod_barrio=' + valor + '"';
                 predio.getSource().updateParams({'STYLES': 'Nomenclatura Domiciliaria', 'CQL_FILTER': eval(filtro)});
             } else if (document.getElementById("localidad").value !== '') {
                 var valor = "'" + values + "'";
-                var arrayResult = update_query("ALTER TABLE u_terreno DROP COLUMN simbol; ALTER TABLE u_terreno ADD COLUMN simbol character varying(20); UPDATE u_terreno SET simbol = 'Estandarizada' WHERE LEFT(direccion,1)IN('C','K','A','D','T') and cod_loc=" + valor + "; UPDATE u_terreno SET simbol = 'No Estandarizada' WHERE LEFT(direccion,1) NOT IN('C','K','A','D','T') and cod_loc=" + valor + "; UPDATE u_terreno SET simbol = 'sin informacion' WHERE direccion ='sin informacion' and cod_loc=" + valor + "");
-                var select = select_query("SELECT COUNT(simbol) FROM u_terreno where cod_loc=" + valor + ";");
-                var param = [['Nomenclatura Estandarizada'], ['Nomenclatura no Estandarizada'], ['Sin Direccion']];
-                var total1 = select_query("SELECT COUNT(simbol) FROM u_terreno where simbol = 'Estandarizada' and cod_loc=" + valor + "");
-                var total2 = select_query("SELECT COUNT(simbol) FROM u_terreno where simbol = 'No Estandarizada' and cod_loc=" + valor + "");
-                var total3 = select_query("SELECT COUNT(simbol) FROM u_terreno where simbol = 'sin informacion' and cod_loc=" + valor + "");
+                try{
+                var select = select_query("select sum(numeropredios) from u_terreno where cod_loc=" + valor + ";");}catch(err){}
+				if (!select){select=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                var param = [['Nomenclatura Estandarizada'], ['Nomenclatura No Estandarizada'], ['Sin Direccion']];
+                try{
+                var total1 = select_query("select sum(numeropredios) from u_terreno where cod_loc=" + valor + " and dir_no_estand = 'SI'");}catch(err){}
+				if (!total1){total1=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                try{
+                var total2 = select_query("select sum(numeropredios) from u_terreno where cod_loc=" + valor + " and dir_no_estand = 'NO'");}catch(err){}
+				if (!total2){total2=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                try{
+                var total3 = select_query("select sum(numeropredios) from u_terreno where cod_loc=" + valor + " and dir_no_estand = 'NN'");}catch(err){}
+				if (!total3){total3=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
                 var totales = total1.concat(total2, total3);
                 estdistica(select, style, param, totales);
                 var filtro = '"cod_loc=' + valor + '"';
                 predio.getSource().updateParams({'STYLES': 'Nomenclatura Domiciliaria', 'CQL_FILTER': eval(filtro)});
             } else if (document.getElementById("manzana").value !== '') {
-                var valor = "'" + values + "'";
-                var arrayResult = update_query("ALTER TABLE u_terreno DROP COLUMN simbol; ALTER TABLE u_terreno ADD COLUMN simbol character varying(20); UPDATE u_terreno SET simbol = 'Estandarizada' WHERE LEFT(direccion,1)IN('C','K','A','D','T') and manzana_co=" + valor + "; UPDATE u_terreno SET simbol = 'No Estandarizada' WHERE LEFT(direccion,1) NOT IN('C','K','A','D','T') and manzana_co=" + valor + "; UPDATE u_terreno SET simbol = 'sin informacion' WHERE direccion ='sin informacion' and manzana_co=" + valor + "");
-                var select = select_query("SELECT COUNT(simbol) FROM u_terreno where manzana_co=" + valor + ";");
-                var param = [['Nomenclatura Estandarizada'], ['Nomenclatura no Estandarizada'], ['Sin Direccion']];
-                var total1 = select_query("SELECT COUNT(simbol) FROM u_terreno where simbol = 'Estandarizada' and manzana_co=" + valor + "");
-                var total2 = select_query("SELECT COUNT(simbol) FROM u_terreno where simbol = 'No Estandarizada' and manzana_co=" + valor + "");
-                var total3 = select_query("SELECT COUNT(simbol) FROM u_terreno where simbol = 'sin informacion' and manzana_co=" + valor + "");
+                 var valor = "'" + values + "'";
+                try{
+                var select = select_query("select sum(numeropredios) from u_terreno where manzana_co=" + valor + ";");}catch(err){}
+				if (!select){select=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                var param = [['Nomenclatura Estandarizada'], ['Nomenclatura No Estandarizada'], ['Sin Direccion']];
+                try{
+                var total1 = select_query("select sum(numeropredios) from u_terreno where manzana_co=" + valor + " and dir_no_estand = 'SI'");}catch(err){}
+				if (!total1){total1=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                try{
+                var total2 = select_query("select sum(numeropredios) from u_terreno where manzana_co=" + valor + " and dir_no_estand = 'NO'");}catch(err){}
+				if (!total2){total2=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                try{
+                var total3 = select_query("select sum(numeropredios) from u_terreno where manzana_co=" + valor + " and dir_no_estand = 'NN'");}catch(err){}
+				if (!total3){total3=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
                 var totales = total1.concat(total2, total3);
                 estdistica(select, style, param, totales);
                 var filtro = '"manzana_co=' + valor + '"';
@@ -2005,7 +2051,7 @@ function rango(style) {
 				try{
                 var select = select_query("select sum(numeropredios) from u_terreno where remosion <> 'Sin Informacion'");}catch(err){}
 				if (!select){select=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
-                var param = [['Riesgo Bajo'], ['Riesgo Medio'], ['Riego Alto'], ['Riego Muy Alto'], ['Licuefacción']];
+                var param = [['Amenaza Baja'], ['Amenaza Media'], ['Amenaza Alta'], ['Amenaza Muy Alta'], ['Licuefacción'], ['Revisar']];
 				try{
                 var total1 = select_query("select sum(numeropredios) from u_terreno where remosion = 'Baja'");}catch(err){}
 				if (!total1){total1=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
@@ -2021,9 +2067,12 @@ function rango(style) {
 				try{
                 var total5 = select_query("select sum(numeropredios) from u_terreno where remosion = 'Licuefaccion'");}catch(err){}
 				if (!total5){total5=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
-                var totales = total1.concat(total2, total3, total4, total5);
+                try{
+                var total6 = select_query("select sum(numeropredios) from u_terreno where remosion = 'Revisar'");}catch(err){}
+				if (!total6){total6=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                var totales = total1.concat(total2, total3, total4, total5, total6);
                 predio.getSource().updateParams({'STYLES': 'Remocion'});
-				var titulo ="Riesgo de Remoción en Masa";
+				var titulo ="Amenaza de Remoción en Masa";
                 estdistica(select, titulo, param, totales);
                 map.getView().fitExtent(predio.getExtent(), map.getSize());	
 				queryexport = style + ' REMOCIONG';
@@ -2048,8 +2097,11 @@ function rango(style) {
 				try{
                 var total5 = select_query("select sum(numeropredios) from u_terreno where remosion = 'Licuefaccion' AND cod_barrio=" + valor + "");}catch(err){}
 				if (!total5){total5=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
-                var totales = total1.concat(total2, total3, total4, total5);
-                var param = [['Riesgo Bajo'], ['Riesgo Medio'], ['Riego Alto'], ['Riego Muy Alto'], ['Licuefacción']];
+                try{
+                var total6 = select_query("select sum(numeropredios) from u_terreno where remosion = 'Revisar' AND cod_barrio=" + valor + "");}catch(err){}
+				if (!total6){total6=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                var totales = total1.concat(total2, total3, total4, total5, total6);
+                var param = [['Amenaza Baja'], ['Amenaza Media'], ['Amenaza Alta'], ['Amenaza Muy Alta'], ['Licuefacción'], ['Revisar']];
                 var titulo ="Riesgo de Remoción en Masa";
                 estdistica(select, titulo, param, totales);
                 var filtro = '"cod_barrio=' + valor + '"';
@@ -2078,7 +2130,11 @@ function rango(style) {
                 var total5 = select_query("select sum(numeropredios) from u_terreno where remosion = 'Licuefaccion' AND cod_loc=" + valor + "");}catch(err){}
 				if (!total5){total5=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
                 var totales = total1.concat(total2, total3, total4, total5);
-                var param = [['Riesgo Bajo'], ['Riesgo Medio'], ['Riego Alto'], ['Riego Muy Alto'], ['Licuefacción']];
+                try{
+                var total6 = select_query("select sum(numeropredios) from u_terreno where remosion = 'Revisar' AND cod_loc=" + valor + "");}catch(err){}
+				if (!total6){total6=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                var totales = total1.concat(total2, total3, total4, total5, total6);
+                var param = [['Amenaza Baja'], ['Amenaza Media'], ['Amenaza Alta'], ['Amenaza Muy Alta'], ['Licuefacción'], ['Revisar']];
                 var titulo ="Riesgo de Remoción en Masa";
                 estdistica(select, titulo, param, totales);
                 var filtro = '"cod_loc=' + valor + '"';
@@ -2104,10 +2160,13 @@ function rango(style) {
                 var total4 = select_query("select sum(numeropredios) from u_terreno where remosion = 'Muy Alta' AND manzana_co=" + valor + "");}catch(err){}
 				if (!total4){total4=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
 				try{
-                var total5 = select_query("select sum(numeropredios) from u_terreno where remosion = 'Licuefaccion' AND manzana_co=" + valor + "");}catch(err){}
+                var total5 = select_query("select sum(numeropredios) from u_terreno where remosion = 'Licuefaccion' AND manzana_co=" + valor + "");}catch(err){} 
 				if (!total5){total5=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
-                var totales = total1.concat(total2, total3, total4, total5);
-                var param = [['Riesgo Bajo'], ['Riesgo Medio'], ['Riego Alto'], ['Riego Muy Alto'], ['Licuefacción']];
+               try{
+                var total6 = select_query("select sum(numeropredios) from u_terreno where remosion = 'Revisar' AND manzana_co=" + valor + "");}catch(err){}
+				if (!total6){total6=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                var totales = total1.concat(total2, total3, total4, total5, total6);
+                var param = [['Amenaza Baja'], ['Amenaza Media'], ['Amenaza Alta'], ['Amenaza Muy Alta'], ['Licuefacción'], ['Revisar']];
                 var titulo ="Riesgo de Remoción en Masa";
                 estdistica(select, titulo, param, totales);
                 var filtro = '"manzana_co=' + valor + '"';

@@ -119,15 +119,36 @@ function file() {
     
    
     else if (queryexport.substring(0, 14) === "oficial_vs_AAA"){
-        var titulo = JSON.stringify(["Codigo Localidad", "Codigo Barrio", "Codigo Manzana", "Codigo Predial", "Direccion", "Matricula", "Estratificacion Acueducto", "Estratificacion Municipio"]);
-        if (queryexport == "oficial_vs_AAA G"){
-            var select = select_query("select cod_loc, cod_barrio, manzana_co, codigo, direccion, matricula, estratificacion_acueducto, estratificacion_municipio from u_terreno;");
-        }else if (queryexport === 'oficial_vs_AAA B') {
-            var select = select_query("select cod_loc, cod_barrio, manzana_co, codigo, direccion, matricula, estratificacion_acueducto, estratificacion_municipio from u_terreno WHERE cod_barrio=" + valor + ";");
-        }else if (queryexport === 'oficial_vs_AAA L') {
-            var select = select_query("select cod_loc, cod_barrio, manzana_co, codigo, direccion, matricula, estratificacion_acueducto, estratificacion_municipio from u_terreno WHERE cod_loc=" + valor + ";");
-        }else if (queryexport === 'oficial_vs_AAA M') {
-            var select = select_query("select cod_loc, cod_barrio, manzana_co, codigo, direccion, matricula, estratificacion_acueducto, estratificacion_municipio from u_terreno WHERE manzana_co=" + valor + ";");
+        var titulo = JSON.stringify(["Localidad", "Barrio", "Codigo Predial", "Estratificacion Prestador", "Estratificacion Municipio", "Comparacion"]);
+        if (queryexport == "oficial_vs_AAA AcueductoG"){
+            alert("La base es demasiado grande para exportarla completa, por favor primero filtre por Localidad, Barrio o Manzana");
+            /*var select = select_query("select cod_loc, cod_barrio, codigo, estrato_acueducto, estratific, dif_est_acued from u_terreno;");*/
+        }else if (queryexport === 'oficial_vs_AAA AcueductoB') {
+            var select = select_query("select cod_loc, cod_barrio, codigo, estrato_acueducto, estratific, dif_est_acued from u_terreno WHERE cod_barrio=" + valor + ";");
+        }else if (queryexport === 'oficial_vs_AAA AcueductoL') {
+            var select = select_query("select cod_loc, cod_barrio, codigo, estrato_acueducto, estratific, dif_est_acued from u_terreno WHERE cod_loc=" + valor + ";");
+        }else if (queryexport === 'oficial_vs_AAA AcueductoM') {
+            var select = select_query("select cod_loc, cod_barrio, codigo, estrato_acueducto, estratific, dif_est_acued from u_terreno WHERE manzana_co=" + valor + ";");
+        }
+        else if (queryexport == "oficial_vs_AAA AlcantarilladoG"){
+            alert("La base es demasiado grande para exportarla completa, por favor primero filtre por Localidad, Barrio o Manzana");
+            /*var select = select_query("select cod_loc, cod_barrio, codigo, estrato_acueducto, estratific, dif_est_acued from u_terreno;");*/
+        }else if (queryexport === 'oficial_vs_AAA AlcantarilladoB') {
+            var select = select_query("select cod_loc, cod_barrio, codigo, estrato_alcantarillado, estratific, dif_est_alc from u_terreno WHERE cod_barrio=" + valor + ";");
+        }else if (queryexport === 'oficial_vs_AAA AlcantarilladoL') {
+            var select = select_query("select cod_loc, cod_barrio, codigo, estrato_alcantarillado, estratific, dif_est_alc from u_terreno WHERE cod_loc=" + valor + ";");
+        }else if (queryexport === 'oficial_vs_AAA AlcantarilladoM') {
+            var select = select_query("select cod_loc, cod_barrio, codigo, estrato_alcantarillado, estratific, dif_est_alc from u_terreno WHERE manzana_co=" + valor + ";");
+        }
+        else if (queryexport == "oficial_vs_AAA AseoG"){
+            alert("La base es demasiado grande para exportarla completa, por favor primero filtre por Localidad, Barrio o Manzana");
+            /*var select = select_query("select cod_loc, cod_barrio, codigo, estrato_acueducto, estratific, dif_est_acued from u_terreno;");*/
+        }else if (queryexport === 'oficial_vs_AAA AseoB') {
+            var select = select_query("select cod_loc, cod_barrio, codigo, estrato_aseo, estratific, dif_est_aseo from u_terreno WHERE cod_barrio=" + valor + ";");
+        }else if (queryexport === 'oficial_vs_AAA AseoL') {
+            var select = select_query("select cod_loc, cod_barrio, codigo, estrato_aseo, estratific, dif_est_aseo from u_terreno WHERE cod_loc=" + valor + ";");
+        }else if (queryexport === 'oficial_vs_AAA AseoM') {
+            var select = select_query("select cod_loc, cod_barrio, codigo, estrato_aseo, estratific, dif_est_aseo from u_terreno WHERE manzana_co=" + valor + ";");
         }
     }
     
@@ -178,17 +199,17 @@ function file() {
     }
     
     else if (queryexport.substring(0, 27) === "Distrito vs Prestadores AAA"){
-		var titulo = JSON.stringify(["Direccion","codigo"]);
+		var titulo = JSON.stringify(["Direccion o Codigo","Estado"]);
         if (queryexport == 'Distrito vs Prestadores AAA G'){
-            alert("El Reporte corresponde a todos los registros de la base AAA que no se encuentran en la Base catastral");
+            alert("El Reporte corresponde a los registros de la base AAA que no se encuentran en la Base catastral");
 			var select = select_query("select drireccion from prestadoresaaa where presenteencatastro = 'No';");
-        }/*else if (queryexport === 'Tipo de Amenaza REMOCIONB') {
-            var select = select_query("select cod_loc, cod_barrio, manzana_co, codigo, remosion, numeropredios from u_terreno where cod_barrio=" + valor + ";");
-        }else if (queryexport === 'Tipo de Amenaza REMOCIONL') {
-            var select = select_query("select cod_loc, cod_barrio, manzana_co, codigo, remosion, numeropredios from u_terreno where cod_loc=" + valor + ";");
-        }else if (queryexport === 'Tipo de Amenaza REMOCIONM') {
-            var select = select_query("select cod_loc, cod_barrio, manzana_co, codigo, remosion, numeropredios from u_terreno where manzana_co=" + valor + ";");     
-        }*/
+        }else if (queryexport === 'Distrito vs Prestadores AAA B') {
+            var select = select_query("select codigo, presenteenaaa from u_terreno where cod_barrio=" + valor + ";");
+        }else if (queryexport === 'Distrito vs Prestadores AAA L') {
+            var select = select_query("select codigo, presenteenaaa from u_terreno where cod_loc=" + valor + ";");
+        }else if (queryexport === 'Distrito vs Prestadores AAA M') {
+            var select = select_query("select codigo, presenteenaaa from u_terreno where manzana_co=" + valor + ";");
+        }
     }
    
     var arr = JSON.stringify(select);

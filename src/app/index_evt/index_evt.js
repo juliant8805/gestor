@@ -46,6 +46,7 @@ function detectarCarga() {
             document.getElementById("predios_actualizacion").style.display = "block";
             document.getElementById("Calidad Construcciones").style.display = "block";
             document.getElementById("Avaluo Catastral").style.display = "block";
+            modulo="catastro";
         }
         //console.log(document.getElementById("icono_matricula").style.display);
         if (select[0][7] === 't') {
@@ -53,9 +54,10 @@ function detectarCarga() {
             document.getElementById("Distrito vs Prestadores AAA").style.display = "block";
             document.getElementById("estratificacion_oficial").style.display = "block";
             document.getElementById("oficial_vs_AAA").style.display = "block";
-            //document.getElementById("oficial_vs_AAA_uso").style.display = "block";
+            document.getElementById("oficial_vs_AAA_uso").style.display = "block";
             document.getElementById("disponibilidad_AAA").style.display = "block";
-            // document.getElementById("Nomenclatura Domiciliaria").style.display = "block";
+            document.getElementById("Nomenclatura Domiciliaria").style.display = "block";
+            modulo="sui";
         }
         if (select[0][9] === 't') {
             var sele = select_query("SELECT COUNT(table_name) FROM information_schema.tables WHERE table_schema='public' AND table_name LIKE 'temp_%'");
@@ -74,12 +76,13 @@ function detectarCarga() {
             document.getElementById("estratificacion_oficial").style.display = "block";
             document.getElementById("Tipo de Amenaza").style.display = "block";
             document.getElementById("Estructura Ecologica Principal").style.display = "block";
-
+            modulo="planeacion";
         }
         if (select[0][10] === 't') {
             document.getElementById("Tipo de Contribuyente").style.display = "block";
             document.getElementById("predios_exentos_2016").style.display = "block";
             document.getElementById("Tipo Propietario").style.display = "block";
+            modulo="hacienda";
         }
     } catch (err) {
     }
@@ -217,9 +220,12 @@ function herramientas() {
 
 function limpiar_consulta() {
     globalstyle = "sinconsulta";
-    manzana.setVisible(true);
+    puntos_aaa.setVisible(false);
+    manzana.setVisible(false);
     construcciones.setVisible(true);
-    unidades.setVisible(true);
+    unidades.setVisible(false);
+    vias.setVisible(false);
+    predio.setVisible(true);
     document.getElementById('panel_atr').style.display = 'none';
     document.getElementById('botoncerrarstreetview').style.display = 'none';
     document.getElementById('botonmostrarstreetview').style.display = 'none';
@@ -500,13 +506,13 @@ function normalImage(id) {
         }
     } else if (id === "oficial_vs_AAA_uso") {
         if (document.getElementById("oficial_vs_AAA_uso").value === "Acueducto") {
-            document.getElementById('oficial_vs_AAA_uso').style = "background-color:#86B12D; min-height: 40px; border:0px; font-size:small;";
+            document.getElementById('oficial_vs_AAA_uso').style = "background-color:#a6a6a6; min-height: 40px; border:0px; font-size:small;";
         } else if (document.getElementById("oficial_vs_AAA_uso").value === "Alcantarillado") {
-            document.getElementById('oficial_vs_AAA_uso').style = "background-color:#86B12D; min-height: 40px; border:0px; font-size:small;";
+            document.getElementById('oficial_vs_AAA_uso').style = "background-color:#a6a6a6; min-height: 40px; border:0px; font-size:small;";
         } else if (document.getElementById("oficial_vs_AAA_uso").value === "Aseo") {
-            document.getElementById('oficial_vs_AAA_uso').style = "background-color:#86B12D; min-height: 40px; border:0px; font-size:small;";
+            document.getElementById('oficial_vs_AAA_uso').style = "background-color:#a6a6a6; min-height: 40px; border:0px; font-size:small;";
         } else {
-            document.getElementById('oficial_vs_AAA_uso').style = "background:url('./imagenes/icono_diferencia_estratificacion.png'); background-color:#86B12D; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
+            document.getElementById('oficial_vs_AAA_uso').style = "background:url('./imagenes/oficial_vs_AAA_uso.png'); background-color:#a6a6a6; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
         }
     } else if (id === "disponibilidad_AAA") {
         if (document.getElementById("disponibilidad_AAA").value === "Acueducto") {

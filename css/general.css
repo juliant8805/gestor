@@ -248,8 +248,8 @@ body{
 /*@media handheld, only screen and (max-width: 767px) {*/
 #subirshape{
     position: absolute;
-    top: 2em;
-    left: 58em;
+    top: 5em;
+    left: 48em;
     height: 2.5em;
     width: 2.5em;
     margin-left: 0.5em;
@@ -261,8 +261,8 @@ body{
 /*}*/
 #valid{
     position: absolute;
-    top: 2em;
-    left: 55em;
+    top: 5em;
+    left: 45em;
     height: 2.5em;
     width: 2.5em;
     margin-left: 0.5em;

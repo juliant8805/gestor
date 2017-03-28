@@ -104,12 +104,12 @@ $(document).ready(function () {
                 }
                 delfile("files");
                 document.getElementById("valid").style.display = "block";
-                message = $("<span class='success'>Archivos subidos correctamente.</span>");
+                var message = $("<span class='success'>Archivos subidos correctamente.</span>");
                 showMessage(message);
             },
             //si ha ocurrido un error
             error: function () {
-                message = $("<span class='error'>Ha ocurrido un error.</span>");
+                var message = $("<span class='error'>Ha ocurrido un error.</span>");
                 showMessage(message);
             }
         });
@@ -136,8 +136,9 @@ function readFile(file, onLoadCallback) {
 function validate() {
     var table = document.getElementById("table");
     table.innerHTML = "";
-    var select = select_query("SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_name LIKE 'temp_%'");
-    var sel = [];
+    //$("table").children().remove()
+    var select = select_query("SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_name LIKE 'temp_%' ORDER BY table_name");
+    //var sel = [];
     //console.log(select);
     var row = table.insertRow(0);
     var cell1 = row.insertCell(0);
@@ -146,19 +147,20 @@ function validate() {
     cell2.innerHTML = " VALIDAR ";
     //filas=table.getRowCount();
     for (i = 1; i <= select.length; i++) {
-        sel[i] = select[i - 1][0];
+        //sel[i - 1] = select[i - 1][0];
         row = table.insertRow(i);
         cell1 = row.insertCell(0);
         cell2 = row.insertCell(1);
         cell1.target = "marco";
-        cell1.innerHTML = select[i - 1][0].link("http://35.184.3.4:8080/geoserver/preproduccion/wms?service=WMS&version=1.1.0&request=GetMap&layers=preproduccion:"+select[i - 1][0]+"&styles=&bbox=-74.878721,10.9183800000001,-74.7586219999999,11.0510640000001&width=695&height=768&srs=EPSG:4326&format=application/openlayers");
+        cell1.innerHTML = select[i - 1][0].split('temp_')[1].link("http://35.184.3.4:8080/geoserver/preproduccion/wms?service=WMS&version=1.1.0&request=GetMap&layers=preproduccion:" + select[i - 1][0] + "&styles=&bbox=-74.878721,10.9183800000001,-74.7586219999999,11.0510640000001&width=695&height=768&srs=EPSG:4326&format=application/openlayers");
         cell1.getElementsByTagName("a")["0"].target = "_blank";
         //console.log(cell1.getElementsByTagName("a"));
         //console.log(cell1);
         var element1 = document.createElement("input");
         element1.type = "checkbox";
         element1.id = select[i - 1][0];
-        element1.setAttribute("onchange", "toggleSelect(" + sel + ")");
+        //element1.setAttribute("onchange", "toggleSelect(" + select[i - 1][0] + ")");
+        //element1.setAttribute("onchange", "toggleSelect()");
         cell2.appendChild(element1);
     }
     /*
@@ -169,10 +171,56 @@ function validate() {
      cell2.innerHTML = "Aqui tambien";
      */
 }
-function toggleSelect(sel){
-    console.log(sel);
-    console.log(document.getElementById(sel[0]));
-    for (i = 0; i <= sel.length; i++) {
-        
+//function toggleSelect(){
+
+/*console.log(sel.checked);
+ console.log(sel.id);
+ console.log(document.getElementById(sel[0]));
+ for (i = 0; i <= sel.length; i++) {
+ 
+ }*/
+//}
+function valshp() {
+    var html = "<span class='info'>Archivos validados con exito</br>";
+    var select = select_query("SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_name LIKE 'temp_%' ORDER BY table_name");
+    for (i = 0; i < select.length; i++) {
+        //console.log(document.getElementById(select[i][0]));
+        if (document.getElementById(select[i][0]).checked === true) {
+            //console.log(select[i][0].split('temp_')[1]);
+            update_query("DROP TABLE post_" + select[i][0].split('temp_')[1] + ";");
+            //var up = update_query("ALTER TABLE " + select[i][0].split('temp_')[1] + " RENAME TO post_" + select[i][0].split('temp_')[1] + ";");
+            var up = update_query("CREATE TABLE post_" + select[i][0].split('temp_')[1] + " AS SELECT * FROM " + select[i][0].split('temp_')[1] + ";");
+            //console.log(select[i][0]);
+            //console.log(up);
+            if (up) {
+                //var lo = update_query("CREATE TABLE " + select[i][0].split('temp_')[1] + " .FROM temp_" + select[i][0].split('temp_')[1] + ";");
+                update_query("DROP TABLE " + select[i][0].split('temp_')[1] + ";");
+                var lo = update_query("CREATE TABLE " + select[i][0].split('temp_')[1] + " AS SELECT * FROM temp_" + select[i][0].split('temp_')[1] + ";");
+                if (lo) {
+                    update_query("DROP TABLE temp_" + select[i][0].split('temp_')[1] + ";");
+                    //mensaj.innerHTML += "<br>" + select[i][0].split('temp_')[1];  // Agrego nueva linea antes
+                    //message += $("<span class='success'>El archivo " + select[i][0].split('temp_')[1] + "fue validado con exito</span>");
+                    html += " ...  " + select[i][0].split('temp_')[1] + "  ...</span></br>";
+                    mns(html);
+                    //console.log(a);
+                    //var mns = document.getElementById("mns");
+                } else {
+                    var message = $("</br></br><span class='error'>Error al validar " + select[i][0].split('temp_')[1] + "</span>");
+                    mn(message);
+                }
+            } else {
+                var message = $("</br></br><span class='error'>Ha ocurrido un error con el archivo " + select[i][0].split('temp_')[1] + "</span>");
+                mn(message);
+            }
+        }
     }
+    validate();
+}
+function mns(message) {
+    $(".message").html("").show();
+    $(".message").html(message);
+}
+function mn(message) {
+    $(".messag").html("").show();
+    $(".messag").html(message);
 }

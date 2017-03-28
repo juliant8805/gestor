@@ -261,13 +261,15 @@
                     <div class="control-group" align="center">
                        <label for="selshape" class="control-label" align="center">Shapefile(s):</label></br>
                         <div align="center">
-                            <table id="table"></table>
+                            <table id="table"></table></br>
+                            <div class="message"></div>
+                            <div class="messag"></div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button href="#" class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
-                    <input type="button" class="btn btn-primary" value="Validar shape(s)" disabled/>
+                    <input type="button" class="btn btn-primary" value="Validar shape(s)" onclick="valshp()"/>
                 </div>
             </div>
         </div>
@@ -287,7 +289,7 @@
                         <span class='success'>(para subir un shapefile los archivos minimos a subir son: *.shp, *.shx, *.dbf y *.prj)</span>
                         <div class="controls"></br>
                             <form enctype="multipart/form-data" class="formulario">
-                                <input type="file" id="files" name="archivo" multiple>
+                                <input type="file" id="files" name="archivo" multiple></br>
                                 <!--<input name="archivo" type="file" id="imagen" />-->
                                 <div class="messages"></div>
                             </form>

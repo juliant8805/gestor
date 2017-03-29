@@ -38,14 +38,14 @@ function detectarCarga() {
         if (select[0][5] === 't') {
             //alert("ww");
             //document.getElementById('botones').style.display = 'block';
-            document.getElementById("icono_matricula").style.display = "block";
+            //document.getElementById("icono_matricula").style.display = "block";
             document.getElementById("icono_codigo").style.display = "block";
-            document.getElementById("Rango Area Terreno").style.display = "block";
-            document.getElementById("Rango Area Construccion").style.display = "block";
+            //document.getElementById("Rango Area Terreno").style.display = "block";
+            //document.getElementById("Rango Area Construccion").style.display = "block";
             document.getElementById("Tipo Construccion").style.display = "block";
-            document.getElementById("predios_actualizacion").style.display = "block";
-            document.getElementById("Calidad Construcciones").style.display = "block";
-            document.getElementById("Avaluo Catastral").style.display = "block";
+            //document.getElementById("predios_actualizacion").style.display = "block";
+            //document.getElementById("Calidad Construcciones").style.display = "block";
+            //document.getElementById("Avaluo Catastral").style.display = "block";
             modulo="catastro";
         }
         //console.log(document.getElementById("icono_matricula").style.display);

@@ -282,48 +282,73 @@ function rango(style) {
             layerSUI.setVisible(false);
             predio.setVisible(true);
             if (document.getElementById("barrio").value === '' && document.getElementById("localidad").value === '' && document.getElementById("manzana").value === '') {
-                var select = select_query("SELECT Count(*) FROM u_terreno;");
-                var param = [['Actualizacion'], ['Conservacion'], ['Sin Estado']];
-                var total1 = select_query("SELECT COUNT(estado) FROM u_terreno where estado = 'ACTUALIZACION'");
-                var total2 = select_query("SELECT COUNT(estado) FROM u_terreno where estado = 'CONSERVACION'");
-                var total3 = select_query("SELECT COUNT(estado) FROM u_terreno where estado = 'SIN'");
-                var totales = total1.concat(total2, total3);
-                predio.getSource().updateParams({'STYLES': style});
-                estdistica(select, style, param, totales);
+                try{
+                var select = select_query("select sum(numeropredios) from u_terreno;");}catch(err){}
+				if (!select){select=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                var param = [['Construido'], ['No Construido']];
+				try{
+                var total1 = select_query("select sum(numeropredios) from u_terreno where area_cons = '1'");}catch(err){}
+				if (!total1){total1=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+				try{
+                var total2 = select_query("select sum(numeropredios) from u_terreno where area_cons = '0'");}catch(err){}
+				if (!total2){total2=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                var totales = total1.concat(total2);
+                predio.getSource().updateParams({'STYLES': 'construido'});
+                var titulo = "Predios sin Area Construida en R1"
+                estdistica(select, titulo, param, totales);
                 map.getView().fitExtent(predio.getExtent(), map.getSize());
                 queryexport = style + ' G';
-            } else if (document.getElementById("barrio").value !== '') {
+            } 
+
+            else if (document.getElementById("barrio").value !== '') {
                 var valor = "'" + values + "'";
-                var select = select_query("SELECT Count(*) FROM u_terreno WHERE cod_barrio=" + valor + ";");
-                var total1 = select_query("SELECT COUNT(estado) FROM u_terreno where estado = 'ACTUALIZACION' AND cod_barrio=" + valor + "");
-                var total2 = select_query("SELECT COUNT(estado) FROM u_terreno where estado = 'CONSERVACION' AND cod_barrio=" + valor + "");
-                var total3 = select_query("SELECT COUNT(estado) FROM u_terreno where estado = 'SIN' AND cod_barrio=" + valor + "");
-                var totales = total1.concat(total2, total3);
-                var param = [['Actualizacion'], ['Conservacion'], ['Sin Estado']];
+                try{
+                var select = select_query("select sum(numeropredios) from u_terreno WHERE cod_barrio=" + valor + ";");}catch(err){}
+				if (!select){select=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}  
+				try{
+                var total1 = select_query("select sum(numeropredios) from u_terreno where ph <'800' AND cod_barrio=" + valor + "");}catch(err){}
+				if (!total1){total1=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+				try{
+                var total2 = select_query("select sum(numeropredios) from u_terreno where ph >= '800' AND cod_barrio=" + valor + "");}catch(err){}
+				if (!total2){total2=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                var totales = total1.concat(total2);
+                var param = [['NPH'], ['PH']];
                 estdistica(select, style, param, totales);
                 var filtro = '"cod_barrio=' + valor + '"';
                 predio.getSource().updateParams({'STYLES': style, 'CQL_FILTER': eval(filtro)});
                 queryexport = style + ' B';
-            } else if (document.getElementById("localidad").value !== '') {
+            } 
+
+            else if (document.getElementById("localidad").value !== '') {
                 var valor = "'" + values + "'";
-                var select = select_query("SELECT Count(*) FROM u_terreno WHERE cod_loc=" + valor + ";");
-                var total1 = select_query("SELECT COUNT(estado) FROM u_terreno where estado = 'ACTUALIZACION' AND cod_loc=" + valor + "");
-                var total2 = select_query("SELECT COUNT(estado) FROM u_terreno where estado = 'CONSERVACION' AND cod_loc=" + valor + "");
-                var total3 = select_query("SELECT COUNT(estado) FROM u_terreno where estado = 'SIN' AND cod_loc=" + valor + "");
-                var totales = total1.concat(total2, total3);
-                var param = [['Actualizacion'], ['Conservacion'], ['Sin Estado']];
+                try{
+                var select = select_query("select sum(numeropredios) from u_terreno WHERE cod_loc=" + valor + ";");}catch(err){}
+				if (!select){select=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}  
+				try{
+                var total1 = select_query("select sum(numeropredios) from u_terreno where ph <'800' AND cod_loc=" + valor + "");}catch(err){}
+				if (!total1){total1=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+				try{
+                var total2 = select_query("select sum(numeropredios) from u_terreno where ph >= '800' AND cod_loc=" + valor + "");}catch(err){}
+				if (!total2){total2=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                var totales = total1.concat(total2);
+                var param = [['NPH'], ['PH']];
                 estdistica(select, style, param, totales);
                 var filtro = '"cod_loc=' + valor + '"';
                 predio.getSource().updateParams({'STYLES': style, 'CQL_FILTER': eval(filtro)});
                 queryexport = style + ' L';
             } else if (document.getElementById("manzana").value !== '') {
                 var valor = "'" + values + "'";
-                var select = select_query("SELECT Count(*) FROM u_terreno WHERE cod_loc=" + valor + ";");
-                var total1 = select_query("SELECT COUNT(estado) FROM u_terreno where estado = 'ACTUALIZACION' AND manzana_co=" + valor + "");
-                var total2 = select_query("SELECT COUNT(estado) FROM u_terreno where estado = 'CONSERVACION' AND manzana_co=" + valor + "");
-                var total3 = select_query("SELECT COUNT(estado) FROM u_terreno where estado = 'SIN' AND manzana_co=" + valor + "");
-                var totales = total1.concat(total2, total3);
-                var param = [['Actualizacion'], ['Conservacion'], ['Sin Estado']];
+                try{
+                var select = select_query("select sum(numeropredios) from u_terreno WHERE manzana_co=" + valor + ";");}catch(err){}
+				if (!select){select=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}  
+				try{
+                var total1 = select_query("select sum(numeropredios) from u_terreno where ph <'800' AND manzana_co=" + valor + "");}catch(err){}
+				if (!total1){total1=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+				try{
+                var total2 = select_query("select sum(numeropredios) from u_terreno where ph >= '800' AND manzana_co=" + valor + "");}catch(err){}
+				if (!total2){total2=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                var totales = total1.concat(total2);
+                var param = [['NPH'], ['PH']];
                 estdistica(select, style, param, totales);
                 var filtro = '"manzana_co=' + valor + '"';
                 predio.getSource().updateParams({'STYLES': style, 'CQL_FILTER': eval(filtro)});
@@ -405,50 +430,75 @@ function rango(style) {
             layerprediosexentos2016.setVisible(false);
             estacionestransmetro.setVisible(false);
             viastransmasivo.setVisible(false);
+            construcciones.setVisible(false);
             predio.setVisible(true);
             if (document.getElementById("barrio").value === '' && document.getElementById("localidad").value === '' && document.getElementById("manzana").value === '') {
-                var select = select_query("SELECT Count(*) FROM u_terreno;");
-                var param = [['NPH'], ['PH'], ['No Construido']];
-                var total1 = select_query("SELECT COUNT(tipo_construccion) FROM u_terreno where tipo_construccion = 'NPH'");
-                var total2 = select_query("SELECT COUNT(tipo_construccion) FROM u_terreno where tipo_construccion = 'PH'");
-                var total3 = select_query("SELECT COUNT(tipo_construccion) FROM u_terreno where tipo_construccion = 'No Const'");
-                var totales = total1.concat(total2, total3);
+                try{
+                var select = select_query("select sum(numeropredios) from u_terreno;");}catch(err){}
+				if (!select){select=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                var param = [['NPH'], ['PH']];
+				try{
+                var total1 = select_query("select sum(numeropredios) from u_terreno where ph <'800'");}catch(err){}
+				if (!total1){total1=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+				try{
+                var total2 = select_query("select sum(numeropredios) from u_terreno where ph >= '800'");}catch(err){}
+				if (!total2){total2=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                var totales = total1.concat(total2);
                 predio.getSource().updateParams({'STYLES': style});
                 estdistica(select, style, param, totales);
                 map.getView().fitExtent(predio.getExtent(), map.getSize());
                 queryexport = style + ' G';
-            } else if (document.getElementById("barrio").value !== '') {
+            } 
+
+            else if (document.getElementById("barrio").value !== '') {
                 var valor = "'" + values + "'";
-                var select = select_query("SELECT Count(*) FROM u_terreno WHERE cod_barrio=" + valor + ";");
-                var total1 = select_query("SELECT COUNT(tipo_construccion) FROM u_terreno where tipo_construccion = 'NPH' AND cod_barrio=" + valor + "");
-                var total2 = select_query("SELECT COUNT(tipo_construccion) FROM u_terreno where tipo_construccion = 'PH' AND cod_barrio=" + valor + "");
-                var total3 = select_query("SELECT COUNT(tipo_construccion) FROM u_terreno where tipo_construccion = 'No Const' AND cod_barrio=" + valor + "");
-                var totales = total1.concat(total2, total3);
-                var param = [['NPH'], ['PH'], ['No Construido']];
+                try{
+                var select = select_query("select sum(numeropredios) from u_terreno WHERE cod_barrio=" + valor + ";");}catch(err){}
+				if (!select){select=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}  
+				try{
+                var total1 = select_query("select sum(numeropredios) from u_terreno where ph <'800' AND cod_barrio=" + valor + "");}catch(err){}
+				if (!total1){total1=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+				try{
+                var total2 = select_query("select sum(numeropredios) from u_terreno where ph >= '800' AND cod_barrio=" + valor + "");}catch(err){}
+				if (!total2){total2=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                var totales = total1.concat(total2);
+                var param = [['NPH'], ['PH']];
                 estdistica(select, style, param, totales);
                 var filtro = '"cod_barrio=' + valor + '"';
                 predio.getSource().updateParams({'STYLES': style, 'CQL_FILTER': eval(filtro)});
                 queryexport = style + ' B';
-            } else if (document.getElementById("localidad").value !== '') {
+            } 
+
+            else if (document.getElementById("localidad").value !== '') {
                 var valor = "'" + values + "'";
-                var select = select_query("SELECT Count(*) FROM u_terreno WHERE cod_loc=" + valor + ";");
-                var total1 = select_query("SELECT COUNT(tipo_construccion) FROM u_terreno where tipo_construccion = 'NPH' AND cod_loc=" + valor + "");
-                var total2 = select_query("SELECT COUNT(tipo_construccion) FROM u_terreno where tipo_construccion = 'PH' AND cod_loc=" + valor + "");
-                var total3 = select_query("SELECT COUNT(tipo_construccion) FROM u_terreno where tipo_construccion = 'No Const' AND cod_loc=" + valor + "");
-                var totales = total1.concat(total2, total3);
-                var param = [['NPH'], ['PH'], ['No Construido']];
+                try{
+                var select = select_query("select sum(numeropredios) from u_terreno WHERE cod_loc=" + valor + ";");}catch(err){}
+				if (!select){select=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}  
+				try{
+                var total1 = select_query("select sum(numeropredios) from u_terreno where ph <'800' AND cod_loc=" + valor + "");}catch(err){}
+				if (!total1){total1=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+				try{
+                var total2 = select_query("select sum(numeropredios) from u_terreno where ph >= '800' AND cod_loc=" + valor + "");}catch(err){}
+				if (!total2){total2=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                var totales = total1.concat(total2);
+                var param = [['NPH'], ['PH']];
                 estdistica(select, style, param, totales);
                 var filtro = '"cod_loc=' + valor + '"';
                 predio.getSource().updateParams({'STYLES': style, 'CQL_FILTER': eval(filtro)});
                 queryexport = style + ' L';
             } else if (document.getElementById("manzana").value !== '') {
                 var valor = "'" + values + "'";
-                var select = select_query("SELECT Count(*) FROM u_terreno WHERE manzana_co=" + valor + ";");
-                var total1 = select_query("SELECT COUNT(tipo_construccion) FROM u_terreno where tipo_construccion = 'NPH' AND manzana_co=" + valor + "");
-                var total2 = select_query("SELECT COUNT(tipo_construccion) FROM u_terreno where tipo_construccion = 'PH' AND manzana_co=" + valor + "");
-                var total3 = select_query("SELECT COUNT(tipo_construccion) FROM u_terreno where tipo_construccion = 'No Const' AND manzana_co=" + valor + "");
-                var totales = total1.concat(total2, total3);
-                var param = [['NPH'], ['PH'], ['No Construido']];
+                try{
+                var select = select_query("select sum(numeropredios) from u_terreno WHERE manzana_co=" + valor + ";");}catch(err){}
+				if (!select){select=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}  
+				try{
+                var total1 = select_query("select sum(numeropredios) from u_terreno where ph <'800' AND manzana_co=" + valor + "");}catch(err){}
+				if (!total1){total1=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+				try{
+                var total2 = select_query("select sum(numeropredios) from u_terreno where ph >= '800' AND manzana_co=" + valor + "");}catch(err){}
+				if (!total2){total2=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                var totales = total1.concat(total2);
+                var param = [['NPH'], ['PH']];
                 estdistica(select, style, param, totales);
                 var filtro = '"manzana_co=' + valor + '"';
                 predio.getSource().updateParams({'STYLES': style, 'CQL_FILTER': eval(filtro)});

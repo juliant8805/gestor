@@ -36,14 +36,17 @@ function detectarCarga() {
     //console.log(select);
     try {
         if (select[0][5] === 't') {
-            //alert("ww");
+            document.getElementById("menu_circular").style.display = "block";
+            document.getElementById("tipo_usuario").style.display = "block";
+            document.getElementById("manual").style.display = "block";
+            
             //document.getElementById('botones').style.display = 'block';
             //document.getElementById("icono_matricula").style.display = "block";
             document.getElementById("icono_codigo").style.display = "block";
             //document.getElementById("Rango Area Terreno").style.display = "block";
             //document.getElementById("Rango Area Construccion").style.display = "block";
             document.getElementById("Tipo Construccion").style.display = "block";
-            //document.getElementById("predios_actualizacion").style.display = "block";
+            document.getElementById("predios_actualizacion").style.display = "block";
             //document.getElementById("Calidad Construcciones").style.display = "block";
             //document.getElementById("Avaluo Catastral").style.display = "block";
             modulo="catastro";
@@ -51,6 +54,9 @@ function detectarCarga() {
         //console.log(document.getElementById("icono_matricula").style.display);
        else if (select[0][7] === 't') {
             //document.getElementById("metrotel").style.display = "block";
+            document.getElementById("menu_circular").style.display = "block";
+            document.getElementById("tipo_usuario").style.display = "block";
+            document.getElementById("manual").style.display = "block";
             document.getElementById("Distrito vs Prestadores AAA").style.display = "block";
             document.getElementById("estratificacion_oficial").style.display = "block";
             document.getElementById("oficial_vs_AAA").style.display = "block";
@@ -66,6 +72,9 @@ function detectarCarga() {
                 //console.log(sele);        
                 document.getElementById("valid").style.display = "block";
             }
+            document.getElementById("menu_circular").style.display = "block";
+            document.getElementById("tipo_usuario").style.display = "block";
+            document.getElementById("manual").style.display = "block";
             document.getElementById("subirshape").style.display = "block";
             document.getElementById("alineamiento").style.display = "block";
             document.getElementById("Usos_Permitidos").style.display = "block";
@@ -79,6 +88,9 @@ function detectarCarga() {
             modulo="planeacion";
         }
         else if (select[0][10] === 't') {
+            document.getElementById("menu_circular").style.display = "block";
+            document.getElementById("tipo_usuario").style.display = "block";
+            document.getElementById("manual").style.display = "block";
             document.getElementById("Tipo de Contribuyente").style.display = "block";
             document.getElementById("predios_exentos_2016").style.display = "block";
             document.getElementById("Tipo Propietario").style.display = "block";
@@ -88,7 +100,7 @@ function detectarCarga() {
             //document.getElementById("Tipo de Contribuyente").style.display = "none";
             //document.getElementById("predios_exentos_2016").style.display = "none";
             //document.getElementById("Tipo Propietario").style.display = "none"; 
-            document.getElementById("cerrar_submenu").style.display = "none";
+            /*document.getElementById("cerrar_submenu").style.display = "none";
             document.getElementById("cerrar_submenu_cafe").style.display = "none";
             document.getElementById("cerrar_submenu_verde").style.display = "none";
             document.getElementById("cerrar_submenu").style.display = "none";
@@ -98,8 +110,9 @@ function detectarCarga() {
             document.getElementById("valid").style.display = "none";
             document.getElementById("nombre_usuario").style.display = "none";
             document.getElementById("tipo_usuario").style.display = "none";
-            document.getElementById("manual").style.display = "none";
-            //document.getElementById("salida").style.display = "none";              
+            document.getElementById("manual").style.display = "none";*/
+            document.getElementById("tipo_usuario").style.display = "none";
+            document.getElementById("salida").style.display = "none";              
             modulo="totem";
         }
     } catch (err) {

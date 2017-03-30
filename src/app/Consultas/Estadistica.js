@@ -14,9 +14,9 @@ function estdistica(select, titulo, param, totales) {
     var dat = new Array(param.length);
     for (i = 0; i < param.length; i++) {
         if (param[i][0]==='PH'){
-            color[i]='#7fbf7f';
-        }else if (param[i][0]==='NPH'){
             color[i]='#ffff4c';
+        }else if (param[i][0]==='NPH'){
+            color[i]='#7fbf7f';
         }else if(param[i][0]==='No Construido'){
             color[i]='#7f7fff';
         }else if(param[i][0]==='0-100m2'){

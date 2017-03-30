@@ -30,7 +30,7 @@
     <script src="src/app/LayersControl.js"></script>
     <script src="src/app/index_evt/index_evt.js"></script>
     <script src="import/import.js"></script>
-    <!--<script> window.oncontextmenu = function() { return false; } </script>-->
+    <script> window.oncontextmenu = function() { return false; } </script>
 
     <!--Highcharts-->
     <script src="src/highcharts/js/highcharts.js"></script>
@@ -411,6 +411,7 @@
 
         <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/predios_exentos.png'); background-color:#86B12D; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="predios_exentos_2016" name="predios_exentos_2016" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button> 
 
+        <!-- construido y no construido-->
         <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_actualizacion_conservacion.png'); background-color:#006D1B; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="predios_actualizacion" name="predios_actualizacion" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>
 
         <select class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_disponibilidad.png'); background-color:#008E30; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="disponibilidad_AAA" name=prestadores onchange="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'>

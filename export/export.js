@@ -81,15 +81,16 @@ function file() {
         }
     }
     else if (queryexport.substring(0, 17) === "Tipo Construccion"){
-        var titulo = JSON.stringify(["Codigo Localidad", "Codigo Barrio", "Codigo Manzana", "Codigo Predial", "Direccion", "Matricula", "Tipo de Construccion"]);
+        var titulo = JSON.stringify(["Localidad", "Barrio", "Codigo Predial", "Condicion de Propiedad"]);
         if (queryexport == "Tipo Construccion G"){
-            var select = select_query("select cod_loc, cod_barrio, manzana_co, codigo, direccion, matricula, tipo_construccion from u_terreno;");
+            alert("el tamaño del archivo es demasiado grande, por favor primero filtre por Localidad, Barrio o Manzana")
+            //var select = select_query("select codigo_ant, ph from u_terreno;");
         }else if (queryexport === 'Tipo Construccion B') {
-            var select = select_query("select cod_loc, cod_barrio, manzana_co, codigo, direccion, matricula, tipo_construccion from u_terreno WHERE cod_barrio=" + valor + ";");
+            var select = select_query("select nombre_loc, cod_barrio, codigo_ant, ph from u_terreno WHERE cod_barrio=" + valor + ";");
         }else if (queryexport === 'Tipo Construccion L') {
-            var select = select_query("select cod_loc, cod_barrio, manzana_co, codigo, direccion, matricula, tipo_construccion from u_terreno WHERE cod_loc=" + valor + ";");
+            var select = select_query("select nombre_loc, cod_barrio, codigo_ant, ph from u_terreno WHERE cod_loc=" + valor + ";");
         }else if (queryexport === 'Tipo Construccion M') {
-            var select = select_query("select cod_loc, cod_barrio, manzana_co, codigo, direccion, matricula, tipo_construccion from u_terreno WHERE manzana_co=" + valor + ";");
+            var select = select_query("select nombre_loc, cod_barrio, codigo_ant, ph from u_terreno WHERE manzana_co=" + valor + ";");
         }
     }
     /*else if (queryexport.substring(0, 19) === "Estratificacion SUI"){

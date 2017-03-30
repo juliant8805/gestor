@@ -485,9 +485,7 @@ function addressSelect(event, ui) {
     
     else if (modulo === 'catastro') {
         predio.setVisible(true);
-         /*document.getElementById("panel_atributos").style.display = "block";
-         document.getElementById("tablaatributos").style.display = "block";
-         document.getElementById("botonocultarpanelatributos").style.display = "block";*/
+ 
         $.ajax({
             url: url,
             success: function (data) {
@@ -508,41 +506,48 @@ function addressSelect(event, ui) {
                     var imag = [];
                     var stv = [];
                     var ig = [];
-                    var codfoto = values.codigo_ant.substring(0,17);  
+                    var codfoto = values.codigo_ant.substring(0,17); 
+                    
+                    
                     select[0] = "<b>Codigo Manzana</b>";
                     select[1] = "<b>Codigo Catastral Nuevo</b>";
                     select[2] = "<b>Codigo Catastral Anterior</b>";
                     select[3] = "<b>Dirección</b>"; 
-                    select[4] = "<b>Estratificación Oficial</b>"; 
-                    select[5] = "<b>Remoción en Masa</b>";
-                    select[6] = "<b>Amenaza de Inundación</b>";
-                    select[7] = "<b>Fotografias</b>";
-                    //select[8] = "<b>Street View</b>";
+                    select[4] = "<b>Código ZHG</b>"; 
+                    select[5] = "<b>Valor m2 ZHG</b>";
+                    select[6] = "<b>Código ZHF</b>";
+                    select[7] = "<b>Uso Permitido</b>";
+                    select[8] = "<b>Uso Actual</b>";
+                    select[9] = "<b>Fotografias</b>";  
+                      
                     sel[0] = values.manzana_co;
                     sel[1] = values.codigo;
                     sel[2] = values.codigo_ant;
                     sel[3] = ui.item.direccionoriginal;
-                    sel[4] = values.estratific;
-                    sel[5] = values.remosion;
-                    sel[6] = values.inundacion;
-                    sel[7] = document.createElement("a");
-                    sel[7].id = "img1";
-                    sel[7].style = "width: 30px; height: 50px;";
-                    sel[7].target = "marco";
-                    sel[7].setAttribute("onclick","open_streetview()");
+                    sel[4] = values.zhg;
+                    sel[5] = values.valor_m2_zhg;
+                    sel[6] = values.zhf;
+                    sel[7] = values.norma_uso;
+                    sel[8] = values.uso_actual_zhf; 
+                    
+                    sel[9] = document.createElement("a");
+                    sel[9].id = "img1";
+                    sel[9].style = "width: 30px; height: 50px;";
+                    sel[9].target = "marco";
+                    sel[9].setAttribute("onclick","open_streetview()");
                     //sel[7].onclick = "open_streetview()";
-                    sel[7].href = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";
-                    imag[7] = document.createElement("img");
-                    imag[7].id = "im1";
-                    imag[7].className = "pequeña";
-                    imag[7].src = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";           
-                    stv[7] = document.createElement("a");
-                    stv[7].id = "imgstreet1";
-                    stv[7].target = "marco";
-                    stv[7].href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
-                    stv[7].setAttribute("onclick","open_streetview()");  
-                    ig[7] = document.createElement("img");
-                    ig[7].src = "./imagenes/streetview.png";
+                    sel[9].href = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";
+                    imag[9] = document.createElement("img");
+                    imag[9].id = "im1";
+                    imag[9].className = "pequeña";
+                    imag[9].src = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";           
+                    stv[9] = document.createElement("a");
+                    stv[9].id = "imgstreet1";
+                    stv[9].target = "marco";
+                    stv[9].href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
+                    stv[9].setAttribute("onclick","open_streetview()");  
+                    ig[9] = document.createElement("img");
+                    ig[9].src = "./imagenes/streetview.png";
                     
                      for (i = 0; i < select.length; i++) {
                         row = table.insertRow(i+1);
@@ -550,7 +555,7 @@ function addressSelect(event, ui) {
                         cell2 = row.insertCell(1);
                         cell1.innerHTML = select[i];
                         
-                        if (i === 7){
+                        if (i === 9){
                             cell2.appendChild(sel[i]);
                             //cell2.appendChild(imag[i]);
                             sel[i].appendChild(imag[i]);

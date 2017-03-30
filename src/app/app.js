@@ -393,9 +393,8 @@ map.on('singleclick', function (evt) {
                         ig[7].src = "./imagenes/streetview.png";
                         var campos=7;
                         }
-                        else if(modulo=='sui'){
-                            
-                        var estacueducto = values.estrato_acueducto;
+                    else if(modulo=='sui'){     
+                    var estacueducto = values.estrato_acueducto;
                     var estalcantarillado = values.estrato_alcantarillado;
                     var estaseo = values.estrato_aseo;
                     if(estacueducto==11){
@@ -479,6 +478,91 @@ map.on('singleclick', function (evt) {
                         ig[12].src = "./imagenes/streetview.png";
                         var campos=12;         
                         }
+                        
+                        
+                        
+                        
+                        
+                    else if(modulo=='totem'){     
+                    var estacueducto = values.estrato_acueducto;
+                    var estalcantarillado = values.estrato_alcantarillado;
+                    var estaseo = values.estrato_aseo;
+                    if(estacueducto==11){
+                        estacueducto = 'Industria (11)';
+                    };
+                    if(estacueducto==12){
+                        estacueducto = 'Comercial (12)';
+                    };
+                    if(estacueducto==13){
+                        estacueducto = 'Especial (13)';
+                    };
+                    if(estacueducto==14){
+                        estacueducto = 'Oficial (14)';
+                    };
+                    if(estalcantarillado==11){
+                        estalcantarillado = 'Industria (11)';
+                    };
+                    if(estalcantarillado==12){
+                        estalcantarillado = 'Comercial (12)';
+                    };
+                    if(estalcantarillado==13){
+                        estalcantarillado = 'Especial (13)';
+                    };
+                    if(estalcantarillado==14){
+                        estalcantarillado = 'Oficial (14)';
+                    };
+                    if(estaseo==11){
+                        estaseo = 'Industria (11)';
+                    };
+                    if(estaseo==12){
+                        estaseo = 'Comercial (12)';
+                    };
+                    if(estaseo==13){
+                        estaseo = 'Especial (13)';
+                    };
+                    if(estaseo==14){
+                        estaseo = 'Oficial (14)';
+                    };
+   
+                    select[0] = "<b>Localidad</b>";  
+                    select[1] = "<b>Barrio</b>" 
+                    select[2] = "<b>Codigo Manzana</b>";
+                    select[3] = "<b>Codigo Catastral Nuevo</b>";
+                    select[4] = "<b>Codigo Catastral Anterior</b>";
+                    select[5] = "<b>Dirección</b>";  
+                    select[6] = "<b>Estratificación Acueducto</b>";
+                    select[7] = "<b>Estratificación Alcantarillado</b>";
+                    select[8] = "<b>Estratificación Aseo</b>";       
+                    select[9] = "<b>Fotografias</b>"; 
+                    sel[0] = values.nombre_loc;
+                    sel[1] = values.cod_barrio; 
+                    sel[2] = values.manzana_co;
+                    sel[3] = values.codigo;
+                    sel[4] = values.codigo_ant;
+                    sel[5] = direccion[0];  
+                    sel[6] = estacueducto;
+                    sel[7] = estalcantarillado;
+                    sel[8] = estaseo;
+                    sel[9] = document.createElement("a");
+                    sel[9].id = "img1";
+                    sel[9].style = "width: 30px; height: 50px;";
+                    sel[9].target = "marco";
+                    sel[9].setAttribute("onclick","open_streetview()");
+                    sel[9].href = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";
+                    imag[9] = document.createElement("img");
+                    imag[9].id = "im1";
+                    imag[9].className = "pequeña";
+                    imag[9].src = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";         
+                    stv[9] = document.createElement("a");
+                    stv[9].id = "imgstreet1";
+                    stv[9].target = "marco";
+                    stv[9].href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
+                    stv[9].setAttribute("onclick","open_streetview()");  
+                    ig[9] = document.createElement("img");
+                    ig[9].src = "./imagenes/streetview.png";
+                        var campos=9;         
+                        }
+                                  
                      for (i = 0; i < select.length; i++) {
                         row = table.insertRow(i+1);
                         cell1 = row.insertCell(0);

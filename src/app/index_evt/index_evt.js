@@ -49,7 +49,7 @@ function detectarCarga() {
             modulo="catastro";
         }
         //console.log(document.getElementById("icono_matricula").style.display);
-        if (select[0][7] === 't') {
+       else if (select[0][7] === 't') {
             //document.getElementById("metrotel").style.display = "block";
             document.getElementById("Distrito vs Prestadores AAA").style.display = "block";
             document.getElementById("estratificacion_oficial").style.display = "block";
@@ -59,11 +59,11 @@ function detectarCarga() {
             document.getElementById("Nomenclatura Domiciliaria").style.display = "block";
             modulo="sui";
         }
-        if (select[0][9] === 't') {
+        else if (select[0][9] === 't') {
             var sele = select_query("SELECT COUNT(table_name) FROM information_schema.tables WHERE table_schema='public' AND table_name LIKE 'temp_%'");
             //console.log(sele);
             if (parseInt(sele[0][0]) > 0) {
-                //console.log(sele);
+                //console.log(sele);        
                 document.getElementById("valid").style.display = "block";
             }
             document.getElementById("subirshape").style.display = "block";
@@ -78,11 +78,29 @@ function detectarCarga() {
             document.getElementById("Estructura Ecologica Principal").style.display = "block";
             modulo="planeacion";
         }
-        if (select[0][10] === 't') {
+        else if (select[0][10] === 't') {
             document.getElementById("Tipo de Contribuyente").style.display = "block";
             document.getElementById("predios_exentos_2016").style.display = "block";
             document.getElementById("Tipo Propietario").style.display = "block";
             modulo="hacienda";
+        }
+        else{
+            //document.getElementById("Tipo de Contribuyente").style.display = "none";
+            //document.getElementById("predios_exentos_2016").style.display = "none";
+            //document.getElementById("Tipo Propietario").style.display = "none"; 
+            document.getElementById("cerrar_submenu").style.display = "none";
+            document.getElementById("cerrar_submenu_cafe").style.display = "none";
+            document.getElementById("cerrar_submenu_verde").style.display = "none";
+            document.getElementById("cerrar_submenu").style.display = "none";
+            document.getElementById("submenu").style.display = "none";
+            document.getElementById("menu_circular").style.display = "none";
+            document.getElementById("lupa_pequeña").style.display = "none";
+            document.getElementById("valid").style.display = "none";
+            document.getElementById("nombre_usuario").style.display = "none";
+            document.getElementById("tipo_usuario").style.display = "none";
+            document.getElementById("manual").style.display = "none";
+            //document.getElementById("salida").style.display = "none";              
+            modulo="totem";
         }
     } catch (err) {
     }

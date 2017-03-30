@@ -259,7 +259,7 @@ body{
     border-radius:25px;
 }
 /*}*/
-#valid{
+/*#valid{
     position: absolute;
     top: 5em;
     left: 45em;
@@ -270,7 +270,7 @@ body{
     -webkit-box-shadow: 5px 5px 5px rgba(0,0,0,0.1);
     -o-box-shadow: 10px -10px 5px rgba(0,0,0,0.1); 
     border-radius:25px;
-}
+}*/
 
 @media handheld, only screen and (min-width: 767px) {
     #cerrar_submenu {
@@ -1093,13 +1093,24 @@ select{
 }
 #panel_atr{
     position:absolute;
-    max-width:30em;
+    max-width:35em;
     max-height:32em;
     bottom:7em;
     left:0em;  
     font-size:11px;
     overflow:scroll;
 }
+
+
+/*#panel_atr{
+    position:absolute;
+    max-width:30em;
+    max-height:32em;
+    bottom:7em;
+    left:0em;  
+    font-size:11px;
+    overflow:scroll;
+}*/
 
 #panel_atributos_ph{
     position:absolute;

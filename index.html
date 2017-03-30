@@ -30,7 +30,7 @@
     <script src="src/app/LayersControl.js"></script>
     <script src="src/app/index_evt/index_evt.js"></script>
     <script src="import/import.js"></script>
-    <script> window.oncontextmenu = function() { return false; } </script>
+    <!--<script> window.oncontextmenu = function() { return false; } </script>-->
 
     <!--Highcharts-->
     <script src="src/highcharts/js/highcharts.js"></script>
@@ -350,7 +350,7 @@
     <div id="mensaje" hidden="hidden"></div>
     <!--<iframe name="marco_imagenes" hidden="hidden" id="marco_imagenes" src="map.control.swipe.html"></iframe>-->
 
-    <img id="tipo_usuario" src="imagenes/tipo_usuario.png" data-toggle="modal" data-target="#myModal"  title="Cambiar Contraseña">
+    <img id="tipo_usuario" hidden="hidden" src="imagenes/tipo_usuario.png" data-toggle="modal" data-target="#myModal"  title="Cambiar Contraseña">
     <!--<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Cambiar Contraseña</button>-->
     <label id="nombre_usuario"></label>
     <!--<img id="consulta_simple" hidden="hidden" src="./imagenes/lupa_submenu.png" title="busqueda personalizada" onclick="busqueda_personalizada()">-->
@@ -363,7 +363,7 @@
     <img id="subirshape" src="imagenes/subirshape.jpg" style="display: none" data-toggle="modal" data-target="#charge" title="Subir shapefile">
     <img id="valid" src="imagenes/validar.jpg" onclick="validate()" style="display: none" data-toggle="modal" data-target="#validate" title="Validar Informacion subida">
 
-    <div id="menu_circular">
+    <div id="menu_circular" hidden="hidden">
         <img id="submenu" src="./imagenes/submenu.png">
         <img id="cerrar_submenu"  src="./imagenes/cerrar_submenu.png" onclick="cerrar_menu()">
         <img id="cerrar_submenu_cafe" hidden="hidden" src="./imagenes/cerrar_submenu_cafe.png" onclick="cerrar_menu()">
@@ -378,7 +378,7 @@
     <!--<img id="maria" src="./fotos_usuarios/user.png">-->
     <a href="barranquilla.html"><img id="salida" src="./imagenes/foto_usuario.png" title="Salir"></a>
 
-    <img id="manual" src="./imagenes/manual.png" onclick="abrir_manual()" title="Manual de Usuario">
+    <img id="manual" src="./imagenes/manual.png" hidden="hidden" onclick="abrir_manual()" title="Manual de Usuario">
     <div id="herramientas" class='container' hidden="hidden">
         <div id="layertree" class="tree"><img src="./imagenes/layers.png"  class="btn btn-success" style="background-color:#198c19; border: 0px solid" ></div> 
     </div> 

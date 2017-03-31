@@ -479,10 +479,7 @@ function addressSelect(event, ui) {
         });
 	}
     
-    
-    
-    
-    
+
     else if (modulo === 'catastro') {
         predio.setVisible(true);
  
@@ -576,57 +573,91 @@ function addressSelect(event, ui) {
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+        else if (modulo === 'hacienda') {
+        predio.setVisible(true);
+        $.ajax({
+            url: url,
+            success: function (data) {
+                //console.log(data);
+                var features = format[0].readFeatures(data);
+                //console.log(format[0]);
+                if (features && features.length >= 1 && features[0]) {
+                    var feature = features[0];
+                    var values = feature.getProperties();
+                    var table = document.getElementById("tblatt");
+                    table.innerHTML = "";
+                    var row = table.insertRow(0);
+                    var cell1 = row.insertCell(0);
+                    cell1.colSpan = 2;
+                    cell1.innerHTML = "<b>INFORMACION DEL PREDIO</b>";
+                    var select = [];
+                    var sel = [];
+                    var imag = [];
+                    var stv = [];
+                    var ig = [];
+                    var codfoto = values.codigo_ant.substring(0,17);    
+                    select[0] = "<b>Codigo Manzana</b>";
+                    select[1] = "<b>Codigo Catastral Nuevo</b>";
+                    select[2] = "<b>Codigo Catastral Anterior</b>";
+                    select[3] = "<b>Dirección</b>"; 
+                    select[4] = "<b>Estrato</b>"; 
+                    select[5] = "<b>Destino</b>";
+                    select[6] = "<b>Avalúo</b>";
+                    select[7] = "<b>Tarifa</b>";
+                    select[8] = "<b>Impuesto</b>";
+                    select[9] = "<b>Fotografias</b>";      
+                    sel[0] = values.manzana_co;
+                    sel[1] = values.codigo;
+                    sel[2] = values.codigo_ant;
+                    sel[3] = ui.item.direccionoriginal;
+                    sel[4] = values.estrato_hacienda;
+                    sel[5] = values.destino_hacienda;
+                    sel[6] = "";
+                    sel[7] = "";
+                    sel[8] = "";   
+                    sel[9] = document.createElement("a");
+                    sel[9].id = "img1";
+                    sel[9].style = "width: 30px; height: 50px;";
+                    sel[9].target = "marco";
+                    sel[9].setAttribute("onclick","open_streetview()");
+                    //sel[7].onclick = "open_streetview()";
+                    sel[9].href = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";
+                    imag[9] = document.createElement("img");
+                    imag[9].id = "im1";
+                    imag[9].className = "pequeña";
+                    imag[9].src = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";           
+                    stv[9] = document.createElement("a");
+                    stv[9].id = "imgstreet1";
+                    stv[9].target = "marco";
+                    stv[9].href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
+                    stv[9].setAttribute("onclick","open_streetview()");  
+                    ig[9] = document.createElement("img");
+                    ig[9].src = "./imagenes/streetview.png";
+                    
+                     for (i = 0; i < select.length; i++) {
+                        row = table.insertRow(i+1);
+                        cell1 = row.insertCell(0);
+                        cell2 = row.insertCell(1);
+                        cell1.innerHTML = select[i];
+                        
+                        if (i === 9){
+                            cell2.appendChild(sel[i]);
+                            //cell2.appendChild(imag[i]);
+                            sel[i].appendChild(imag[i]);
+                            cell2.appendChild(stv[i]);
+                            //cell2.appendChild(ig[i]);
+                            stv[i].appendChild(ig[i]);
+                            
+                        }else{
+                            cell2.innerHTML = sel[i];
+                        }
+                    }
+                    document.getElementById("panel_atr").style.display = "block";
+                    document.getElementById("botonminimizar").style.display = "block";      
+            }
+            }
+        });
+	}
     
     
     else if (modulo === 'sui') {

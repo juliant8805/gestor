@@ -47,6 +47,8 @@ function detectarCarga() {
             //document.getElementById("Rango Area Construccion").style.display = "block";
             document.getElementById("Tipo Construccion").style.display = "block";
             document.getElementById("predios_actualizacion").style.display = "block";
+            document.getElementById("Distrito vs Prestadores AAA").style.display = "block";
+            document.getElementById("plusvalia").style.display = "block";
             //document.getElementById("Calidad Construcciones").style.display = "block";
             //document.getElementById("Avaluo Catastral").style.display = "block";
             modulo="catastro";
@@ -60,7 +62,7 @@ function detectarCarga() {
             document.getElementById("Distrito vs Prestadores AAA").style.display = "block";
             document.getElementById("estratificacion_oficial").style.display = "block";
             document.getElementById("oficial_vs_AAA").style.display = "block";
-            document.getElementById("oficial_vs_AAA_uso").style.display = "block";
+            //document.getElementById("oficial_vs_AAA_uso").style.display = "block";
             document.getElementById("disponibilidad_AAA").style.display = "block";
             document.getElementById("Nomenclatura Domiciliaria").style.display = "block";
             modulo="sui";
@@ -92,7 +94,7 @@ function detectarCarga() {
             document.getElementById("tipo_usuario").style.display = "block";
             document.getElementById("manual").style.display = "block";
             document.getElementById("Tipo de Contribuyente").style.display = "block";
-            document.getElementById("predios_exentos_2016").style.display = "block";
+            //document.getElementById("predios_exentos_2016").style.display = "block";
             document.getElementById("Tipo Propietario").style.display = "block";
             modulo="hacienda";
         }
@@ -406,11 +408,29 @@ function lista() {
 }
 
 function abrir_manual() {
+    if (modulo=='catastro'){
     window.open(
-            'http://104.197.185.151/calidad/documentos/manual.pdf',
+            'http://35.184.3.4/gesstor/documentos/manual_catastro.pdf',
+            '_blank' // <- This is what makes it open in a new window.
+            );}
+    else if (modulo=='planeacion'){
+        window.open(
+            'http://35.184.3.4/gesstor/documentos/manual_misional_planeacion.pdf',
             '_blank' // <- This is what makes it open in a new window.
             );
-
+    }
+    else if (modulo=='sui'){
+        window.open(
+            'http://35.184.3.4/gesstor/documentos/manual_sui.pdf',
+            '_blank' // <- This is what makes it open in a new window.
+            );
+    }
+    else if (modulo=='hacienda'){
+        window.open(
+            'http://35.184.3.4/gesstor/documentos/manual_hacienda.pdf',
+            '_blank' // <- This is what makes it open in a new window.
+            );
+    }
 }
 
 // Close the dropdown menu if the user clicks outside of it
@@ -499,6 +519,9 @@ function changeImage(id) {
         document.getElementById('alineamiento').style = "background:url('./imagenes/alineamiento.png'); background-color:#adad32; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
     } else if (id === "Usos_Permitidos") {
         document.getElementById('Usos_Permitidos').style = "background:url('./imagenes/usos_permitidos.png'); background-color:#adad32; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
+    }
+    else if (id === "plusvalia") {
+        document.getElementById('plusvalia').style = "background:url('./imagenes/icono_plusvalia.png'); background-color:#b7b7b7; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
     }
 }
 ;
@@ -597,6 +620,8 @@ function normalImage(id) {
         document.getElementById('alineamiento').style = "background:url('./imagenes/alineamiento.png'); background-color:#006D1B; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
     } else if (id === "Usos_Permitidos") {
         document.getElementById('Usos_Permitidos').style = "background:url('./imagenes/usos_permitidos.png'); background-color:#008E30; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
+    } else if (id === "plusvalia") {
+        document.getElementById('plusvalia').style = "background:url('./imagenes/icono_plusvalia.png'); background-color:#a6a6a6; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
     }
 }
 ;

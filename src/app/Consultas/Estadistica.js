@@ -14,11 +14,15 @@ function estdistica(select, titulo, param, totales) {
     var dat = new Array(param.length);
     for (i = 0; i < param.length; i++) {
         if (param[i][0]==='PH'){
-            color[i]='#ffff4c';
+            color[i]='#FFB2B2';
         }else if (param[i][0]==='NPH'){
-            color[i]='#7fbf7f';
+            color[i]='#BAC0E8';
         }else if(param[i][0]==='No Construido'){
-            color[i]='#7f7fff';
+            color[i]='#FFBFA1';
+        }else if(param[i][0]==='Sin Informacion'){
+            color[i]='#b2b2b2';
+        }else if(param[i][0]==='Construido'){
+            color[i]='#BAC0E8';
         }else if(param[i][0]==='0-100m2'){
             color[i]='#e31a1c';
         }else if(param[i][0]==='100-1.000m2'){
@@ -28,17 +32,17 @@ function estdistica(select, titulo, param, totales) {
         }else if(param[i][0]==='mayor a 10.000m2'){
             color[i]='#7fbf7f';
         }else if (param[i][0]==='Estrato 1'){
-            color[i]='#FF8A8A';
+            color[i]='#FDF6C3';
         }else if(param[i][0]==='Estrato 2'){
-            color[i]='#FFFF84';
+            color[i]='#BAC0E8';
         }else if(param[i][0]==='Estrato 3'){
-            color[i]='#8FFEDD';
+            color[i]='#FFB2B2';
         }else if(param[i][0]==='Estrato 4'){
-            color[i]='#AAFD8E';
+            color[i]='#E3BFE3';
         }else if(param[i][0]==='Estrato 5'){
-            color[i]='#ffc966';
+            color[i]='#C3D7C8';
         }else if(param[i][0]==='Estrato 6'){
-            color[i]='#89FC63';
+            color[i]='#FFD8C7';
         } else if(param[i][0]==='Sin Estrato'){
             color[i]='#919092';
         }else if (param[i][0]==='1'){
@@ -57,7 +61,7 @@ function estdistica(select, titulo, param, totales) {
             color[i]='#7fbf7f';
         }else if(param[i][0]==='Regimen Simplificado'){
             color[i]='#ffae19';
-        }else if(param[i][0]==='No Aplica'){
+        }else if(param[i][0]==='N/A'){
             color[i]='#7f7fff';
         }else if(param[i][0]==='Agente Retenedor'){
             color[i]='#e31a1c';
@@ -202,15 +206,15 @@ function estdistica(select, titulo, param, totales) {
         }else if(param[i][0]==='Especial o Sin Inf.'){
             color[i]='#a2a0a3';
         }else if(param[i][0]==='Existe Prestador de Acueducto'){
-            color[i]='#b7b7ff';
+            color[i]='#E4E4FF';
         }else if(param[i][0]==='Sin Prestador de Acueducto'){
             color[i]='#FFA8A8';
         }else if(param[i][0]==='Existe Prestador de Alcantarillado'){
-            color[i]='#b7b7ff';
+            color[i]='#E4E4FF';
         }else if(param[i][0]==='Sin Prestador de Alcantarillado'){
             color[i]='#FFA8A8';
         }else if(param[i][0]==='Existe Prestador de Aseo'){
-            color[i]='#b7b7ff';
+            color[i]='#E4E4FF';
         }else if(param[i][0]==='Sin Prestador de Aseo'){
             color[i]='#FFA8A8';
         }else if(param[i][0]==='Espacio Público Existente (Hectáreas)'){

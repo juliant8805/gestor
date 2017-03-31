@@ -40,7 +40,9 @@
     <div id="completo" hidden="hidden">		
         <div id="condiciones" >
             <img id="gesstor" src="./imagenes/imagen_condiciones.png" style="top:5%; left:10%; width:80%; height:auto">
+            
             <div style="margin-left:8em;  margin-top:13em"><a href="http://104.197.185.151/beta1/documentos/manual.pdf" target="_blank" style="color:blue; text-decoration: underline">Condiciones de Uso</a></div>
+            
             <div style="margin-left:1em;  margin-top:0.1em">
                 <input type="checkbox" value="1" name="termin" id="termin"/><label><font size="2">&nbspAcepto los T&eacute;rminos y Condiciones&nbsp&nbsp</font></label>
                 <input type="button" onclick="marcado()" id="botoncondiciones" value="Aceptar">
@@ -413,6 +415,9 @@
 
         <!-- construido y no construido-->
         <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_actualizacion_conservacion.png'); background-color:#006D1B; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="predios_actualizacion" name="predios_actualizacion" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>
+        
+         <!--plusvalia-->
+        <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_plusvalia.png'); background-color:#a6a6a6; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="plusvalia" name="plusvalia" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>
 
         <select class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_disponibilidad.png'); background-color:#008E30; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="disponibilidad_AAA" name=prestadores onchange="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'>
             <option disabled selected>
@@ -464,7 +469,7 @@
             <option value="2014" style="font-weight: bold; color: white;  font-size:small;">Vigencia 2014
         </select>
 
-        <!--Tipo Propietario--> 
+        <!--Impuesto Industria y Comercio<!--Tipo Propietario--> 
         <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_tipo_propietario.png'); background-color:#00AD41; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="Tipo Propietario" name="propietario" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>		   
 
         <!--Conflicto de Uso del Suelo-->

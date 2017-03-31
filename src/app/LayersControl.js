@@ -15,7 +15,7 @@ var ortofotourbana = new ol.layer.Tile({
     maxResolution:20,
     opacity:0,
     source: new ol.source.XYZ({
-        url: "http://104.197.185.151/ortofoto/{z}/{x}/{y}.png"
+        url: "http://35.184.3.4/ortofoto/{z}/{x}/{y}.png"
     }), name: 'Ortofoto 2016 Distrito'
 });
 var streetmap = new ol.layer.Tile({
@@ -25,7 +25,6 @@ var streetmap = new ol.layer.Tile({
     maxResolution:20,*/
     name: 'Street Map'
 });
-
 
 var bingarranque = new ol.layer.Image({
                             visible: true,
@@ -40,8 +39,6 @@ var bingarranque = new ol.layer.Image({
                                 imageExtent: [-8377346.467879, 1202426.862044, -8279545.277057, 1256384.963248]
                             })
                         });
-
-
 
 var bing = new ol.layer.Tile({
     visible: false,

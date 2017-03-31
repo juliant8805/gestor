@@ -34,7 +34,7 @@
                 //alert("dd");
                 var ca = document.cookie.split('=');
                 //alert(ca);
-                var select = select_query("SELECT * FROM usuario WHERE usuario ='" + ca[0] + "' AND contrasena ='" + ca[1] + "' AND estado='t' AND tecnologia='t';");
+                var select = select_query("SELECT * FROM usuario WHERE usuario ='" + ca[0] + "' AND contrasena ='" + ca[1] + "' AND estado='t' AND sistemas='t';");
                 //console.log(select);
                 if (select === null) {
                     //alert("ad");
@@ -138,19 +138,20 @@
                         <table class="table table-hover table-bordered">
                             <tr>
                                 <th colspan="2">GESTION CATASTRAL</th>
-                                <th colspan="2">SUI</th>
-                                <th rowspan="2">PLANEACION</th>
-                                <th rowspan="2">INDUSTRIA Y COMERCIO</th>
-                                <th rowspan="2">TECNOLOGIA</th>
+                                <th colspan="4">PLANEACION</th>
+                                <th colspan="2">HACIENDA</th>
+                                <th rowspan="2">SISTEMAS</th>
                                 <th rowspan="2">GESSTOR</th>
                             </tr>
                             <tr>
+                                <th>MISIONAL</th>
                                 <th>CONSULTA</th>
-                                <th>ADMINISTRADOR</th>
+                                <th>MISIONAL</th>
                                 <th>CONSULTA</th>
-                                <th>ADMINISTRADOR</th>
-                                <!--<th>CONSULTA</th>
-                                <th>ADMINISTRADOR</th>-->
+                                <th>SUI</th>
+                                <th>POT INTERACTIVO</th>
+                                <th>MISIONAL</th>
+                                <th>CONSULTA</th>
                             </tr>
                             <tbody>
                                 <!-- Aplicadas en las filas -->
@@ -165,23 +166,7 @@
                                     </td>
                                     <td>
                                         <div class="btn-group" data-toggle="buttons">
-                                            <label id="catastroAdm" class="btn btn-success">
-                                                <input type="checkbox" autocomplete="off">
-                                                <span class="glyphicon glyphicon-ok"></span>
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="btn-group" data-toggle="buttons">
-                                            <label id="hacienda" class="btn btn-primary">
-                                                <input type="checkbox" autocomplete="off">
-                                                <span class="glyphicon glyphicon-ok"></span>
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="btn-group" data-toggle="buttons">
-                                            <label id="haciendaAdm" class="btn btn-success">
+                                            <label id="catastroConsul" class="btn btn-success">
                                                 <input type="checkbox" autocomplete="off">
                                                 <span class="glyphicon glyphicon-ok"></span>
                                             </label>
@@ -197,7 +182,7 @@
                                     </td>
                                     <td>
                                         <div class="btn-group" data-toggle="buttons">
-                                            <label id="planeacionAdm" class="btn btn-success">
+                                            <label id="planeacionConsul" class="btn btn-success">
                                                 <input type="checkbox" autocomplete="off">
                                                 <span class="glyphicon glyphicon-ok"></span>
                                             </label>
@@ -205,7 +190,40 @@
                                     </td>
                                     <td>
                                         <div class="btn-group" data-toggle="buttons">
-                                            <label id="tecnologia" class="btn btn-warning">
+                                            <label id="sui" class="btn btn-warning">
+                                                <input type="checkbox" autocomplete="off">
+                                                <span class="glyphicon glyphicon-ok"></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" data-toggle="buttons">
+                                            <label id="pot" class="btn btn-danger">
+                                                <input type="checkbox" autocomplete="off">
+                                                <span class="glyphicon glyphicon-ok"></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" data-toggle="buttons">
+                                            <label id="hacienda" class="btn btn-primary">
+                                                <input type="checkbox" autocomplete="off">
+                                                <span class="glyphicon glyphicon-ok"></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" data-toggle="buttons">
+                                            <label id="haciendaConsul" class="btn btn-success">
+                                                <input type="checkbox" autocomplete="off">
+                                                <span class="glyphicon glyphicon-ok"></span>
+                                            </label>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="btn-group" data-toggle="buttons">
+                                            <label id="sistemas" class="btn btn-warning">
                                                 <input type="checkbox" autocomplete="off">
                                                 <span class="glyphicon glyphicon-ok"></span>
                                             </label>
@@ -219,6 +237,7 @@
                                             </label>
                                         </div>
                                     </td>
+
                                 </tr>
                             </tbody>
                         </table>
@@ -230,8 +249,7 @@
                         <!--<button type="submit" class="btn btn-primary btn-block btn-large" onclick="setCookie()">Ingresar</button>-->
                     </div>
                 </form>
-
-
+                <img src="./imagenes/organigrama.png" style="position: absolute;right: 1em;top: 3em; width: 48em">
             </div>
             <div class="tab-pane fade" id="modificacion">
                 <div class="col-xs-12"><h2>Modificación de Usuario</h2></div>
@@ -240,7 +258,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="formGroup">Usuario</label>
                         <div class="col-sm-2">
-                            <input class="form-control ui-autocomplete-input" type="text" id="usu" onkeyup="usuario()">
+                            <input class="form-control ui-autocomplete-input" type="text" id="usu" onkeyup="usuario()" autocomplete="off">
                         </div>
                     </div>
                     <div id="group" hidden="hidden">
@@ -311,26 +329,27 @@
                             <table class="table table-hover table-bordered">
                                 <tr>
                                     <th colspan="2">GESTION CATASTRAL</th>
-                                    <th colspan="2">SUI</th>
-                                    <th rowspan="2">PLANEACION</th>
-                                    <th rowspan="2">INDUSTRIA Y COMERCIO</th>
-                                    <th rowspan="2">TECNOLOGIA</th>
+                                    <th colspan="4">PLANEACION</th>
+                                    <th colspan="2">HACIENDA</th>
+                                    <th rowspan="2">SISTEMAS</th>
                                     <th rowspan="2">GESSTOR</th>
                                 </tr>
                                 <tr>
+                                    <th>MISIONAL</th>
                                     <th>CONSULTA</th>
-                                    <th>ADMINISTRADOR</th>
+                                    <th>MISIONAL</th>
                                     <th>CONSULTA</th>
-                                    <th>ADMINISTRADOR</th>
-                                    <!--<th>CONSULTA</th>
-                                    <th>ADMINISTRADOR</th>-->
+                                    <th>SUI</th>
+                                    <th>POT INTERACTIVO</th>
+                                    <th>MISIONAL</th>
+                                    <th>CONSULTA</th>
                                 </tr>
                                 <tbody>
                                     <!-- Aplicadas en las filas -->
                                     <tr class="active">
                                         <td>
                                             <div class="btn-group" data-toggle="buttons">
-                                                <label id ="cat" class="btn btn-primary">
+                                                <label id="catastroE" class="btn btn-primary">
                                                     <input type="checkbox" autocomplete="off">
                                                     <span class="glyphicon glyphicon-ok"></span>
                                                 </label>
@@ -338,7 +357,7 @@
                                         </td>
                                         <td>
                                             <div class="btn-group" data-toggle="buttons">
-                                                <label id ="catA" class="btn btn-success">
+                                                <label id="catastroConsulE" class="btn btn-success">
                                                     <input type="checkbox" autocomplete="off">
                                                     <span class="glyphicon glyphicon-ok"></span>
                                                 </label>
@@ -346,7 +365,7 @@
                                         </td>
                                         <td>
                                             <div class="btn-group" data-toggle="buttons">
-                                                <label id ="hac" class="btn btn-primary">
+                                                <label id="planeacionE" class="btn btn-primary">
                                                     <input type="checkbox" autocomplete="off">
                                                     <span class="glyphicon glyphicon-ok"></span>
                                                 </label>
@@ -354,7 +373,7 @@
                                         </td>
                                         <td>
                                             <div class="btn-group" data-toggle="buttons">
-                                                <label id ="hacA" class="btn btn-success">
+                                                <label id="planeacionConsulE" class="btn btn-success">
                                                     <input type="checkbox" autocomplete="off">
                                                     <span class="glyphicon glyphicon-ok"></span>
                                                 </label>
@@ -362,7 +381,7 @@
                                         </td>
                                         <td>
                                             <div class="btn-group" data-toggle="buttons">
-                                                <label id ="pla" class="btn btn-primary">
+                                                <label id="suiE" class="btn btn-warning">
                                                     <input type="checkbox" autocomplete="off">
                                                     <span class="glyphicon glyphicon-ok"></span>
                                                 </label>
@@ -370,7 +389,7 @@
                                         </td>
                                         <td>
                                             <div class="btn-group" data-toggle="buttons">
-                                                <label id ="plaA" class="btn btn-success">
+                                                <label id="potE" class="btn btn-danger">
                                                     <input type="checkbox" autocomplete="off">
                                                     <span class="glyphicon glyphicon-ok"></span>
                                                 </label>
@@ -378,7 +397,7 @@
                                         </td>
                                         <td>
                                             <div class="btn-group" data-toggle="buttons">
-                                                <label id="tec" class="btn btn-warning">
+                                                <label id="haciendaE" class="btn btn-primary">
                                                     <input type="checkbox" autocomplete="off">
                                                     <span class="glyphicon glyphicon-ok"></span>
                                                 </label>
@@ -386,12 +405,30 @@
                                         </td>
                                         <td>
                                             <div class="btn-group" data-toggle="buttons">
-                                                <label id ="ges" class="btn btn-danger">
+                                                <label id="haciendaConsulE" class="btn btn-success">
                                                     <input type="checkbox" autocomplete="off">
                                                     <span class="glyphicon glyphicon-ok"></span>
                                                 </label>
                                             </div>
                                         </td>
+
+                                        <td>
+                                            <div class="btn-group" data-toggle="buttons">
+                                                <label id="sistemasE" class="btn btn-warning">
+                                                    <input type="checkbox" autocomplete="off">
+                                                    <span class="glyphicon glyphicon-ok"></span>
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group" data-toggle="buttons">
+                                                <label id="gestorE" class="btn btn-danger">
+                                                    <input type="checkbox" autocomplete="off">
+                                                    <span class="glyphicon glyphicon-ok"></span>
+                                                </label>
+                                            </div>
+                                        </td>
+
                                     </tr>
                                 </tbody>
                             </table>
@@ -403,6 +440,7 @@
                         <!--<button type="button" class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-remove-circle"></span> Cancelar</button>-->
                     </div>
                 </form>
+                <img src="./imagenes/organigrama.png" style="position: absolute;right: 1em;top: 3em; width: 48em">
             </div>
         </div>
         <!--<div class="form-group">
@@ -426,48 +464,58 @@
                 //var nomg = nom[0] + "." + nom[nom.length - 1];
                 //console.log(nomg + "2017");
                 //var contrasena = hex_md5(nomg + "2017");
-                if (document.getElementById('cat').className === 'btn btn-primary') {
-                    var catastro = 'f';
+                if (document.getElementById('catastroE').className === 'btn btn-primary') {
+                    var catastroE = 'f';
                 } else {
-                    var catastro = 't';
+                    var catastroE = 't';
                 }
-                if (document.getElementById('catA').className === 'btn btn-success') {
-                    var catastroadm = 'f';
+                if (document.getElementById('catastroConsulE').className === 'btn btn-success') {
+                    var catastroConsulE = 'f';
                 } else {
-                    var catastroadm = 't';
+                    var catastroConsulE = 't';
                 }
-                if (document.getElementById('hac').className === 'btn btn-primary') {
-                    var hacienda = 'f';
+                if (document.getElementById('planeacionE').className === 'btn btn-primary') {
+                    var planeacionE = 'f';
                 } else {
-                    var hacienda = 't';
+                    var planeacionE = 't';
                 }
-                if (document.getElementById('hacA').className === 'btn btn-success') {
-                    var haciendaadm = 'f';
+                if (document.getElementById('planeacionConsulE').className === 'btn btn-success') {
+                    var planeacionConsulE = 'f';
                 } else {
-                    var haciendaadm = 't';
+                    var planeacionConsulE = 't';
                 }
-                if (document.getElementById('pla').className === 'btn btn-primary') {
-                    var planeacion = 'f';
+                if (document.getElementById('suiE').className === 'btn btn-warning') {
+                    var suiE = 'f';
                 } else {
-                    var planeacion = 't';
+                    var suiE = 't';
                 }
-                if (document.getElementById('plaA').className === 'btn btn-success') {
-                    var planeacionadm = 'f';
+                if (document.getElementById('potE').className === 'btn btn-danger') {
+                    var potE = 'f';
                 } else {
-                    var planeacionadm = 't';
+                    var potE = 't';
                 }
-                if (document.getElementById('tec').className === 'btn btn-warning') {
-                    var tecnologia = 'f';
+                if (document.getElementById('haciendaE').className === 'btn btn-primary') {
+                    var haciendaE = 'f';
                 } else {
-                    var tecnologia = 't';
+                    var haciendaE = 't';
                 }
-                if (document.getElementById('ges').className === 'btn btn-danger') {
-                    var gestor = 'f';
+                if (document.getElementById('haciendaConsulE').className === 'btn btn-success') {
+                    var haciendaConsulE = 'f';
                 } else {
-                    var gestor = 't';
+                    var haciendaConsulE = 't';
+                }
+                if (document.getElementById('sistemasE').className === 'btn btn-warning') {
+                    var sistemasE = 'f';
+                } else {
+                    var sistemasE = 't';
+                }
+                if (document.getElementById('gestorE').className === 'btn btn-danger') {
+                    var gestorE = 'f';
+                } else {
+                    var gestorE = 't';
                 }
                 /*console.log("catastro"+catastro);
-                 console.log("catastroadm"+catastroadm);
+                 console.log("catastroConsul"+catastroConsul);
                  console.log("hacienda"+hacienda);
                  console.log("haciendaadm"+haciendaadm);
                  console.log("planeacion"+planeacion);
@@ -475,8 +523,8 @@
                  console.log("tecnologia"+tecnologia);
                  console.log("gestor"+gestor);
                  console.log(document.getElementById('inlineRadio1').checked);*/
-                var arrayResult = update_query("UPDATE usuario SET cargo='" + document.getElementById('e_cargo').value + "',email='" + document.getElementById('e_email').value + "', catastro='" + catastro + "', catastro_a='" + catastroadm + "', sui='" + hacienda + "', sui_adm='" + haciendaadm + "', planeacion='" + planeacion + "', planeac_01='" + planeacionadm + "', tecnologia='" + tecnologia + "', gestor='" + gestor + "', estado='" + document.getElementById('rad1').checked + "', dependenci='" + document.getElementById('e_dependencia').value + "', fechaexp='" + document.getElementById('e_fecha').value + "' WHERE usuario='" + document.getElementById('usu').value + "';");
-                //var arrayResult = update_query("INSERT INTO usuario (nombre1,nombre2,apellido1,apellido2,email,usuario,contrasena,catastro,catastro_adm,hacienda,hacienda_adm,planeacion,planeacion_adm,tecnologia,gestor,estado) VALUES('" + document.getElementById('nombre1').value + "','" + document.getElementById('nombre2').value + "','" + document.getElementById('apellido1').value + "','" + document.getElementById('apellido2').value + "','" + document.getElementById('email').value + "','" + nomg + "','" + contrasena + "','" + catastro + "','" + catastroadm + "','" + hacienda + "','" + haciendaadm + "','" + planeacion + "','" + planeacionadm + "','" + tecnologia + "','" + gestor + "','" + document.getElementById('inlineRadio1').checked + "');");
+                var arrayResult = update_query("UPDATE usuario SET cargo='" + document.getElementById('e_cargo').value + "',email='" + document.getElementById('e_email').value + "', catastrom='" + catastroE + "', catastroc='" + catastroConsulE + "', sui='" + suiE + "', pot='" + potE + "', planeacionm='" + planeacionE + "', haciendam='" + haciendaE + "', sistemas='" + sistemasE + "', gestor='" + gestorE + "', planeacionc='" + planeacionConsulE + "', haciendac='" + haciendaConsulE + "', estado='" + document.getElementById('rad1').checked + "', dependenci='" + document.getElementById('e_dependencia').value + "', fechaexp='" + document.getElementById('e_fecha').value + "' WHERE usuario='" + document.getElementById('usu').value + "';");
+                //var arrayResult = update_query("INSERT INTO usuario (nombre1,nombre2,apellido1,apellido2,email,usuario,contrasena,catastro,catastro_adm,hacienda,hacienda_adm,planeacion,planeacion_adm,tecnologia,gestor,estado) VALUES('" + document.getElementById('nombre1').value + "','" + document.getElementById('nombre2').value + "','" + document.getElementById('apellido1').value + "','" + document.getElementById('apellido2').value + "','" + document.getElementById('email').value + "','" + nomg + "','" + contrasena + "','" + catastro + "','" + catastroConsul + "','" + hacienda + "','" + haciendaadm + "','" + planeacion + "','" + planeacionadm + "','" + tecnologia + "','" + gestor + "','" + document.getElementById('inlineRadio1').checked + "');");
                 //console.log(arrayResult);
                 //var arrayResult = update_query("UPDATE u_terreno SET simbol='0';UPDATE u_terreno SET simbol = '100' WHERE area<100;UPDATE u_terreno SET simbol = '100-1.000' WHERE area BETWEEN 100 AND 1000;UPDATE u_terreno SET simbol = '1.000-10.000' WHERE area BETWEEN 1000 AND 10000;UPDATE u_terreno SET simbol = '10.000' WHERE area > 10000;");
             }
@@ -484,50 +532,60 @@
                 var nom = document.getElementById('nombre').value.split(' ');
                 var nomg = nom[0] + "." + nom[nom.length - 1];
                 //console.log(nomg + "2017");
-                var cont = nomg + "2017"
+                var cont = nomg + "2017";
                 var contrasena = hex_md5(cont);
                 if (document.getElementById('catastro').className === 'btn btn-primary') {
                     var catastro = 'f';
                 } else {
                     var catastro = 't';
                 }
-                if (document.getElementById('catastroAdm').className === 'btn btn-success') {
-                    var catastroadm = 'f';
+                if (document.getElementById('catastroConsul').className === 'btn btn-success') {
+                    var catastroConsul = 'f';
                 } else {
-                    var catastroadm = 't';
+                    var catastroConsul = 't';
                 }
-                if (document.getElementById('hacienda').className === 'btn btn-primary') {
-                    var hacienda = 'f';
+                if (document.getElementById('sui').className === 'btn btn-warning') {
+                    var sui = 'f';
                 } else {
-                    var hacienda = 't';
+                    var sui = 't';
                 }
-                if (document.getElementById('haciendaAdm').className === 'btn btn-success') {
-                    var haciendaadm = 'f';
+                if (document.getElementById('pot').className === 'btn btn-danger') {
+                    var pot = 'f';
                 } else {
-                    var haciendaadm = 't';
+                    var pot = 't';
                 }
                 if (document.getElementById('planeacion').className === 'btn btn-primary') {
                     var planeacion = 'f';
                 } else {
                     var planeacion = 't';
                 }
-                if (document.getElementById('planeacionAdm').className === 'btn btn-success') {
-                    var planeacionadm = 'f';
+                if (document.getElementById('hacienda').className === 'btn btn-primary') {
+                    var hacienda = 'f';
                 } else {
-                    var planeacionadm = 't';
+                    var hacienda = 't';
                 }
-                if (document.getElementById('tecnologia').className === 'btn btn-warning') {
-                    var tecnologia = 'f';
+                if (document.getElementById('sistemas').className === 'btn btn-warning') {
+                    var sistemas = 'f';
                 } else {
-                    var tecnologia = 't';
+                    var sistemas = 't';
                 }
                 if (document.getElementById('gestor').className === 'btn btn-danger') {
                     var gestor = 'f';
                 } else {
                     var gestor = 't';
                 }
+                if (document.getElementById('planeacionConsul').className === 'btn btn-success') {
+                    var planeacionConsul = 'f';
+                } else {
+                    var planeacionConsul = 't';
+                }
+                if (document.getElementById('haciendaConsul').className === 'btn btn-success') {
+                    var haciendaConsul = 'f';
+                } else {
+                    var haciendaConsul = 't';
+                }
                 /*console.log("catastro"+catastro);
-                 console.log("catastroadm"+catastroadm);
+                 console.log("catastroConsul"+catastroConsul);
                  console.log("hacienda"+hacienda);
                  console.log("haciendaadm"+haciendaadm);
                  console.log("planeacion"+planeacion);
@@ -535,8 +593,7 @@
                  console.log("tecnologia"+tecnologia);
                  console.log("gestor"+gestor);
                  console.log(document.getElementById('inlineRadio1').checked);*/
-                var arrayResult = update_query("INSERT INTO usuario (nombre,cargo,email,usuario,contrasena,catastro,catastro_a,sui,sui_adm,planeacion,planeac_01,tecnologia,gestor,estado,dependenci,fechaexp) VALUES('" + document.getElementById('nombre').value + "','" + document.getElementById('cargo').value + "','" + document.getElementById('email').value + "','" + nomg + "','" + contrasena + "','" + catastro + "','" + catastroadm + "','" + hacienda + "','" + haciendaadm + "','" + planeacion + "','" + planeacionadm + "','" + tecnologia + "','" + gestor + "','t','" + document.getElementById('dependencia').value + "','" + document.getElementById('fecha').value + "');");
-                //console.log(arrayResult);
+                var arrayResult = update_query("INSERT INTO usuario (nombre,cargo,email,usuario,contrasena,catastrom,catastroc,sui,pot,planeacionm,haciendam,sistemas,gestor,planeacionc,haciendac,estado,dependenci,fechaexp) VALUES('" + document.getElementById('nombre').value + "','" + document.getElementById('cargo').value + "','" + document.getElementById('email').value + "','" + nomg + "','" + contrasena + "','" + catastro + "','" + catastroConsul + "','" + sui + "','" + pot + "','" + planeacion + "','" + hacienda + "','" + sistemas + "','" + gestor + "','" + planeacionConsul + "','" + haciendaConsul + "','t','" + document.getElementById('dependencia').value + "','" + document.getElementById('fecha').value + "');");
                 if (arrayResult) {
                     var urls = "./mail/envio_mail.php";
                     var req = new ajaxRequest();
@@ -556,8 +613,6 @@
                     eliminar.parentNode.removeChild(eliminar);
                 } catch (error) {
                 }
-                ;
-
                 var select = select_query("SELECT usuario FROM usuario WHERE usuario LIKE '" + document.getElementById("usu").value + "%';");
                 //console.log(select);
                 //if (select.length > 5) {
@@ -631,44 +686,54 @@
                     document.getElementById("rad2").checked = true;
                 }
                 if (select["0"][5] === "t") {
-                    document.getElementById("cat").className = "btn btn-primary active";
+                    document.getElementById("catastroE").className = "btn btn-primary active";
                 } else {
-                    document.getElementById("cat").className = "btn btn-primary";
+                    document.getElementById("catastroE").className = "btn btn-primary";
                 }
                 if (select["0"][6] === "t") {
-                    document.getElementById("catA").className = "btn btn-success active";
+                    document.getElementById("catastroConsulE").className = "btn btn-success active";
                 } else {
-                    document.getElementById("catA").className = "btn btn-success";
+                    document.getElementById("catastroConsulE").className = "btn btn-success";
                 }
                 if (select["0"][7] === "t") {
-                    document.getElementById("hac").className = "btn btn-primary active";
+                    document.getElementById("suiE").className = "btn btn-warning active";
                 } else {
-                    document.getElementById("hac").className = "btn btn-primary";
+                    document.getElementById("suiE").className = "btn btn-warning";
                 }
                 if (select["0"][8] === "t") {
-                    document.getElementById("hacA").className = "btn btn-success active";
+                    document.getElementById("potE").className = "btn btn-danger active";
                 } else {
-                    document.getElementById("hacA").className = "btn btn-success";
+                    document.getElementById("potE").className = "btn btn-danger";
                 }
                 if (select["0"][9] === "t") {
-                    document.getElementById("pla").className = "btn btn-primary active";
+                    document.getElementById("planeacionE").className = "btn btn-primary active";
                 } else {
-                    document.getElementById("pla").className = "btn btn-primary";
+                    document.getElementById("planeacionE").className = "btn btn-primary";
                 }
                 if (select["0"][10] === "t") {
-                    document.getElementById("plaA").className = "btn btn-success active";
+                    document.getElementById("haciendaE").className = "btn btn-primary active";
                 } else {
-                    document.getElementById("plaA").className = "btn btn-success";
+                    document.getElementById("haciendaE").className = "btn btn-primary";
                 }
                 if (select["0"][11] === "t") {
-                    document.getElementById("tec").className = "btn btn-warning active";
+                    document.getElementById("sistemasE").className = "btn btn-warning active";
                 } else {
-                    document.getElementById("tec").className = "btn btn-warning";
+                    document.getElementById("sistemasE").className = "btn btn-warning";
                 }
                 if (select["0"][12] === "t") {
-                    document.getElementById("ges").className = "btn btn-danger active";
+                    document.getElementById("gestorE").className = "btn btn-danger active";
                 } else {
-                    document.getElementById("ges").className = "btn btn-danger";
+                    document.getElementById("gestorE").className = "btn btn-danger";
+                }
+                if (select["0"][16] === "t") {
+                    document.getElementById("planeacionConsulE").className = "btn btn-success active";
+                } else {
+                    document.getElementById("planeacionConsulE").className = "btn btn-success";
+                }
+                if (select["0"][17] === "t") {
+                    document.getElementById("haciendaConsulE").className = "btn btn-success active";
+                } else {
+                    document.getElementById("haciendaConsulE").className = "btn btn-success";
                 }
                 //document.getElementById('e_nombre1').value = select["0"]["0"];
                 //document.getElementById('e_nombre1').value = select["0"]["0"];

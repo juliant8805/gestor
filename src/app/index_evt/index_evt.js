@@ -74,6 +74,10 @@ function detectarCarga() {
                 //console.log(sele);        
                 document.getElementById("valid").style.display = "block";
             }
+            var sel = select_query("SELECT COUNT(table_name) FROM information_schema.tables WHERE table_schema='public' AND table_name LIKE 'post_%'");
+            if (parseInt(sel[0][0]) > 0) {
+                document.getElementById("deshacer").style.display = "block";
+            }
             document.getElementById("menu_circular").style.display = "block";
             document.getElementById("tipo_usuario").style.display = "block";
             document.getElementById("manual").style.display = "block";

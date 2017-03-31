@@ -269,7 +269,8 @@
                 </div>
                 <div class="modal-footer">
                     <button href="#" class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
-                    <input type="button" class="btn btn-primary" value="Validar shape(s)" onclick="valshp()"/>
+                    <!--<input id="mbutt" type="button" class="btn btn-primary" value="Confirmar cambios" onclick="valshp()"/>-->
+                    <input id="mbutt" type="button" class="btn btn-primary" value="Confirmar cambios"/>
                 </div>
             </div>
         </div>
@@ -298,7 +299,7 @@
                 </div>
                 <div class="modal-footer">
                     <button href="#" class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
-                    <input type="button" class="btn btn-primary" value="Subir shape" disabled/>
+                    <input id="btonsubir" type="button" class="btn btn-primary" value="Subir shape" disabled/>
                 </div>
             </div>
         </div>
@@ -361,8 +362,8 @@
     <!--<<img id="logos_cabezote" src="./imagenes/logos_cabezote.png" data-toggle="modal" data-target="#charge">-->
     <img id="boton_limpiar" src="imagenes/limpiar.png" onclick="limpiar_consulta()" title="Limpiar Consulta">
     <img id="subirshape" src="imagenes/subirshape.jpg" style="display: none" data-toggle="modal" data-target="#charge" title="Subir shapefile">
-    <img id="valid" src="imagenes/validar.jpg" onclick="validate()" style="display: none" data-toggle="modal" data-target="#validate" title="Validar Informacion subida">
-
+    <img id="valid" src="imagenes/validar.jpg" onclick="validate(id)" style="display: none" data-toggle="modal" data-target="#validate" title="Validar Informacion subida">
+    <img id="deshacer" src="imagenes/deshacer.jpg" onclick="validate(id)" style="display: none" data-toggle="modal" data-target="#validate" title="Deshacer cambios">
     <div id="menu_circular" hidden="hidden">
         <img id="submenu" src="./imagenes/submenu.png">
         <img id="cerrar_submenu"  src="./imagenes/cerrar_submenu.png" onclick="cerrar_menu()">

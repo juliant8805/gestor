@@ -11,7 +11,7 @@
             $contrasena = $_GET['p'];
             $usuario = $_GET['u'];
         //}
-        $send=mail($correo, 'Usuario Gesstor', 'Bienvenido a Gesstor, su nombre de usuario es: '.$usuario.' y su contraseña: '.$contrasena.' link de acceso: http://104.197.185.151/calidad/barranquilla.html','From:judatoca@gmail.com');
+        $send=mail($correo, 'Usuario Gesstor', 'Bienvenido a Gesstor, su nombre de usuario es: '.$usuario.' y su contraseña: '.$contrasena.' link de acceso: http://35.184.3.4/gesstor/barranquilla.html','From:soportegesstor@gmail.com');
         if($send) :
             echo 'yes';
         else:

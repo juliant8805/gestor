@@ -153,7 +153,7 @@ map = new ol.Map({
         center: center,
         zoom: zoom,
         extent: [-8360194.483519, 1214264.520807, -8302594.687951, 1245861.102880],
-        maxZoom: 20, minZoom: 12
+        maxZoom: 21, minZoom: 12
     })
 });
 

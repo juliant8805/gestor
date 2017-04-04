@@ -2,6 +2,7 @@
     $path = 'C:/xampp/htdocs/gesstor/export/Reporte.xls';
     $array_data = json_decode($_POST['arreglo']);
     $fp = fopen($path, 'w');
+    $b = '\@';
     $array_headers = json_decode($_POST['titulos']);
     fputs($fp, '<table><tr bgcolor="#f0f0f0">');
     array_walk_recursive($array_headers, 'ExportExcelHeaders', $fp);
@@ -12,7 +13,8 @@
             $cadena = ereg_replace('[[:space:]]+', ' ', utf8_decode($array_data[$indice][$clave]));
             //fputs($fp, '<td style="mso-number-format:"0.00";"><font face="Arial,Helvetica,sans-serif">' . "8001011000000130" . '</font></td>');
             //fputs($fp, '<td>'."&nbsp;".'8001011000000130</td>');  funciona
-            fputs($fp, '<td style="mso-number-format:' . 0 . ';"><font face="Arial,Helvetica,sans-serif">' . $cadena . '</font></td>');
+            //fputs($fp, '<td style="mso-number-format:' . 0 . ';"><font face="Arial,Helvetica,sans-serif">' . $cadena . '</font></td>');
+            fputs($fp, '<td style="mso-number-format:' . $b . ';"><font face="Arial,Helvetica,sans-serif">' . $cadena . '</font></td>');
         }
         fputs($fp, '</tr>');
     }

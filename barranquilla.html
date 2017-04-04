@@ -19,6 +19,7 @@
                 <input type="password" id="p" name="p" placeholder="Contraseña" required="required" />
                 <button type="submit" id="b" class="btn btn-primary btn-block btn-circle" onclick="setCookie()">Log in</button>
                 <h2 id="er" class="error" hidden="hidden">Credenciales no validas</h2>
+                <h2 id="er1" class="error" hidden="hidden">Por favor ingrese desde Google Chrome</h2>
             </form>
         </div>
         <script src="js/index.js"></script>
@@ -39,6 +40,14 @@
             else
             {
                 document.getElementById('er').style.display = 'none';    
+            }
+             if (validar[1] == "ig=navegador")
+            {
+                document.getElementById('er1').style.display = 'block';
+            }
+            else
+            {
+                document.getElementById('er1').style.display = 'none';    
             }
         }
         function setC(name, value, expirydays) {

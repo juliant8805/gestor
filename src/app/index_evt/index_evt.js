@@ -5,16 +5,16 @@ function validacionusuarios() {
         var select = select_query("SELECT * FROM usuario WHERE usuario ='" + ca[0] + "' AND contrasena ='" + ca[1] + "' AND estado='t';");
         document.getElementById("carga").style.display = "none";
         document.getElementById("nombre_usuario").innerHTML = select[0][0].split(" ", 1);
-    } catch (err) {
-    }
-
+    } catch (err) {}
     return(select);
 }
 function detectarCarga() {
     var select = validacionusuarios();
     //console.log(select);
+    if (navigator.vendor !== "Google Inc."){
+        location.href = "barranquilla.html?ig=navegador";
+    }
     if (select === null) {
-        //alert("ad");
         location.href = "barranquilla.html?ig=error";
     } else {
         try {
@@ -800,9 +800,6 @@ function mostrarpanelatributosaaa() {
     document.getElementById("botonminimizarpuntosaaa").style.display = "block";
 }
 
-
-
-
 function mapposi(coord, giro) {
     var coo = coord.toString(function () {
         return(this.lat(), this.lng());
@@ -856,28 +853,7 @@ function mapposi(coord, giro) {
     }
     markerSource.addFeature(feat);
 }
-
 function cerrarbarrasconsultas() {
     document.getElementById("barra_alineamiento").style.display = "none";
     document.getElementById("barra_predioshasusos").style.display = "none";
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

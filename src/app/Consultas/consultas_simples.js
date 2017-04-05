@@ -603,36 +603,36 @@ function addressSelect(event, ui) {
                     select[4] = "<b>Estrato</b>"; 
                     select[5] = "<b>Destino</b>";
                     select[6] = "<b>Avalúo</b>";
-                    select[7] = "<b>Tarifa</b>";
-                    select[8] = "<b>Impuesto</b>";
-                    select[9] = "<b>Fotografias</b>";      
+                    //select[7] = "<b>Tarifa</b>";
+                    select[7] = "<b>Impuesto</b>";
+                    select[8] = "<b>Fotografias</b>";      
                     sel[0] = values.manzana_co;
                     sel[1] = values.codigo;
                     sel[2] = values.codigo_ant;
                     sel[3] = ui.item.direccionoriginal;
                     sel[4] = values.estrato_hacienda;
                     sel[5] = values.destino_hacienda;
-                    sel[6] = "";
-                    sel[7] = "";
-                    sel[8] = "";   
-                    sel[9] = document.createElement("a");
-                    sel[9].id = "img1";
-                    sel[9].style = "width: 30px; height: 50px;";
-                    sel[9].target = "marco";
-                    sel[9].setAttribute("onclick","open_streetview()");
+                    sel[6] = values.avaluo_hacienda;
+                    //sel[7] = "";
+                    sel[7] = values.impuesto_hacienda;   
+                    sel[8] = document.createElement("a");
+                    sel[8].id = "img1";
+                    sel[8].style = "width: 30px; height: 50px;";
+                    sel[8].target = "marco";
+                    sel[8].setAttribute("onclick","open_streetview()");
                     //sel[7].onclick = "open_streetview()";
-                    sel[9].href = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";
-                    imag[9] = document.createElement("img");
-                    imag[9].id = "im1";
-                    imag[9].className = "pequeña";
-                    imag[9].src = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";           
-                    stv[9] = document.createElement("a");
-                    stv[9].id = "imgstreet1";
-                    stv[9].target = "marco";
-                    stv[9].href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
-                    stv[9].setAttribute("onclick","open_streetview()");  
-                    ig[9] = document.createElement("img");
-                    ig[9].src = "./imagenes/streetview.png";
+                    sel[8].href = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";
+                    imag[8] = document.createElement("img");
+                    imag[8].id = "im1";
+                    imag[8].className = "pequeña";
+                    imag[8].src = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";           
+                    stv[8] = document.createElement("a");
+                    stv[8].id = "imgstreet1";
+                    stv[8].target = "marco";
+                    stv[8].href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
+                    stv[8].setAttribute("onclick","open_streetview()");  
+                    ig[8] = document.createElement("img");
+                    ig[8].src = "./imagenes/streetview.png";
                     
                      for (i = 0; i < select.length; i++) {
                         row = table.insertRow(i+1);
@@ -640,7 +640,7 @@ function addressSelect(event, ui) {
                         cell2 = row.insertCell(1);
                         cell1.innerHTML = select[i];
                         
-                        if (i === 9){
+                        if (i === 8){
                             cell2.appendChild(sel[i]);
                             //cell2.appendChild(imag[i]);
                             sel[i].appendChild(imag[i]);

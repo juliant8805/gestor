@@ -41,9 +41,10 @@ function detectarCarga() {
             document.getElementById("manual").style.display = "block";
             
             //document.getElementById('botones').style.display = 'block';
-            //document.getElementById("icono_matricula").style.display = "block";
+            document.getElementById("icono_matricula").style.display = "block";
             document.getElementById("icono_codigo").style.display = "block";
-            //document.getElementById("Rango Area Terreno").style.display = "block";
+            document.getElementById("propietario").style.display = "block";
+            document.getElementById("cedula").style.display = "block";
             //document.getElementById("Rango Area Construccion").style.display = "block";
             document.getElementById("Tipo Construccion").style.display = "block";
             document.getElementById("predios_actualizacion").style.display = "block";
@@ -356,15 +357,31 @@ function busqueda(id) {
     document.getElementById('matricula').value = "";
     document.getElementById('direccion').value = "";
     document.getElementById('codigo').value = "";
+    document.getElementById('cedul').value = "";
+    document.getElementById('propietarios').value = "";
     document.getElementById('input_ladomanzana').value = "";
-    if (id === "personalizada")
+    if (id === "propietar")
     {
+        document.getElementById('codigo').style.display = 'none';
+        document.getElementById('cedul').style.display = 'none';
+        document.getElementById('barra_codigo').style.display = 'block';
+        document.getElementById('propietarios').style.display = 'block';
+    } else if (id === "cedula")
+    {
+        console.log(1);
+        document.getElementById('propietarios').style.display = 'none';
+        document.getElementById('codigo').style.display = 'none';
+        document.getElementById('barra_codigo').style.display = 'block';
+        document.getElementById('cedul').style.display = 'block';
     } else if (id === "personalizada1")
     {
         document.getElementById('barra_busqueda_matricula').style.display = 'block';
     } else if (id === "personalizada2")
     {
+        document.getElementById('propietarios').style.display = 'none';
+        document.getElementById('cedul').style.display = 'none';
         document.getElementById('barra_codigo').style.display = 'block';
+        document.getElementById('codigo').style.display = 'block';
     } else if (id === "alineamiento")
     {
         document.getElementById('barra_alineamiento').style.display = 'block';

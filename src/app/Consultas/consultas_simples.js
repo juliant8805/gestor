@@ -189,7 +189,7 @@ $("#address1").autocomplete({
     source: addressSource,
     select: PlaceSelect
 });
-$("#nombre_propietario").autocomplete({
+$("#cedul").autocomplete({
     minLength: 1,
     source: addressSource,
     select: addressSelect
@@ -291,6 +291,9 @@ function addressSource(requestString, responseFunc) {
     } else if ($("#propietarios")["0"].value !== "") {
         var tempname = "preproduccion:buscar_propietario_reg";
         var temp = "propietario";
+    } else if ($("#cedul")["0"].value !== "") {
+        var tempname = "preproduccion:buscar_cedula_reg";
+        var temp = "cedula";
     } else if ($("#matricula")["0"].value !== "") {
         var tempname = "preproduccion:buscar_matricula_reg";
         var temp = "matricula";
@@ -371,6 +374,15 @@ function addressSource(requestString, responseFunc) {
                     arr.push({
                         codigo: data.features[i].properties.codigo,
                         value: data.features[i].properties.propietario,
+                        feature: data,
+                        direccion: data.features[i].properties.direccion
+                    });
+                }
+            } else if (temp === "cedula") {
+                for (i = 0; i < data.features.length; i++) {
+                    arr.push({
+                        codigo: data.features[i].properties.codigo,
+                        value: data.features[i].properties.cedula,
                         feature: data,
                         direccion: data.features[i].properties.direccion
                     });

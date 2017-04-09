@@ -133,24 +133,26 @@ function estdistica(select, titulo, param, totales) {
             color[i]='#9999ff';
         }else if(param[i][0]==='Persona Juridica'){
             color[i]='#ffff19';
-        }else if(param[i][0]==='0-100 millones'){
-            color[i]='#7fbf7f';
-        }else if(param[i][0]==='100-1.000 millones'){
-            color[i]='#ffff4c';
-        }else if(param[i][0]==='1.000-10.000 millones'){
-            color[i]='#ffae19';
-        }else if(param[i][0]==='mayor a 10.000 millones'){
-            color[i]='#e31a1c';
+        }else if(param[i][0]==='0-20 millones'){
+            color[i]='#7CEB98';
+        }else if(param[i][0]==='20-50 millones'){
+            color[i]='#EDEF85';
+        }else if(param[i][0]==='50-100 millones'){
+            color[i]='#FFBBFF';
+        }else if(param[i][0]==='100-500 millones'){
+            color[i]='#FF8A8A';
+        }else if(param[i][0]==='mayor a 500 millones'){
+            color[i]='#9999FF';
         }else if(param[i][0]==='Sin Proteccion'){
             color[i]='#F7FE2E';
         }else if(param[i][0]==='Area de Reserva y Proteccion'){
             color[i]='#04B4AE';
-        }else if(param[i][0]==='Suelo de Expansion'){
-            color[i]='#FFFF00';
-        }else if(param[i][0]==='Suelo Rural'){
-            color[i]='#008000';
-        }else if(param[i][0]==='Suelo Urbano'){
-            color[i]='#00004c';
+        }else if(param[i][0]==='Predios en Suelo de Expansión'){
+            color[i]='#FF8A8A';
+        }else if(param[i][0]==='Predios en Suelo Rural'){
+            color[i]='#7CEB98';
+        }else if(param[i][0]==='Predios en Suelo Urbano'){
+            color[i]='#9999FF';
         }else if(param[i][0]==='Licuefacción'){
             color[i]='#FFA4FF';
         }else if(param[i][0]==='Amenaza Muy Alta'){

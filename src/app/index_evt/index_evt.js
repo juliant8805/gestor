@@ -39,17 +39,17 @@ function detectarCarga() {
             document.getElementById("menu_circular").style.display = "block";
             document.getElementById("tipo_usuario").style.display = "block";
             document.getElementById("manual").style.display = "block";
-            
-            //document.getElementById('botones').style.display = 'block';
             document.getElementById("icono_matricula").style.display = "block";
             document.getElementById("icono_codigo").style.display = "block";
             document.getElementById("propietario").style.display = "block";
             document.getElementById("cedula").style.display = "block";
             //document.getElementById("Rango Area Construccion").style.display = "block";
             document.getElementById("Tipo Construccion").style.display = "block";
-            document.getElementById("predios_actualizacion").style.display = "block";
+            document.getElementById("predios_construidos").style.display = "block";
             document.getElementById("Distrito vs Prestadores AAA").style.display = "block";
             document.getElementById("plusvalia").style.display = "block";
+            document.getElementById("predios_actualizacion").style.display = "block";
+            
             //document.getElementById("Calidad Construcciones").style.display = "block";
             //document.getElementById("Avaluo Catastral").style.display = "block";
             modulo="catastro";
@@ -92,9 +92,12 @@ function detectarCarga() {
             document.getElementById("estratificacion_oficial").style.display = "block";
             document.getElementById("Tipo de Amenaza").style.display = "block";
             document.getElementById("Estructura Ecologica Principal").style.display = "block";
+            document.getElementById("Clasificacion_Uso").style.display = "block";
             modulo="planeacion";
         }
         else if (select[0][10] === 't') {
+            document.getElementById("Avaluo Catastral").style.display = "block";
+            document.getElementById("Incremento Avaluo").style.display = "block";
             document.getElementById("menu_circular").style.display = "block";
             document.getElementById("tipo_usuario").style.display = "block";
             document.getElementById("manual").style.display = "block";
@@ -498,8 +501,8 @@ function changeImage(id) {
         document.getElementById('predios_exentos_2016').style = "background:url('./imagenes/consultar_predios_exentos.png'); background-color:#adad32; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
     } else if (id === "estratificacion_oficial") {
         document.getElementById('estratificacion_oficial').style = "background:url('./imagenes/consultar_estratificacion_oficial.png'); background-color:#46a346; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
-    } else if (id === "predios_actualizacion") {
-        document.getElementById('predios_actualizacion').style = "background:url('./imagenes/actualizacion_conservacion.png'); background-color:#46a346; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
+    } else if (id === "predios_construidos") {
+        document.getElementById('predios_construidos').style = "background:url('./imagenes/actualizacion_conservacion.png'); background-color:#46a346; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
     } else if (id === "oficial_vs_AAA") {
         document.getElementById('oficial_vs_AAA').style = "background:url('./imagenes/oficial_vs_AAA.png'); background-color:#adad32; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
         document.getElementById('oficial_vs_AAA').value = 0;
@@ -521,7 +524,6 @@ function changeImage(id) {
         document.getElementById('Rango Area Construccion').style = "background:url('./imagenes/rango_construccion.png'); background-color:#93c993; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
     } else if (id === "Avaluo Catastral") {
         document.getElementById('Avaluo Catastral').style = "background:url('./imagenes/Avaluo_Catastral.png'); background-color:#adad32; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
-        document.getElementById('Avaluo Catastral').value = 0;
     } else if (id === "Tipo Propietario") {
         document.getElementById('Tipo Propietario').style = "background:url('./imagenes/tipo_propietario.png'); background-color:#326f32; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
         document.getElementById('Avaluo Catastral').value = 0;
@@ -543,6 +545,12 @@ function changeImage(id) {
     }
     else if (id === "plusvalia") {
         document.getElementById('plusvalia').style = "background:url('./imagenes/icono_plusvalia.png'); background-color:#b7b7b7; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
+    }
+    else if (id === "Incremento Avaluo") {
+        document.getElementById('Incremento Avaluo').style = "background:url('./imagenes/icono_incremento_avaluo.png'); background-color:#b7b7b7; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
+    }
+    else if (id === "Clasificacion_Uso") {
+        document.getElementById('Clasificacion_Uso').style = "background:url('./imagenes/icono_clasificacion_uso.png'); background-color:#adad32; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
     }
 }
 ;
@@ -567,8 +575,8 @@ function normalImage(id) {
         document.getElementById('predios_exentos_2016').style = "background:url('./imagenes/predios_exentos.png'); background-color:#86B12D; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
     } else if (id === "estratificacion_oficial") {
         document.getElementById('estratificacion_oficial').style = "background:url('./imagenes/estratificacion_oficial.png'); background-color:#008E30; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
-    } else if (id === "predios_actualizacion") {
-        document.getElementById('predios_actualizacion').style = "background:url('./imagenes/icono_actualizacion_conservacion.png'); background-color:#006D1B; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
+    } else if (id === "predios_construidos") {
+        document.getElementById('predios_construidos').style = "background:url('./imagenes/icono_actualizacion_conservacion.png'); background-color:#006D1B; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
     } else if (id === "oficial_vs_AAA") {
         if (document.getElementById("oficial_vs_AAA").value === "Acueducto") {
             document.getElementById('oficial_vs_AAA').style = "background-color:#00AD41; min-height: 40px; border:0px; font-size:small;";
@@ -610,15 +618,7 @@ function normalImage(id) {
     } else if (id === "Rango Area Construccion") {
         document.getElementById('Rango Area Construccion').style = "background:url('./imagenes/icono_rango_area_construccion.png'); background-color:#008E30; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
     } else if (id === "Avaluo Catastral") {
-        if (document.getElementById("Avaluo Catastral").value === "2016") {
-            document.getElementById('Avaluo Catastral').style = "background-color:#006D1B; min-height: 40px; border:0px; font-size:small;";
-        } else if (document.getElementById("Avaluo Catastral").value === "2015") {
-            document.getElementById('Avaluo Catastral').style = "background-color:#006D1B; min-height: 40px; border:0px; font-size:small;";
-        } else if (document.getElementById("Avaluo Catastral").value === "2014") {
-            document.getElementById('Avaluo Catastral').style = "background-color:#006D1B; min-height: 40px; border:0px; font-size:small;";
-        } else {
-            document.getElementById('Avaluo Catastral').style = "background:url('./imagenes/icono_vigencia_avaluos.png'); background-color:#006D1B; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
-        }
+            document.getElementById('Avaluo Catastral').style = "background:url('./imagenes/icono_vigencia_avaluos.png'); background-color:#008E30; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
     } else if (id === "Tipo Propietario") {
         document.getElementById('Tipo Propietario').style = "background:url('./imagenes/icono_tipo_propietario.png'); background-color:#00AD41; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
     } else if (id === "Conflicto Uso del Suelo") {
@@ -644,45 +644,20 @@ function normalImage(id) {
     } else if (id === "plusvalia") {
         document.getElementById('plusvalia').style = "background:url('./imagenes/icono_plusvalia.png'); background-color:#a6a6a6; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
     }
+    else if (id === "Incremento Avaluo") {
+        document.getElementById('Incremento Avaluo').style = "background:url('./imagenes/icono_incremento_avaluo.png'); background-color:#a6a6a6; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
+    }
+    else if (id === "Clasificacion_Uso") {
+        document.getElementById('Clasificacion_Uso').style = "background:url('./imagenes/icono_clasificacion_uso.png'); background-color:#00AD41; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
+    }
 }
 ;
-
 function comparacion_imagenes() {
     window.open(
             'http://104.197.185.151/calidad/control/comparacion_imagenes/map.control.swipe.html',
             '_blank' // <- This is what makes it open in a new window.
             );
 }
-;
-/*
- function gestioncatastral(){
- document.getElementById("industriaycomercio").style.display = "none";
- document.getElementById("botones").style.display = "none";
- document.getElementById("potinteractivo").style.display = "none";
- document.getElementById("SUI").style.display = "none";
- document.getElementById("gestioncatastral").style.display = "block";   
- }
- function potinteractivo(){
- document.getElementById("industriaycomercio").style.display = "none";
- document.getElementById("SUI").style.display = "none";
- document.getElementById("botones").style.display = "none";
- document.getElementById("gestioncatastral").style.display = "none";   
- document.getElementById("potinteractivo").style.display = "block";   
- }
- function SUI(){
- document.getElementById("industriaycomercio").style.display = "none";
- document.getElementById("botones").style.display = "none";
- document.getElementById("gestioncatastral").style.display = "none";   
- document.getElementById("potinteractivo").style.display = "none"; 
- document.getElementById("SUI").style.display = "block"; 
- }
- function industriaycomercio(){
- document.getElementById("botones").style.display = "none";
- document.getElementById("gestioncatastral").style.display = "none";   
- document.getElementById("potinteractivo").style.display = "none"; 
- document.getElementById("SUI").style.display = "none"; 
- document.getElementById("industriaycomercio").style.display = "block";
- }*/
 function ocultarstreetview() {
     document.getElementById("marco").style.display = "none";
     document.getElementById("botoncerrarstreetview").style.display = "none";
@@ -722,100 +697,7 @@ function mostrarpanelatributos() {
     document.getElementById("botonmostrarpanelatributos").style.display = "none";
     //document.getElementById("botonocultarpanelatributos").style.display = "block";
 }
-function ocultarpanelatributosalineamiento() {
-    document.getElementById("botonminimizar").style.display = "none";
-    document.getElementById("panel_atributos_alineamiento").style.display = "none";
-    document.getElementById("tablaatributosalineamiento").style.display = "none";
-    document.getElementById("botonmaximizar").style.display = "block";
-}
-function mostrarpanelatributosalineamiento() {
-    document.getElementById("botonminimizar").style.display = "block";
-    document.getElementById("panel_atributos_alineamiento").style.display = "block";
-    document.getElementById("tablaatributosalineamiento").style.display = "block";
-    document.getElementById("botonmaximizar").style.display = "none";
-}
-function ocultarpanelatributoshasusos() {
-    document.getElementById("botonminimizar").style.display = "none";
-    document.getElementById("panel_atributos_predioshasusos").style.display = "none";
-    document.getElementById("tablaatributospredioshasusos").style.display = "none";
-    document.getElementById("botonmaximizarhasusos").style.display = "block";
-}
-function mostrarpanelatributoshasusos() {
-    document.getElementById("botonminimizar").style.display = "block";
-    document.getElementById("panel_atributos_predioshasusos").style.display = "block";
-    document.getElementById("tablaatributospredioshasusos").style.display = "block";
-    document.getElementById("botonmaximizarhasusos").style.display = "none";
-}
-function mostrarpanelatributosph() {
-    document.getElementById("panel_atributos").style.display = "none";
-    document.getElementById("panel_atributos_alineamiento").style.display = "none";
-    document.getElementById("panel_atributos_predioshasusos").style.display = "none";
-    document.getElementById("botonminimizarph").style.display = "block";
-    document.getElementById("panel_atributos_ph").style.display = "block";
-    document.getElementById("tablaatributosprediosph").style.display = "block";
-    document.getElementById("botonmaximizarph").style.display = "none";
-}
-function ocultarpanelatributosph() {
-    document.getElementById("botonminimizarph").style.display = "none";
-    document.getElementById("panel_atributos_ph").style.display = "none";
-    document.getElementById("tablaatributosprediosph").style.display = "none";
-    document.getElementById("botonmaximizarph").style.display = "block";
-}
-function mostrarpanelatributosph() {
-    document.getElementById("panel_atributos").style.display = "none";
-    document.getElementById("panel_atributos_alineamiento").style.display = "none";
-    document.getElementById("panel_atributos_predioshasusos").style.display = "none";
-    document.getElementById("botonminimizarph").style.display = "block";
-    document.getElementById("panel_atributos_ph").style.display = "block";
-    document.getElementById("tablaatributosprediosph").style.display = "block";
-    document.getElementById("botonmaximizarph").style.display = "none";
-}
-function ocultarpanelatributossui() {
-    document.getElementById("botonminimizarph").style.display = "none";
-    document.getElementById("panel_atributos_ph").style.display = "none";
-    document.getElementById("tablaatributosprediosph").style.display = "none";
-    document.getElementById("botonmaximizarph").style.display = "none";
-    document.getElementById("botonminimizarsui").style.display = "none";
-    document.getElementById("panel_atributos_sui").style.display = "none";
-    document.getElementById("botonmaximizarsui").style.display = "block";
-}
-function mostrarpanelatributossui() {
-    document.getElementById("panel_atributos").style.display = "none";
-    document.getElementById("panel_atributos_alineamiento").style.display = "none";
-    document.getElementById("panel_atributos_predioshasusos").style.display = "none";
-    document.getElementById("botonminimizarph").style.display = "none";
-    document.getElementById("panel_atributos_ph").style.display = "none";
-    document.getElementById("tablaatributosprediosph").style.display = "none";
-    document.getElementById("botonmaximizarph").style.display = "none";
-    document.getElementById("botonmaximizarsui").style.display = "none";
-    document.getElementById("panel_atributos_sui").style.display = "block";
-    document.getElementById("botonminimizarsui").style.display = "block";
-}
-function ocultarpanelatributosaaa() {
-    document.getElementById("botonminimizarph").style.display = "none";
-    document.getElementById("panel_atributos_ph").style.display = "none";
-    document.getElementById("tablaatributosprediosph").style.display = "none";
-    document.getElementById("botonmaximizarph").style.display = "none";
-    document.getElementById("botonminimizarsui").style.display = "none";
-    document.getElementById("panel_atributos_sui").style.display = "none";
-    document.getElementById("botonmaximizarsui").style.display = "none";
-    document.getElementById("panel_atributos_puntos_aaa").style.display = "none";
-    document.getElementById("botonmaximizarpuntosaaa").style.display = "block";
-}
-function mostrarpanelatributosaaa() {
-    document.getElementById("panel_atributos").style.display = "none";
-    document.getElementById("panel_atributos_alineamiento").style.display = "none";
-    document.getElementById("panel_atributos_predioshasusos").style.display = "none";
-    document.getElementById("botonminimizarph").style.display = "none";
-    document.getElementById("panel_atributos_ph").style.display = "none";
-    document.getElementById("tablaatributosprediosph").style.display = "none";
-    document.getElementById("botonmaximizarph").style.display = "none";
-    document.getElementById("botonmaximizarsui").style.display = "none";
-    document.getElementById("panel_atributos_sui").style.display = "none";
-    document.getElementById("botonminimizarsui").style.display = "none";
-    document.getElementById("panel_atributos_puntos_aaa").style.display = "block";
-    document.getElementById("botonminimizarpuntosaaa").style.display = "block";
-}
+
 
 function mapposi(coord, giro) {
     var coo = coord.toString(function () {
@@ -874,3 +756,24 @@ function cerrarbarrasconsultas() {
     document.getElementById("barra_alineamiento").style.display = "none";
     document.getElementById("barra_predioshasusos").style.display = "none";
 }
+
+function alertDGC(mensaje)
+{
+    var dgcTiempo=500
+    var ventanaCS='<div class="dgcAlert"><div class="dgcVentana"><div class="dgcCerrar"></div><div class="dgcMensaje">'+mensaje+'<br><div class="dgcAceptar">Aceptar</div></div></div></div>';
+    $('body').append(ventanaCS);
+    var alVentana=$('.dgcVentana').height();
+    var alNav=$(window).height();
+    var supNav=$(window).scrollTop();
+    $('.dgcAlert').css('height',$(document).height());
+    $('.dgcVentana').css('top',((alNav-alVentana)/2+supNav-100)+'px');
+    $('.dgcAlert').css('display','block');
+    $('.dgcAlert').animate({opacity:1},dgcTiempo);
+    $('.dgcCerrar,.dgcAceptar').click(function(e) {
+        $('.dgcAlert').animate({opacity:0},dgcTiempo);
+        setTimeout("$('.dgcAlert').remove()",dgcTiempo);
+    });
+}
+window.alert = function (message) {
+  alertDGC(message);
+};

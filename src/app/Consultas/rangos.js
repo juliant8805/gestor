@@ -94,7 +94,6 @@ function rango(style) {
                 queryexport = style + ' M';
             }
         } else if (style === "Avaluo Catastral") {
-
             layermetrotel.setVisible(false);
             layerSUI.setVisible(false);
             layerindustriaycomercio.setVisible(false);
@@ -103,176 +102,210 @@ function rango(style) {
             layerprediosexentos2016.setVisible(false);
             estacionestransmetro.setVisible(false);
             viastransmasivo.setVisible(false);
+            construcciones.setVisible(false);
+            predio.setVisible(true); 
+            var formatNumber = {
+                 separador: ".", // separador para los miles
+                 sepDecimal: ',', // separador para los decimales
+                 formatear:function (num){
+                  num +='';
+                  var splitStr = num.split('.');
+                  var splitLeft = splitStr[0];
+                  var splitRight = splitStr.length > 1 ? this.sepDecimal + splitStr[1] : '';
+                  var regx = /(\d+)(\d{3})/;
+                  while (regx.test(splitLeft)) {
+                  splitLeft = splitLeft.replace(regx, '$1' + this.separador + '$2');
+                  }
+                  return this.simbol + splitLeft  +splitRight;
+                 },
+                 new:function(num, simbol){
+                  this.simbol = simbol ||'';
+                  return this.formatear(num);
+                 }
+                }
+            if (document.getElementById("barrio").value === '' && document.getElementById("localidad").value === '' && document.getElementById("manzana").value === '') {
+                try{
+                var select = select_query("select count(*) from preliquidacion_2017;");}catch(err){}
+				if (!select){select=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                var param = [['0-20 millones'], ['20-50 millones'], ['50-100 millones'], ['100-500 millones'], ['mayor a 500 millones']];
+				try{
+                var total1 = select_query("select count(*) from preliquidacion_2017 where avaluo_int Between 0 And 20000000");}catch(err){}
+				if (!total1){total1=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+				try{
+                var total2 = select_query("select count(*) from preliquidacion_2017 where avaluo_int Between 20000001 And 50000000");}catch(err){}
+				if (!total2){total2=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+				try{
+                var total3 = select_query("select count(*) from preliquidacion_2017 where avaluo_int Between 50000001 And 100000000");}catch(err){}
+				if (!total3){total3=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+				try{
+				var total4 = select_query("select count(*) from preliquidacion_2017 where avaluo_int Between 100000001 And 500000000");}catch(err){}
+                if (!total4){total4=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                try{
+                var total5 = select_query("select count(*) from preliquidacion_2017 where avaluo_int > 500000000");}catch(err){}
+                if (!total5){total5=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                var valoravaluo = select_query("select sum(avaluo_int) from preliquidacion_2017;");
+                var valoravaluo = valoravaluo.toString();  
+                var valoravaluo = formatNumber.new(valoravaluo); 
+                var titulo = "Total Avalúo Catastral: " + valoravaluo;
+                var totales = total1.concat(total2, total3, total4, total5);
+                predio.getSource().updateParams({'STYLES': style});
+                estdistica(select, titulo, param, totales);
+                map.getView().fitExtent(predio.getExtent(), map.getSize());
+                queryexport = style + ' G';
+            } else if (document.getElementById("barrio").value !== '') {
+                var valor = "'" + values + "'";
+                try{
+                var select = select_query("select count(*) from preliquidacion_2017 WHERE barrio=" + valor + ";");}catch(err){}
+				if (!select){select=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}  
+				try{
+                var total1 = select_query("select count(*) from preliquidacion_2017 where avaluo_int Between 0 And 20000000 AND barrio=" + valor + "");}catch(err){}
+				if (!total1){total1=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+				try{
+                var total2 = select_query("select count(*) from preliquidacion_2017 where avaluo_int Between 20000001 And 50000000 AND barrio=" + valor + "");}catch(err){}
+				if (!total2){total2=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+				try{
+                var total3 = select_query("select count(*) from preliquidacion_2017 where avaluo_int Between 50000001 And 100000000 AND barrio=" + valor + "");}catch(err){}
+				if (!total3){total3=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+				try{
+				var total4 = select_query("select count(*) from preliquidacion_2017 where avaluo_int Between 100000001 And 500000000 AND barrio=" + valor + "");}catch(err){}
+                if (!total4){total4=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                try{
+                var total5 = select_query("select count(*) from preliquidacion_2017 where avaluo_int > 500000000 AND barrio=" + valor + "");}catch(err){}
+                if (!total5){total5=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                var valoravaluo = select_query("select sum(avaluo_int) from preliquidacion_2017 WHERE barrio=" + valor + ";");
+                var valoravaluo = valoravaluo.toString();  
+                var valoravaluo = formatNumber.new(valoravaluo); 
+                var titulo = "Total Avalúo Catastral: " + valoravaluo;
+                var totales = total1.concat(total2, total3, total4, total5);
+                var param = [['0-20 millones'], ['20-50 millones'], ['50-100 millones'], ['100-500 millones'], ['mayor a 500 millones']];
+                estdistica(select, titulo, param, totales);
+                var filtro = '"cod_barrio=' + valor + '"';
+                predio.getSource().updateParams({'STYLES': style, 'CQL_FILTER': eval(filtro)});
+                queryexport = style + ' B';
+            } else if (document.getElementById("localidad").value !== '') {
+                var valor = "'" + values + "'";
+                try{
+                var select = select_query("select count(*) from preliquidacion_2017 WHERE cod_loc=" + valor + ";");}catch(err){}
+				if (!select){select=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}  
+				try{
+                var total1 = select_query("select count(*) from preliquidacion_2017 where avaluo_int Between 0 And 20000000 AND cod_loc=" + valor + "");}catch(err){}
+				if (!total1){total1=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+				try{
+                var total2 = select_query("select count(*) from preliquidacion_2017 where avaluo_int Between 20000001 And 50000000 AND cod_loc=" + valor + "");}catch(err){}
+				if (!total2){total2=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+				try{
+                var total3 = select_query("select count(*) from preliquidacion_2017 where avaluo_int Between 50000001 And 100000000 AND cod_loc=" + valor + "");}catch(err){}
+				if (!total3){total3=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+				try{
+				var total4 = select_query("select count(*) from preliquidacion_2017 where avaluo_int Between 100000001 And 500000000 AND cod_loc=" + valor + "");}catch(err){}
+                if (!total4){total4=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                try{
+                var total5 = select_query("select count(*) from preliquidacion_2017 where avaluo_int > 500000000 AND cod_loc=" + valor + "");}catch(err){}
+                if (!total5){total5=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                var valoravaluo = select_query("select sum(avaluo_int) from preliquidacion_2017 WHERE cod_loc=" + valor + ";");
+                var valoravaluo = valoravaluo.toString();  
+                var valoravaluo = formatNumber.new(valoravaluo); 
+                var titulo = "Total Avalúo Catastral: " + valoravaluo;
+                var totales = total1.concat(total2, total3, total4, total5);
+                var param = [['0-20 millones'], ['20-50 millones'], ['50-100 millones'], ['100-500 millones'], ['mayor a 500 millones']];
+                estdistica(select, titulo, param, totales);
+                var filtro = '"cod_loc=' + valor + '"';
+                predio.getSource().updateParams({'STYLES': style, 'CQL_FILTER': eval(filtro)});
+                queryexport = style + ' L';
+            } else if (document.getElementById("manzana").value !== '') {
+                 var valor = "'" + values + "'";
+                try{
+                var select = select_query("select sum(numeropredios) from u_terreno WHERE manzana_co=" + valor + ";");}catch(err){}
+				if (!select){select=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}  
+				try{
+                var total1 = select_query("select sum(numeropredios) from u_terreno where avaluo_hacienda Between 0 And 20000000 AND manzana_co=" + valor + "");}catch(err){}
+				if (!total1){total1=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+				try{
+                var total2 = select_query("select sum(numeropredios) from u_terreno where avaluo_hacienda Between 20000001 And 50000000 AND manzana_co=" + valor + "");}catch(err){}
+				if (!total2){total2=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+				try{
+                var total3 = select_query("select sum(numeropredios) from u_terreno where avaluo_hacienda Between 50000001 And 100000000 AND manzana_co=" + valor + "");}catch(err){}
+				if (!total3){total3=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+				try{
+				var total4 = select_query("select sum(numeropredios) from u_terreno where avaluo_hacienda Between 100000001 And 500000000 AND manzana_co=" + valor + "");}catch(err){}
+                if (!total4){total4=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                try{
+                var total5 = select_query("select sum(numeropredios) from u_terreno where avaluo_hacienda > 500000000 AND manzana_co=" + valor + "");}catch(err){}
+                if (!total5){total5=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                var valoravaluo = select_query("select sum(avaluo_hacienda) from u_terreno WHERE manzana_co=" + valor + ";");
+                var valoravaluo = valoravaluo.toString();  
+                var valoravaluo = formatNumber.new(valoravaluo); 
+                var titulo = "Total Avalúo Catastral: " + valoravaluo;
+                var totales = total1.concat(total2, total3, total4, total5);
+                var param = [['0-20 millones'], ['20-50 millones'], ['50-100 millones'], ['100-500 millones'], ['mayor a 500 millones']];
+                estdistica(select, titulo, param, totales);
+                var filtro = '"manzana_co=' + valor + '"';
+                predio.getSource().updateParams({'STYLES': style, 'CQL_FILTER': eval(filtro)});
+                queryexport = style + ' M';
+            }     
+         }
+        
+        
+        else if (style === "Incremento Avaluo") {
+            alert("GESSTOR INFORMA:</br></br>Solo se encuetra información de avalúo catastral para la vigencia 2017, por este motivo no es posible calcular porcentajes de incrementos");
+            layermetrotel.setVisible(false);
+            layerSUI.setVisible(false);
+            layerindustriaycomercio.setVisible(false);
+            layerEstratificacionOficial.setVisible(false);
+            layerprediosexentos2016.setVisible(false);
+            layerprediosexentos2016.setVisible(false);
+            estacionestransmetro.setVisible(false);
+            viastransmasivo.setVisible(false);
+            construcciones.setVisible(false);
             predio.setVisible(true);
-
-            //Vigencia 2016    
-            if (document.getElementById("Avaluo Catastral").value === "2016") {
-                if (document.getElementById("barrio").value === '' && document.getElementById("localidad").value === '' && document.getElementById("manzana").value === '') {
-                    var select = select_query("SELECT Count(*) FROM u_terreno;");
-                    var param = [['0-100 millones'], ['100-1.000 millones'], ['1.000-10.000 millones'], ['mayor a 10.000 millones']];
-                    var total1 = select_query("SELECT COUNT (avaluo_2016) FROM u_terreno where avaluo_2016 Between 0 And 100000000");
-                    var total2 = select_query("SELECT COUNT (avaluo_2016) FROM u_terreno where avaluo_2016 Between 100000000 And 1000000000");
-                    var total3 = select_query("SELECT COUNT (avaluo_2016) FROM u_terreno where avaluo_2016 Between 1000000000 And 10000000000");
-                    var total4 = select_query("SELECT COUNT (avaluo_2016) FROM u_terreno where avaluo_2016>10000000000");
-                    var totales = total1.concat(total2, total3, total4);
-                    predio.getSource().updateParams({'STYLES': 'Avaluo Catastral 2016'});
-                    estdistica(select, style, param, totales);
-                    map.getView().fitExtent(predio.getExtent(), map.getSize());
-                    queryexport = style + ' 2016G';
-                } else if (document.getElementById("barrio").value !== '') {
-                    var valor = "'" + values + "'";
-                    var select = select_query("SELECT Count(*) FROM u_terreno WHERE cod_barrio=" + valor + ";");
-                    var total1 = select_query("SELECT COUNT (avaluo_2016) FROM u_terreno where avaluo_2016 Between 0 And 100000000 AND cod_barrio=" + valor + "");
-                    var total2 = select_query("SELECT COUNT (avaluo_2016) FROM u_terreno where avaluo_2016 Between 100000000 And 1000000000 AND cod_barrio=" + valor + "");
-                    var total3 = select_query("SELECT COUNT (avaluo_2016) FROM u_terreno where avaluo_2016 Between 1000000000 And 10000000000 AND cod_barrio=" + valor + "");
-                    var total4 = select_query("SELECT COUNT (avaluo_2016) FROM u_terreno where avaluo_2016>10000000000 AND cod_barrio=" + valor + "");
-                    var totales = total1.concat(total2, total3, total4);
-                    var param = [['0-100 millones'], ['100-1.000 millones'], ['1.000-10.000 millones'], ['mayor a 10.000 millones']];
-                    estdistica(select, style, param, totales);
-                    var filtro = '"cod_barrio=' + valor + '"';
-                    predio.getSource().updateParams({'STYLES': 'Avaluo Catastral 2016', 'CQL_FILTER': eval(filtro)});
-                    queryexport = style + ' 2016B';
-                } else if (document.getElementById("localidad").value !== '') {
-                    var valor = "'" + values + "'";
-                    var select = select_query("SELECT Count(*) FROM u_terreno WHERE cod_loc=" + valor + ";");
-                    var total1 = select_query("SELECT COUNT (avaluo_2016) FROM u_terreno where avaluo_2016 Between 0 And 100000000 AND cod_loc=" + valor + "");
-                    var total2 = select_query("SELECT COUNT (avaluo_2016) FROM u_terreno where avaluo_2016 Between 100000000 And 1000000000 AND cod_loc=" + valor + "");
-                    var total3 = select_query("SELECT COUNT (avaluo_2016) FROM u_terreno where avaluo_2016 Between 1000000000 And 10000000000 AND cod_loc=" + valor + "");
-                    var total4 = select_query("SELECT COUNT (avaluo_2016) FROM u_terreno where avaluo_2016>10000000000 AND cod_loc=" + valor + "");
-                    var totales = total1.concat(total2, total3, total4);
-                    var param = [['0-100 millones'], ['100-1.000 millones'], ['1.000-10.000 millones'], ['mayor a 10.000 millones']];
-                    estdistica(select, style, param, totales);
-                    var filtro = '"cod_loc=' + valor + '"';
-                    predio.getSource().updateParams({'STYLES': 'Avaluo Catastral 2016', 'CQL_FILTER': eval(filtro)});
-                    queryexport = style + ' 2016L';
-                } else if (document.getElementById("manzana").value !== '') {
-                    var valor = "'" + values + "'";
-                    var select = select_query("SELECT Count(*) FROM u_terreno WHERE manzana_co=" + valor + ";");
-                    var total1 = select_query("SELECT COUNT (avaluo_2016) FROM u_terreno where avaluo_2016 Between 0 And 100000000 AND manzana_co=" + valor + "");
-                    var total2 = select_query("SELECT COUNT (avaluo_2016) FROM u_terreno where avaluo_2016 Between 100000000 And 1000000000 AND manzana_co=" + valor + "");
-                    var total3 = select_query("SELECT COUNT (avaluo_2016) FROM u_terreno where avaluo_2016 Between 1000000000 And 10000000000 AND manzana_co=" + valor + "");
-                    var total4 = select_query("SELECT COUNT (avaluo_2016) FROM u_terreno where avaluo_2016>10000000000 AND manzana_co=" + valor + "");
-                    var totales = total1.concat(total2, total3, total4);
-                    var param = [['0-100 millones'], ['100-1.000 millones'], ['1.000-10.000 millones'], ['mayor a 10.000 millones']];
-                    estdistica(select, style, param, totales);
-                    var filtro = '"manzana_co=' + valor + '"';
-                    predio.getSource().updateParams({'STYLES': 'Avaluo Catastral 2016', 'CQL_FILTER': eval(filtro)});
-                    queryexport = style + ' 2016M';
-                }
-
-            }
-            //Vigencia 2015
-            else if (document.getElementById("Avaluo Catastral").value === "2015") {
-                if (document.getElementById("barrio").value === '' && document.getElementById("localidad").value === '' && document.getElementById("manzana").value === '') {
-                    var select = select_query("SELECT Count(*) FROM u_terreno;");
-                    var param = [['0-100 millones'], ['100-1.000 millones'], ['1.000-10.000 millones'], ['mayor a 10.000 millones']];
-                    var total1 = select_query("SELECT COUNT (avaluo_2015) FROM u_terreno where avaluo_2015 Between 0 And 100000000");
-                    var total2 = select_query("SELECT COUNT (avaluo_2015) FROM u_terreno where avaluo_2015 Between 100000000 And 1000000000");
-                    var total3 = select_query("SELECT COUNT (avaluo_2015) FROM u_terreno where avaluo_2015 Between 1000000000 And 10000000000");
-                    var total4 = select_query("SELECT COUNT (avaluo_2015) FROM u_terreno where avaluo_2015>10000000000");
-                    var totales = total1.concat(total2, total3, total4);
-                    predio.getSource().updateParams({'STYLES': 'Avaluo Catastral 2015'});
-                    estdistica(select, style, param, totales);
-                    map.getView().fitExtent(predio.getExtent(), map.getSize());
-                    queryexport = style + ' 2015G';
-                } else if (document.getElementById("barrio").value !== '') {
-                    var valor = "'" + values + "'";
-                    var select = select_query("SELECT Count(*) FROM u_terreno WHERE cod_barrio=" + valor + ";");
-                    var total1 = select_query("SELECT COUNT (avaluo_2015) FROM u_terreno where avaluo_2015 Between 0 And 100000000 AND cod_barrio=" + valor + "");
-                    var total2 = select_query("SELECT COUNT (avaluo_2015) FROM u_terreno where avaluo_2015 Between 100000000 And 1000000000 AND cod_barrio=" + valor + "");
-                    var total3 = select_query("SELECT COUNT (avaluo_2015) FROM u_terreno where avaluo_2015 Between 1000000000 And 10000000000 AND cod_barrio=" + valor + "");
-                    var total4 = select_query("SELECT COUNT (avaluo_2015) FROM u_terreno where avaluo_2015>10000000000 AND cod_barrio=" + valor + "");
-                    var totales = total1.concat(total2, total3, total4);
-                    var param = [['0-100 millones'], ['100-1.000 millones'], ['1.000-10.000 millones'], ['mayor a 10.000 millones']];
-                    estdistica(select, style, param, totales);
-                    var filtro = '"cod_barrio=' + valor + '"';
-                    predio.getSource().updateParams({'STYLES': 'Avaluo Catastral 2015', 'CQL_FILTER': eval(filtro)});
-                    queryexport = style + ' 2015B';
-                } else if (document.getElementById("localidad").value !== '') {
-                    var valor = "'" + values + "'";
-                    var select = select_query("SELECT Count(*) FROM u_terreno WHERE cod_loc=" + valor + ";");
-                    var total1 = select_query("SELECT COUNT (avaluo_2015) FROM u_terreno where avaluo_2015 Between 0 And 100000000 AND cod_loc=" + valor + "");
-                    var total2 = select_query("SELECT COUNT (avaluo_2015) FROM u_terreno where avaluo_2015 Between 100000000 And 1000000000 AND cod_loc=" + valor + "");
-                    var total3 = select_query("SELECT COUNT (avaluo_2015) FROM u_terreno where avaluo_2015 Between 1000000000 And 10000000000 AND cod_loc=" + valor + "");
-                    var total4 = select_query("SELECT COUNT (avaluo_2015) FROM u_terreno where avaluo_2015>10000000000 AND cod_loc=" + valor + "");
-                    var totales = total1.concat(total2, total3, total4);
-                    var param = [['0-100 millones'], ['100-1.000 millones'], ['1.000-10.000 millones'], ['mayor a 10.000 millones']];
-                    estdistica(select, style, param, totales);
-                    var filtro = '"cod_loc=' + valor + '"';
-                    predio.getSource().updateParams({'STYLES': 'Avaluo Catastral 2015', 'CQL_FILTER': eval(filtro)});
-                    queryexport = style + ' 2015L';
-                } else if (document.getElementById("manzana").value !== '') {
-                    var valor = "'" + values + "'";
-                    var select = select_query("SELECT Count(*) FROM u_terreno WHERE manzana_co=" + valor + ";");
-                    var total1 = select_query("SELECT COUNT (avaluo_2015) FROM u_terreno where avaluo_2015 Between 0 And 100000000 AND manzana_co=" + valor + "");
-                    var total2 = select_query("SELECT COUNT (avaluo_2015) FROM u_terreno where avaluo_2015 Between 100000000 And 1000000000 AND manzana_co=" + valor + "");
-                    var total3 = select_query("SELECT COUNT (avaluo_2015) FROM u_terreno where avaluo_2015 Between 1000000000 And 10000000000 AND manzana_co=" + valor + "");
-                    var total4 = select_query("SELECT COUNT (avaluo_2015) FROM u_terreno where avaluo_2015>10000000000 AND manzana_co=" + valor + "");
-                    var totales = total1.concat(total2, total3, total4);
-                    var param = [['0-100 millones'], ['100-1.000 millones'], ['1.000-10.000 millones'], ['mayor a 10.000 millones']];
-                    estdistica(select, style, param, totales);
-                    var filtro = '"manzana_co=' + valor + '"';
-                    predio.getSource().updateParams({'STYLES': 'Avaluo Catastral 2015', 'CQL_FILTER': eval(filtro)});
-                    queryexport = style + ' 2015M';
-                }
-            }
-
-            //Vigencia 2014
-            else if (document.getElementById("Avaluo Catastral").value === "2014") {
-                if (document.getElementById("barrio").value === '' && document.getElementById("localidad").value === '' && document.getElementById("manzana").value === '') {
-                    var select = select_query("SELECT Count(*) FROM u_terreno;");
-                    var param = [['0-100 millones'], ['100-1.000 millones'], ['1.000-10.000 millones'], ['mayor a 10.000 millones']];
-                    var total1 = select_query("SELECT COUNT (avaluo_2014) FROM u_terreno where avaluo_2014 Between 0 And 100000000");
-                    var total2 = select_query("SELECT COUNT (avaluo_2014) FROM u_terreno where avaluo_2014 Between 100000000 And 1000000000");
-                    var total3 = select_query("SELECT COUNT (avaluo_2014) FROM u_terreno where avaluo_2014 Between 1000000000 And 10000000000");
-                    var total4 = select_query("SELECT COUNT (avaluo_2014) FROM u_terreno where avaluo_2014>10000000000");
-                    var totales = total1.concat(total2, total3, total4);
-                    predio.getSource().updateParams({'STYLES': 'Avaluo Catastral 2014'});
-                    estdistica(select, style, param, totales);
-                    map.getView().fitExtent(predio.getExtent(), map.getSize());
-                    queryexport = style + ' 2014G';
-                } else if (document.getElementById("barrio").value !== '') {
-                    var valor = "'" + values + "'";
-                    var select = select_query("SELECT Count(*) FROM u_terreno WHERE cod_barrio=" + valor + ";");
-                    var total1 = select_query("SELECT COUNT (avaluo_2014) FROM u_terreno where avaluo_2014 Between 0 And 100000000 AND cod_barrio=" + valor + "");
-                    var total2 = select_query("SELECT COUNT (avaluo_2014) FROM u_terreno where avaluo_2014 Between 100000000 And 1000000000 AND cod_barrio=" + valor + "");
-                    var total3 = select_query("SELECT COUNT (avaluo_2014) FROM u_terreno where avaluo_2014 Between 1000000000 And 10000000000 AND cod_barrio=" + valor + "");
-                    var total4 = select_query("SELECT COUNT (avaluo_2014) FROM u_terreno where avaluo_2014>10000000000 AND cod_barrio=" + valor + "");
-                    var totales = total1.concat(total2, total3, total4);
-                    var param = [['0-100 millones'], ['100-1.000 millones'], ['1.000-10.000 millones'], ['mayor a 10.000 millones']];
-                    estdistica(select, style, param, totales);
-                    var filtro = '"cod_barrio=' + valor + '"';
-                    predio.getSource().updateParams({'STYLES': 'Avaluo Catastral 2014', 'CQL_FILTER': eval(filtro)});
-                    queryexport = style + ' 2014B';
-                } else if (document.getElementById("localidad").value !== '') {
-                    var valor = "'" + values + "'";
-                    var select = select_query("SELECT Count(*) FROM u_terreno WHERE cod_loc=" + valor + ";");
-                    var total1 = select_query("SELECT COUNT (avaluo_2014) FROM u_terreno where avaluo_2014 Between 0 And 100000000 AND cod_loc=" + valor + "");
-                    var total2 = select_query("SELECT COUNT (avaluo_2014) FROM u_terreno where avaluo_2014 Between 100000000 And 1000000000 AND cod_loc=" + valor + "");
-                    var total3 = select_query("SELECT COUNT (avaluo_2014) FROM u_terreno where avaluo_2014 Between 1000000000 And 10000000000 AND cod_loc=" + valor + "");
-                    var total4 = select_query("SELECT COUNT (avaluo_2014) FROM u_terreno where avaluo_2014>10000000000 AND cod_loc=" + valor + "");
-                    var totales = total1.concat(total2, total3, total4);
-                    var param = [['0-100 millones'], ['100-1.000 millones'], ['1.000-10.000 millones'], ['mayor a 10.000 millones']];
-                    estdistica(select, style, param, totales);
-                    var filtro = '"cod_loc=' + valor + '"';
-                    predio.getSource().updateParams({'STYLES': 'Avaluo Catastral 2014', 'CQL_FILTER': eval(filtro)});
-                    queryexport = style + ' 2014L';
-                } else if (document.getElementById("manzana").value !== '') {
-                    var valor = "'" + values + "'";
-                    var select = select_query("SELECT Count(*) FROM u_terreno WHERE manzana_co=" + valor + ";");
-                    var total1 = select_query("SELECT COUNT (avaluo_2014) FROM u_terreno where avaluo_2014 Between 0 And 100000000 AND manzana_co=" + valor + "");
-                    var total2 = select_query("SELECT COUNT (avaluo_2014) FROM u_terreno where avaluo_2014 Between 100000000 And 1000000000 AND manzana_co=" + valor + "");
-                    var total3 = select_query("SELECT COUNT (avaluo_2014) FROM u_terreno where avaluo_2014 Between 1000000000 And 10000000000 AND manzana_co=" + valor + "");
-                    var total4 = select_query("SELECT COUNT (avaluo_2014) FROM u_terreno where avaluo_2014>10000000000 AND manzana_co=" + valor + "");
-                    var totales = total1.concat(total2, total3, total4);
-                    var param = [['0-100 millones'], ['100-1.000 millones'], ['1.000-10.000 millones'], ['mayor a 10.000 millones']];
-                    estdistica(select, style, param, totales);
-                    var filtro = '"manzana_co=' + valor + '"';
-                    predio.getSource().updateParams({'STYLES': 'Avaluo Catastral 2014', 'CQL_FILTER': eval(filtro)});
-                    queryexport = style + ' 2014M';
-                }
-            }
-        } else if (style === "predios_actualizacion") {
+            try{
+                var select = select_query("select sum(numeropredios) from u_terreno");}catch(err){}
+				if (!select){select=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                var param = [['Incremento 0 - 10%'], ['Incremento 10% - 30%'], ['Incremento 30% - 60%'], ['Incremento mayor al 60%'], ['Sin Informacion']];
+                var total1 = select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");
+                var total2 = select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");
+                var total3 = select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");
+                var total4 = select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");
+                var total5 = select_query("select sum(numeropredios) from u_terreno");
+                var totales = total1.concat(total2, total3, total4, total5);
+                var titulo = "Incremento Avalúo Catastral 2016 - 2017";
+                predio.getSource().updateParams({'STYLES':'sin_informacion'});
+                estdistica(select, titulo, param, totales);
+                map.getView().fitExtent(predio.getExtent(), map.getSize());  
+        }
+         
+         else if (style === "Clasificacion_Uso") {         
+                layermetrotel.setVisible(false);
+                layerSUI.setVisible(false);
+                layerindustriaycomercio.setVisible(false);
+                layerEstratificacionOficial.setVisible(false);
+                layerprediosexentos2016.setVisible(false);
+                layerprediosexentos2016.setVisible(false);
+                estacionestransmetro.setVisible(false);
+                viastransmasivo.setVisible(false);
+                construcciones.setVisible(false);
+                predio.setVisible(true);    
+              //funciona en postgres select(select sum(numeropredios) from u_terreno) + (select count(*) from r_terreno);
+                try{
+                var select = select_query("select sum(numeropredios) from u_terreno");}catch(err){}
+                var param = [['Predios en Suelo Urbano'], ['Predios en Suelo de Expansión'], ['Predios en Suelo Rural']];
+				try{
+                var total1 = select_query("select sum(numeropredios) from u_terreno where clasificacion_uso_suelo = 'Suelo Urbano'");}catch(err){}
+				if (!total1){total1=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+				try{
+                var total2 = select_query("select sum(numeropredios) from u_terreno where clasificacion_uso_suelo = 'Suelo de Expansion'");}catch(err){}
+				if (!total2){total2=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+				try{
+                var total3 = select_query("select sum(numeropredios) from u_terreno where clasificacion_uso_suelo = 'Suelo Rural'");}catch(err){}
+				if (!total3){total3=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                var totales = total1.concat(total2, total3);
+                predio.getSource().updateParams({'STYLES': style});
+                estdistica(select, style, param, totales);
+                map.getView().fitExtent(predio.getExtent(), map.getSize());
+                queryexport = style + ' G';
+         }
+        
+          else if (style === "predios_construidos") {
             layerEstratificacionOficial.setVisible(false);
             layermetrotel.setVisible(false);
             layerindustriaycomercio.setVisible(false);

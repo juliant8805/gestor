@@ -63,6 +63,14 @@ var predio = new ol.layer.Tile({
     }), name: 'Predios'
 });
 
+var predio_rural = new ol.layer.Tile({
+    visible: false,
+    source: new ol.source.TileWMS({
+        url: 'http://35.184.3.4:8080/geoserver/preproduccion/wms',
+        params: {LAYERS: 'preproduccion:r_terreno', STYLES: ''}
+    }), name: 'Predios Rurales'
+});
+
 var manzana = new ol.layer.Tile({
     visible: false,
     source: new ol.source.TileWMS({
@@ -473,7 +481,7 @@ var geocodificador = new ol.layer.Tile({
 });
 //CAPS GROUP
 var layerCatastro = new ol.layer.Group({
-    layers: [manzana, predio, construcciones, unidades, vias, consolidado, highlightfeatures],
+    layers: [predio_rural, manzana, predio, construcciones, unidades, vias, consolidado, highlightfeatures],
     name: 'Catastro'
 });
 var layerSitios = new ol.layer.Group({

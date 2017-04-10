@@ -1317,15 +1317,29 @@ img.pequeña{
     width: 2em;
     height: 2em;
 }
-/*
-table, th, td {
-    /* border: 1px solid black;
-    //align: center;*/
-/*  width: 100px;
-  text-align: center;
-}*/
+
 td{
     text-align:center;
     /*border:1px solid #000000;*/
     width:200px;
 }
+
+.dgcAlert {top: 0;position: absolute;width: 100%;display: block;height: 1000px; background: url(http://www.dgcmedia.es/recursosExternos/fondoAlert.png) repeat; text-align:center; opacity:0; display:none; z-index:999999999999999;}
+.dgcAlert .dgcVentana{width: 450px; background: white;min-height: 130px;position: relative;margin: 0 auto;color: black;padding: 8px;border-radius: 10px;}
+.dgcAlert .dgcVentana .dgcCerrar {height: 25px;width: 25px;float: right; cursor:pointer; background: url(http://www.dgcmedia.es/recursosExternos/cerrarAlert.jpg) no-repeat center center;}
+.dgcAlert .dgcVentana .dgcMensaje { margin: 0 auto; padding-top: 45px; text-align: center; width: 400px;font-size: 16px;}
+.dgcAlert .dgcVentana .dgcAceptar{background:#09C; bottom:20px; display: inline-block; font-size: 12px; font-weight: bold; height: 24px; line-height: 24px; padding-left: 5px; padding-right: 5px;text-align: center; text-transform: uppercase; width: 75px;cursor: pointer; color:#FFF; margin-top:50px;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

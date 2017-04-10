@@ -415,15 +415,15 @@
             <option value="Aseo" style="font-weight: bold; color: white;  font-size:small;">Aseo
         </select>
 
-
         <!--metrotel-->    
         <!--<button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/estratificacion_metrotel.png'); background-color:#008E30; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="metrotel" name="metrotel" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button> -->         
-
-        <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/tipo_contribuyente.png'); background-color:#006D1B; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="Tipo de Contribuyente" name="Tipo de Contribuyente" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button> 
 
         <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/predios_exentos.png'); background-color:#86B12D; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="predios_exentos_2016" name="predios_exentos_2016" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button> 
 
         <!-- construido y no construido-->
+        <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_actualizacion_conservacion.png'); background-color:#006D1B; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="predios_construidos" name="predios_construidos" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>
+        
+         <!--Actualizacion Conservacion-->
         <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_actualizacion_conservacion.png'); background-color:#006D1B; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="predios_actualizacion" name="predios_actualizacion" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>
 
         <!--plusvalia-->
@@ -471,13 +471,21 @@
         <!--Rango Construccion-->
         <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_rango_area_construccion.png'); background-color:#008E30; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="Rango Area Construccion" name="predio" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>
 
-        <!--Vigencias Avaluos-->
-        <select class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_vigencia_avaluos.png'); background-color:#006D1B; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="Avaluo Catastral" name="vigen" onchange="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'>
+        <!--Avaluos Catastral-->
+         <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_vigencia_avaluos.png'); background-color:#008E30; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="Avaluo Catastral" name="Avaluo Catastral" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>
+        
+         <!--Incremento Avaluo Catastral-->
+         <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_incremento_avaluo.png'); background-color:#a6a6a6; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="Incremento Avaluo" name="Incremento Avaluo" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>
+        
+        
+        <!--<select class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_vigencia_avaluos.png'); background-color:#006D1B; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="Avaluo Catastral" name="vigen" onchange="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'>
             <option disabled selected>
             <option value="2016" style="font-weight: bold; color: white;  font-size:small;">Vigencia 2016
             <option value="2015" style="font-weight: bold; color: white;  font-size:small;">Vigencia 2015
             <option value="2014" style="font-weight: bold; color: white;  font-size:small;">Vigencia 2014
-        </select>
+        </select>-->
+        
+        <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/tipo_contribuyente.png'); background-color:#006D1B; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="Tipo de Contribuyente" name="Tipo de Contribuyente" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button> 
 
         <!--Impuesto Industria y Comercio<!--Tipo Propietario--> 
         <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_tipo_propietario.png'); background-color:#00AD41; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="Tipo Propietario" name="propietario" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>		   
@@ -490,7 +498,10 @@
 
         <!--Areas de Proteccion-->
         <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_proteccion_urbanistica.png'); background-color:#a6a6a6; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="Area Proteccion Urbanistica" name="proteccion" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>
-
+        
+        <!--urbano rural o de expansion-->
+        <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_clasificacion_uso.png'); background-color:#00AD41; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="Clasificacion_Uso" name="Clasificacion_Uso" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>
+        
         <!--uso AAA-->
         <select class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/oficial_vs_AAA_uso.png'); background-color:#a6a6a6; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="oficial_vs_AAA_uso" name=prestadores onchange="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'>
             <option disabled selected>

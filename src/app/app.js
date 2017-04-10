@@ -647,23 +647,212 @@ map.on('singleclick', function (evt) {
                                 cell2.innerHTML = sel[i];
                             }
                         }
-                        document.getElementById("panel_atr").style.display = "block";
-                        document.getElementById("botonminimizar").style.display = "block";
 
-                        var c = feature.values_.geom.flatCoordinates.length - 1;
-                        for (var i = 0; i <= c; i = i + 3) {
-                            var a = feature.values_.geom.flatCoordinates[i];
-                            feature.values_.geom.flatCoordinates[i] = feature.values_.geom.flatCoordinates[i + 1];
-                            feature.values_.geom.flatCoordinates[i + 1] = a;
+                    } else if (modulo == 'catastro') {
+                        select[0] = "<b>Codigo Manzana</b>";
+                        select[1] = "<b>Codigo Catastral Nuevo</b>";
+                        select[2] = "<b>Codigo Catastral Anterior</b>";
+                        select[3] = "<b>Dirección</b>";
+                        select[4] = "<b>Código ZHG</b>";
+                        select[5] = "<b>Valor m2 ZHG</b>";
+                        select[6] = "<b>Código ZHF</b>";
+                        select[7] = "<b>Uso Permitido</b>";
+                        select[8] = "<b>Uso Actual</b>";
+                        select[9] = "<b>Fotografias</b>";
+                        sel[0] = values.manzana_co;
+                        sel[1] = values.codigo;
+                        sel[2] = values.codigo_ant;
+                        sel[3] = direccion[0];
+                        sel[4] = values.zhg;
+                        sel[5] = values.valor_m2_zhg;
+                        sel[6] = values.zhf;
+                        sel[7] = values.norma_uso;
+                        sel[8] = values.uso_actual_zhf;
+                        sel[9] = document.createElement("a");
+                        sel[9].id = "img1";
+                        sel[9].style = "width: 30px; height: 50px;";
+                        sel[9].target = "marco";
+                        sel[9].setAttribute("onclick", "open_streetview()");
+                        sel[9].href = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";
+                        imag[9] = document.createElement("img");
+                        imag[9].id = "im1";
+                        imag[9].className = "pequeña";
+                        imag[9].src = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";
+                        stv[9] = document.createElement("a");
+                        stv[9].id = "imgstreet1";
+                        stv[9].target = "marco";
+                        stv[9].href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
+                        stv[9].setAttribute("onclick", "open_streetview()");
+                        ig[9] = document.createElement("img");
+                        ig[9].src = "./imagenes/streetview.png";
+                        var campos = 9;
+                    } else if (modulo == 'hacienda') {
+                        select[0] = "<b>Codigo Manzana</b>";
+                        select[1] = "<b>Codigo Catastral Nuevo</b>";
+                        select[2] = "<b>Codigo Catastral Anterior</b>";
+                        select[3] = "<b>Dirección</b>";
+                        select[4] = "<b>Estrato</b>";
+                        select[5] = "<b>Destino Económico</b>";
+                        select[6] = "<b>Avalúo Catastral 2017</b>";
+                        select[7] = "<b>Impuesto Predial 2017</b>";
+                        select[8] = "<b>Área de Terreno (m2)</b>";
+                        select[9] = "<b>Área Construida (m2)</b>";
+                        select[10] = "<b>Fotografias</b>";
+                        sel[0] = values.manzana_co;
+                        sel[1] = values.codigo;
+                        sel[2] = values.codigo_ant;
+                        sel[3] = direccion[0];
+                        sel[4] = values.estrato_hacienda;
+                        sel[5] = values.destino_hacienda;
+                        sel[6] = values.avaluo_hacienda;
+                        sel[7] = values.impuesto_hacienda;
+                        sel[8] = values.area_terreno_hacienda;
+                        sel[9] = values.area_construida_hacienda;
+                        sel[10] = document.createElement("a");
+                        sel[10].id = "img1";
+                        sel[10].style = "width: 30px; height: 50px;";
+                        sel[10].target = "marco";
+                        sel[10].setAttribute("onclick", "open_streetview()");
+                        sel[10].href = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";
+                        imag[10] = document.createElement("img");
+                        imag[10].id = "im1";
+                        imag[10].className = "pequeña";
+                        imag[10].src = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";
+                        stv[10] = document.createElement("a");
+                        stv[10].id = "imgstreet1";
+                        stv[10].target = "marco";
+                        stv[10].href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
+                        stv[10].setAttribute("onclick", "open_streetview()");
+                        ig[10] = document.createElement("img");
+                        ig[10].src = "./imagenes/streetview.png";
+                        var campos = 10;
+                    } else if (modulo == 'totem') {
+                        var estacueducto = values.estrato_acueducto;
+                        var estalcantarillado = values.estrato_alcantarillado;
+                        var estaseo = values.estrato_aseo;
+                        if (estacueducto == 11) {
+                            estacueducto = 'Industria (11)';
                         }
-                        feature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
-                        highlightfeatures.setStyle(PredioStyle);
-                        var markerSourcenoph = highlightfeatures.getSource();
-                        markerSourcenoph.clear();
-                        markerSourcenoph.addFeature(feature);
+                        ;
+                        if (estacueducto == 12) {
+                            estacueducto = 'Comercial (12)';
+                        }
+                        ;
+                        if (estacueducto == 13) {
+                            estacueducto = 'Especial (13)';
+                        }
+                        ;
+                        if (estacueducto == 14) {
+                            estacueducto = 'Oficial (14)';
+                        }
+                        ;
+                        if (estalcantarillado == 11) {
+                            estalcantarillado = 'Industria (11)';
+                        }
+                        ;
+                        if (estalcantarillado == 12) {
+                            estalcantarillado = 'Comercial (12)';
+                        }
+                        ;
+                        if (estalcantarillado == 13) {
+                            estalcantarillado = 'Especial (13)';
+                        }
+                        ;
+                        if (estalcantarillado == 14) {
+                            estalcantarillado = 'Oficial (14)';
+                        }
+                        ;
+                        if (estaseo == 11) {
+                            estaseo = 'Industria (11)';
+                        }
+                        ;
+                        if (estaseo == 12) {
+                            estaseo = 'Comercial (12)';
+                        }
+                        ;
+                        if (estaseo == 13) {
+                            estaseo = 'Especial (13)';
+                        }
+                        ;
+                        if (estaseo == 14) {
+                            estaseo = 'Oficial (14)';
+                        }
+                        ;
+
+                        select[0] = "<b>Localidad</b>";
+                        select[1] = "<b>Barrio</b>"
+                        select[2] = "<b>Codigo Manzana</b>";
+                        select[3] = "<b>Codigo Catastral Nuevo</b>";
+                        select[4] = "<b>Codigo Catastral Anterior</b>";
+                        select[5] = "<b>Dirección</b>";
+                        select[6] = "<b>Estratificación Acueducto</b>";
+                        select[7] = "<b>Estratificación Alcantarillado</b>";
+                        select[8] = "<b>Estratificación Aseo</b>";
+                        select[9] = "<b>Fotografias</b>";
+                        sel[0] = values.nombre_loc;
+                        sel[1] = values.cod_barrio;
+                        sel[2] = values.manzana_co;
+                        sel[3] = values.codigo;
+                        sel[4] = values.codigo_ant;
+                        sel[5] = direccion[0];
+                        sel[6] = estacueducto;
+                        sel[7] = estalcantarillado;
+                        sel[8] = estaseo;
+                        sel[9] = document.createElement("a");
+                        sel[9].id = "img1";
+                        sel[9].style = "width: 30px; height: 50px;";
+                        sel[9].target = "marco";
+                        sel[9].setAttribute("onclick", "open_streetview()");
+                        sel[9].href = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";
+                        imag[9] = document.createElement("img");
+                        imag[9].id = "im1";
+                        imag[9].className = "pequeña";
+                        imag[9].src = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";
+                        stv[9] = document.createElement("a");
+                        stv[9].id = "imgstreet1";
+                        stv[9].target = "marco";
+                        stv[9].href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
+                        stv[9].setAttribute("onclick", "open_streetview()");
+                        ig[9] = document.createElement("img");
+                        ig[9].src = "./imagenes/streetview.png";
+                        var campos = 9;
                     }
+
+                    for (i = 0; i < select.length; i++) {
+                        row = table.insertRow(i + 1);
+                        cell1 = row.insertCell(0);
+                        cell2 = row.insertCell(1);
+                        cell1.innerHTML = select[i];
+
+                        if (i === campos) {
+                            cell2.appendChild(sel[i]);
+                            //cell2.appendChild(imag[i]);
+                            sel[i].appendChild(imag[i]);
+                            cell2.appendChild(stv[i]);
+                            //cell2.appendChild(ig[i]);
+                            stv[i].appendChild(ig[i]);
+
+                        } else {
+                            cell2.innerHTML = sel[i];
+                        }
+                    }
+                    document.getElementById("panel_atr").style.display = "block";
+                    document.getElementById("botonminimizar").style.display = "block";
+
+                    var c = feature.values_.geom.flatCoordinates.length - 1;
+                    for (var i = 0; i <= c; i = i + 3) {
+                        var a = feature.values_.geom.flatCoordinates[i];
+                        feature.values_.geom.flatCoordinates[i] = feature.values_.geom.flatCoordinates[i + 1];
+                        feature.values_.geom.flatCoordinates[i + 1] = a;
+                    }
+                    feature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
+                    highlightfeatures.setStyle(PredioStyle);
+                    var markerSourcenoph = highlightfeatures.getSource();
+                    markerSourcenoph.clear();
+                    markerSourcenoph.addFeature(feature);
                 }
             }
+        
         });
     }
     if (url2) {

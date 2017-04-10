@@ -472,7 +472,7 @@ function codeAddress(val) {
 }
 
 function addressSelect(event, ui) {
-    console.log(ui);
+    //console.log(ui);
     //var select = validacionusuarios();
     var consultaregistro = new Object();
     consultaregistro.term = ui.item.codigo;
@@ -724,10 +724,11 @@ function addressSelect(event, ui) {
                     select[3] = "<b>Dirección</b>";
                     select[4] = "<b>Estrato</b>";
                     select[5] = "<b>Destino</b>";
-                    select[6] = "<b>Avalúo</b>";
-                    //select[7] = "<b>Tarifa</b>";
-                    select[7] = "<b>Impuesto</b>";
-                    select[8] = "<b>Fotografias</b>";
+                    select[6] = "<b>Avalúo Catastral 2017</b>";
+                    select[7] = "<b>Impuesto Predial 2017</b>";
+                    select[8] = "<b>Area de Terreno (m2)</b>";
+                    select[9] = "<b>Area Construida (m2)</b>"
+                    select[10] = "<b>Fotografias</b>";      
                     sel[0] = values.manzana_co;
                     sel[1] = values.codigo;
                     sel[2] = values.codigo_ant;
@@ -735,34 +736,34 @@ function addressSelect(event, ui) {
                     sel[4] = values.estrato_hacienda;
                     sel[5] = values.destino_hacienda;
                     sel[6] = values.avaluo_hacienda;
-                    //sel[7] = "";
-                    sel[7] = values.impuesto_hacienda;
-                    sel[8] = document.createElement("a");
-                    sel[8].id = "img1";
-                    sel[8].style = "width: 30px; height: 50px;";
-                    sel[8].target = "marco";
-                    sel[8].setAttribute("onclick", "open_streetview()");
-                    //sel[7].onclick = "open_streetview()";
-                    sel[8].href = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";
-                    imag[8] = document.createElement("img");
-                    imag[8].id = "im1";
-                    imag[8].className = "pequeña";
-                    imag[8].src = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";
-                    stv[8] = document.createElement("a");
-                    stv[8].id = "imgstreet1";
-                    stv[8].target = "marco";
-                    stv[8].href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
-                    stv[8].setAttribute("onclick", "open_streetview()");
-                    ig[8] = document.createElement("img");
-                    ig[8].src = "./imagenes/streetview.png";
-
-                    for (i = 0; i < select.length; i++) {
-                        row = table.insertRow(i + 1);
+                    sel[7] = values.impuesto_hacienda; 
+                    sel[8] = values.area_terreno_hacienda;
+                    sel[9] = values.area_construida_hacienda;  
+                    sel[10] = document.createElement("a");
+                    sel[10].id = "img1";
+                    sel[10].style = "width: 30px; height: 50px;";
+                    sel[10].target = "marco";
+                    sel[10].setAttribute("onclick","open_streetview()");
+                    sel[10].href = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";
+                    imag[10] = document.createElement("img");
+                    imag[10].id = "im1";
+                    imag[10].className = "pequeña";
+                    imag[10].src = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";           
+                    stv[10] = document.createElement("a");
+                    stv[10].id = "imgstreet1";
+                    stv[10].target = "marco";
+                    stv[10].href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
+                    stv[10].setAttribute("onclick","open_streetview()");  
+                    ig[10] = document.createElement("img");
+                    ig[10].src = "./imagenes/streetview.png";
+                    
+                     for (i = 0; i < select.length; i++) {
+                        row = table.insertRow(i+1);
                         cell1 = row.insertCell(0);
                         cell2 = row.insertCell(1);
                         cell1.innerHTML = select[i];
-
-                        if (i === 8) {
+                        
+                        if (i === 10){
                             cell2.appendChild(sel[i]);
                             //cell2.appendChild(imag[i]);
                             sel[i].appendChild(imag[i]);
@@ -1098,7 +1099,7 @@ function PlaceSelect(event, ui) {
     var transf1 = (transf[1]);
     var transf2 = (transf[0]);
     var transf = [transf[1], transf[0], 0];
-    console.log(transf);
+    //console.log(transf);
 
     view.setCenter(geom.getFirstCoordinate());
     view.setZoom(18);

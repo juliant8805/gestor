@@ -189,6 +189,11 @@ $("#address1").autocomplete({
     source: addressSource,
     select: PlaceSelect
 });
+$("#direccion_gestor").autocomplete({
+    minLength: 1,
+    source: addressSource,
+    select: PlaceSelect
+});
 $("#cedul").autocomplete({
     minLength: 1,
     source: addressSource,
@@ -270,7 +275,7 @@ function addressSource(requestString, responseFunc) {
     });
     // Set up the parameters for our WFS call to the address_autocomplete
     // web service.
-    
+
 
     //busqueda direccion y codigo en reg
     if (requestString.val === "direccion") {
@@ -300,6 +305,9 @@ function addressSource(requestString, responseFunc) {
     } else if ($("#address1")["0"].value !== "") {
         var tempname = "preproduccion:sitios_autocompletar";
         var temp = "address1";
+    } else if ($("#direccion_gestor")["0"].value !== "") {
+        var tempname = "preproduccion:buscar_dir_gestor";
+        var temp = "direcci";
     } else if ($("#barrio")["0"].value !== "") {
         var tempname = "preproduccion:buscar_barrio";
         var temp = "nombre";
@@ -328,7 +336,6 @@ function addressSource(requestString, responseFunc) {
         srsname: 'EPSG:3857',
         viewparams: viewParamsStr
     };
-    console.log(wfsParams);
     $.ajax({
         url: url,
         data: wfsParams,
@@ -339,8 +346,6 @@ function addressSource(requestString, responseFunc) {
                 object: data
             });
             var arr = [];
-            console.log(url);
-            console.log(data);
             if (temp === "direccion") {
                 //console.log(data.features);
                 for (i = 0; i < data.features.length; i++) {
@@ -388,7 +393,6 @@ function addressSource(requestString, responseFunc) {
                     });
                 }
             } else {
-                console.log(data);
                 geojson.forEachFeature(function (feat) {
                     arr.push({
                         label: feat.get(temp),
@@ -410,19 +414,63 @@ function addressSource(requestString, responseFunc) {
                 }
                 try {
                     responseFunc(arr);
-                } catch (err) {}
+                } catch (err) {
+                }
             } else {
-                arr[0] = "No se encuentra informacion geografica asociada a la consulta";
-                responseFunc(arr);
+                if (temp === 'direcci') {
+                    //console.log(viewParamsStr);
+                    codeAddress(viewParamsStr);
+                } else {
+                    arr[0] = "No se encuentra informacion geografica asociada a la consulta";
+                    responseFunc(arr);
+                }
             }
         },
         error: function () {
-                console.log("error");
-            }
+            console.log("error");
+        }
 
     });
 
 }
+function codeAddress(val) {
+
+    //obtengo la direccion del formulario
+    //val.split(":");
+    var address = 'barranquilla ' + val.split(":")[1];
+    geocoder = new google.maps.Geocoder();
+    //var latLng = new google.maps.LatLng(11.0041072,-74.80698129999996);
+    //console.log(address);
+    //console.log(results[0].geometry.location);
+    //hago la llamada al geodecoder
+    geocoder.geocode({'address': address}, function (results, status) {
+        //console.log(address);
+        //si el estado de la llamado es OK
+        if (status == google.maps.GeocoderStatus.OK) {
+            //console.log(results[0]);
+            console.log(results[0].geometry.viewport.b.b);
+            console.log(results[0].geometry.viewport.f.b);
+            //console.log(results[0].geometry.location);
+            //console.log(results[0].formatted_address);
+            //centro el mapa en las coordenadas obtenidas
+            //map.setCenter(results[0].geometry.location);
+            //coloco el marcador en dichas coordenadas
+            //marker.setPosition(results[0].geometry.location);
+            //actualizo el formulario      
+            //updatePosition(results[0].geometry.location);
+
+            //Añado un listener para cuando el markador se termine de arrastrar
+            //actualize el formulario con las nuevas coordenadas
+            //google.maps.event.addListener(marker, 'dragend', function () {
+            //updatePosition(marker.getPosition());
+            //});
+        } else {
+            //si no es OK devuelvo error
+            alert("No podemos encontrar la direcci&oacute;n, error: " + status);
+        }
+    });
+}
+
 function addressSelect(event, ui) {
     console.log(ui);
     //var select = validacionusuarios();
@@ -431,9 +479,9 @@ function addressSelect(event, ui) {
     consultaregistro.val = "direccion";
     //consultaregistro.direccionoriginal = ui.item.value;
     //consultaregistro.direccion = ui.item.direccion;
-    if (ui.item.direccion){
+    if (ui.item.direccion) {
         consultaregistro.direccionoriginal = ui.item.direccion;
-    }else{
+    } else {
         consultaregistro.direccionoriginal = ui.item.value;
     }
     try {
@@ -1044,9 +1092,9 @@ function PlaceSelect(event, ui) {
     var values = feat.values_;
     var geom = feat.getGeometry();
     var coord = values.geometry.flatCoordinates;
-    console.log(coord);
+    //console.log(coord);
     var transf = ol.proj.transform(coord, 'EPSG:3857', 'EPSG:4326');
-    console.log(transf);
+    //console.log(transf);
     var transf1 = (transf[1]);
     var transf2 = (transf[0]);
     var transf = [transf[1], transf[0], 0];

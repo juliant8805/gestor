@@ -9,53 +9,87 @@ function file() {
         var valor = "'" + values + "'";
     }catch(err){}
     if (queryexport.substring(0, 18) === "Rango Area Terreno"){
-        var titulo = JSON.stringify(["Codigo Localidad", "Codigo Barrio", "Codigo Manzana", "Codigo Predial", "Direccion", "Matricula", "Area"]);
+        var titulo = JSON.stringify(["Codigo Predial", "Area Terreno"]);
         if (queryexport === 'Rango Area Terreno G') {
-            var select = select_query("select cod_loc, cod_barrio, manzana_co, codigo, direccion, matricula, area from u_terreno;");
+            var select = select_query("select codigo, area_terreno_hacienda from u_terreno;");
         } else if (queryexport === 'Rango Area Terreno B') {
-            var select = select_query("select cod_loc, cod_barrio, manzana_co, codigo, direccion, matricula, area from u_terreno WHERE cod_barrio=" + valor + ";");
+            var select = select_query("select codigo, area_terreno_hacienda from u_terreno WHERE cod_barrio=" + valor + ";");
         } else if (queryexport === 'Rango Area Terreno L') {
-            var select = select_query("select cod_loc, cod_barrio, manzana_co, codigo, direccion, matricula, area from u_terreno WHERE cod_loc=" + valor + ";");
+            var select = select_query("select codigo, area_terreno_hacienda from u_terreno WHERE cod_loc=" + valor + ";");
         } else if (queryexport === 'Rango Area Terreno M') {
-            var select = select_query("select cod_loc, cod_barrio, manzana_co, codigo, direccion, matricula, area from u_terreno WHERE manzana_co=" + valor + ";");
+            var select = select_query("select codigo, area_terreno_hacienda from u_terreno WHERE manzana_co=" + valor + ";");
         }
     }
-    else if (queryexport.substring(0, 21) === "Avaluo Catastral 2016"){
-        var titulo = JSON.stringify(["Codigo Localidad", "Codigo Barrio", "Codigo Manzana", "Codigo Predial", "Direccion", "Matricula", "Avaluo 2016"]);
-        if (queryexport == "Avaluo Catastral 2016G"){
-            var select = select_query("select cod_loc, cod_barrio, manzana_co, codigo, direccion, matricula, avaluo_2016 from u_terreno;");
-        }else if (queryexport === 'Avaluo Catastral 2016B') {
-            var select = select_query("select cod_loc, cod_barrio, manzana_co, codigo, direccion, matricula, avaluo_2016 from u_terreno WHERE cod_barrio=" + valor + ";");
-        }else if (queryexport === 'Avaluo Catastral 2016L') {
-            var select = select_query("select cod_loc, cod_barrio, manzana_co, codigo, direccion, matricula, avaluo_2016 from u_terreno WHERE cod_loc=" + valor + ";");
-        }else if (queryexport === 'Avaluo Catastral 2016M') {
-            var select = select_query("select cod_loc, cod_barrio, manzana_co, codigo, direccion, matricula, avaluo_2016 from u_terreno WHERE manzana_co=" + valor + ";");
+    
+    else if (queryexport.substring(0, 17) === "Tipo Construccion"){
+        var titulo = JSON.stringify(["Codigo Predial", "Condicion Propiedad"]);
+        if (queryexport === 'Tipo Construccion G') {
+            var select = select_query("select codigo, ph from u_terreno;");
+        } else if (queryexport === 'Tipo Construccion B') {
+            var select = select_query("select codigo, ph from u_terreno WHERE cod_barrio=" + valor + ";");
+        } else if (queryexport === 'Tipo Construccion L') {
+            var select = select_query("select codigo, ph from u_terreno WHERE cod_loc=" + valor + ";");
+        } else if (queryexport === 'Tipo Construccion M') {
+            var select = select_query("select codigo, ph from u_terreno WHERE manzana_co=" + valor + ";");
         }
     }
-    else if (queryexport.substring(0, 21) === "Avaluo Catastral 2015"){
-        var titulo = JSON.stringify(["Codigo Localidad", "Codigo Barrio", "Codigo Manzana", "Codigo Predial", "Direccion", "Matricula", "Avaluo 2015"]);
-        if (queryexport == "Avaluo Catastral 2015G"){
-            var select = select_query("select cod_loc, cod_barrio, manzana_co, codigo, direccion, matricula, avaluo_2015 from u_terreno;");
-        }else if (queryexport === 'Avaluo Catastral 2015B') {
-            var select = select_query("select cod_loc, cod_barrio, manzana_co, codigo, direccion, matricula, avaluo_2015 from u_terreno WHERE cod_barrio=" + valor + ";");
-        }else if (queryexport === 'Avaluo Catastral 2015L') {
-            var select = select_query("select cod_loc, cod_barrio, manzana_co, codigo, direccion, matricula, avaluo_2015 from u_terreno WHERE cod_loc=" + valor + ";");
-        }else if (queryexport === 'Avaluo Catastral 2015M') {
-            var select = select_query("select cod_loc, cod_barrio, manzana_co, codigo, direccion, matricula, avaluo_2015 from u_terreno WHERE manzana_co=" + valor + ";");
+    
+    
+    else if (queryexport.substring(0, 19) === "predios_construidos"){
+        var titulo = JSON.stringify(["Codigo Predial", "Area Construida"]);
+        if (queryexport === 'predios_construidos G') {
+            var select = select_query("select codigo, area_construida_hacienda from u_terreno;");
+        } else if (queryexport === 'predios_construidos B') {
+            var select = select_query("select codigo, area_construida_hacienda from u_terreno WHERE cod_barrio=" + valor + ";");
+        } else if (queryexport === 'predios_construidos L') {
+            var select = select_query("select codigo, area_construida_hacienda from u_terreno WHERE cod_loc=" + valor + ";");
+        } else if (queryexport === 'predios_construidos M') {
+            var select = select_query("select codigo, area_construida_hacienda from u_terreno WHERE manzana_co=" + valor + ";");
         }
     }
-    else if (queryexport.substring(0, 21) === "Avaluo Catastral 2014"){
-        var titulo = JSON.stringify(["Codigo Localidad", "Codigo Barrio", "Codigo Manzana", "Codigo Predial", "Direccion", "Matricula", "Avaluo 2014"]);
-        if (queryexport == "Avaluo Catastral 2014G"){
-            var select = select_query("select cod_loc, cod_barrio, manzana_co, codigo, direccion, matricula, avaluo_2014 from u_terreno;");
-        }else if (queryexport === 'Avaluo Catastral 2014B') {
-            var select = select_query("select cod_loc, cod_barrio, manzana_co, codigo, direccion, matricula, avaluo_2014 from u_terreno WHERE cod_barrio=" + valor + ";");
-        }else if (queryexport === 'Avaluo Catastral 2014L') {
-            var select = select_query("select cod_loc, cod_barrio, manzana_co, codigo, direccion, matricula, avaluo_2014 from u_terreno WHERE cod_loc=" + valor + ";");
-        }else if (queryexport === 'Avaluo Catastral 2014M') {
-            var select = select_query("select cod_loc, cod_barrio, manzana_co, codigo, direccion, matricula, avaluo_2014 from u_terreno WHERE manzana_co=" + valor + ";");
+       
+    else if (queryexport.substring(0, 22) === "Calidad Construcciones"){
+        var titulo = JSON.stringify(["Codigo Predial", "Puntaje"]);
+        if (queryexport === 'Calidad Construcciones G') {
+            var select = select_query("select codigo, puntaje from u_terreno;");
+        } else if (queryexport === 'Calidad Construcciones B') {
+            var select = select_query("select codigo, puntaje from u_terreno WHERE cod_barrio=" + valor + ";");
+        } else if (queryexport === 'Calidad Construcciones L') {
+            var select = select_query("select codigo, puntaje from u_terreno WHERE cod_loc=" + valor + ";");
+        } else if (queryexport === 'Calidad Construcciones M') {
+            var select = select_query("select codigo, puntaje from u_terreno WHERE manzana_co=" + valor + ";");
         }
     }
+     
+    
+    else if (queryexport.substring(0, 19) === "predios_construidos"){
+        var titulo = JSON.stringify(["Codigo Predial", "Area Construida"]);
+        if (queryexport === 'predios_construidos G') {
+            var select = select_query("select codigo, area_construida_hacienda from u_terreno;");
+        } else if (queryexport === 'predios_construidos B') {
+            var select = select_query("select codigo, area_construida_hacienda from u_terreno WHERE cod_barrio=" + valor + ";");
+        } else if (queryexport === 'predios_construidos L') {
+            var select = select_query("select codigo, area_construida_hacienda from u_terreno WHERE cod_loc=" + valor + ";");
+        } else if (queryexport === 'predios_construidos M') {
+            var select = select_query("select codigo, area_construida_hacienda from u_terreno WHERE manzana_co=" + valor + ";");
+        }
+    }
+    
+    else if (queryexport.substring(0, 16) === "Avaluo Catastral"){
+        var titulo = JSON.stringify(["Codigo Predial", "Avaluo Catastral"]);
+        if (queryexport === 'Avaluo Catastral G') {
+            var select = select_query("select cod_anteri, avaluo_int from preliquidacion_2017;");
+        } else if (queryexport === 'Avaluo Catastral B') {
+            var select = select_query("select cod_anteri, avaluo_int from preliquidacion_2017 WHERE barrio=" + valor + ";");
+        } else if (queryexport === 'Avaluo Catastral L') {
+            var select = select_query("select cod_anteri, avaluo_int from preliquidacion_2017 WHERE cod_loc=" + valor + ";");
+        } else if (queryexport === 'Avaluo Catastral M') {
+            var select = select_query("select cod_anteri, avaluo_int from preliquidacion_2017 WHERE manzana_co=" + valor + ";");
+        }
+    }
+    
+    
+    
     else if (queryexport.substring(0, 21) === "predios_actualizacion"){
         var titulo = JSON.stringify(["Codigo Localidad", "Codigo Barrio", "Codigo Manzana", "Codigo Predial", "Direccion", "Matricula", "Estado"]);
         if (queryexport == "predios_actualizacion G"){
@@ -69,15 +103,15 @@ function file() {
         }
     }
     else if (queryexport.substring(0, 23) === "Rango Area Construccion"){
-        var titulo = JSON.stringify(["Codigo Localidad", "Codigo Barrio", "Codigo Manzana", "Codigo Predial", "Direccion", "Matricula", "Area Construida"]);
-        if (queryexport == "Rango Area Construccion G"){
-            var select = select_query("select cod_loc, cod_barrio, manzana_co, codigo, direccion, matricula, area_construccion from u_terreno;");
-        }else if (queryexport === 'Rango Area Construccion B') {
-            var select = select_query("select cod_loc, cod_barrio, manzana_co, codigo, direccion, matricula, area_construccion from u_terreno WHERE cod_barrio=" + valor + ";");
-        }else if (queryexport === 'Rango Area Construccion L') {
-            var select = select_query("select cod_loc, cod_barrio, manzana_co, codigo, direccion, matricula, area_construccion from u_terreno WHERE cod_loc=" + valor + ";");
-        }else if (queryexport === 'Rango Area Construccion M') {
-            var select = select_query("select cod_loc, cod_barrio, manzana_co, codigo, direccion, matricula, area_construccion from u_terreno WHERE manzana_co=" + valor + ";");
+        var titulo = JSON.stringify(["Codigo Predial", "Area Construida"]);
+        if (queryexport === 'Rango Area Construccion G') {
+            var select = select_query("select codigo, area_construida_hacienda from u_terreno;");
+        } else if (queryexport === 'Rango Area Construccion B') {
+            var select = select_query("select codigo, area_construida_hacienda from u_terreno WHERE cod_barrio=" + valor + ";");
+        } else if (queryexport === 'Rango Area Construccion L') {
+            var select = select_query("select codigo, area_construida_hacienda from u_terreno WHERE cod_loc=" + valor + ";");
+        } else if (queryexport === 'Rango Area Construccion M') {
+            var select = select_query("select codigo, area_construida_hacienda from u_terreno WHERE manzana_co=" + valor + ";");
         }
     }
     else if (queryexport.substring(0, 17) === "Tipo Construccion"){
@@ -153,6 +187,49 @@ function file() {
         }
     }
     
+    
+    
+    else if (queryexport.substring(0, 18) === "disponibilidad_AAA"){
+        var titulo = JSON.stringify(["Codigo", "Prestador"]);
+        if (queryexport == "disponibilidad_AAA AcueductoG"){
+            var select = select_query("select codigo, disponibilidad_acueducto from u_terreno;");
+        }else if (queryexport === 'disponibilidad_AAA AcueductoB') {
+            var select = select_query("select codigo, disponibilidad_acueducto from u_terreno WHERE cod_barrio=" + valor + ";");
+        }else if (queryexport === 'disponibilidad_AAA AcueductoL') {
+            var select = select_query("select codigo, disponibilidad_acueducto from u_terreno WHERE cod_loc=" + valor + ";");
+        }else if (queryexport === 'disponibilidad_AAA AcueductoM') {
+            var select = select_query("select codigo, disponibilidad_acueducto from u_terreno WHERE manzana_co=" + valor + ";");
+        }
+        else if (queryexport == "oficial_vs_AAA AlcantarilladoG"){
+            var select = select_query("select codigo, disponibilidad_alcantarillado from u_terreno;");
+        }else if (queryexport === 'oficial_vs_AAA AlcantarilladoB') {
+            var select = select_query("select codigo, disponibilidad_alcantarillado from u_terreno WHERE cod_barrio=" + valor + ";");
+        }else if (queryexport === 'oficial_vs_AAA AlcantarilladoL') {
+            var select = select_query("select codigo, disponibilidad_alcantarillado from u_terreno WHERE cod_loc=" + valor + ";");
+        }else if (queryexport === 'oficial_vs_AAA AlcantarilladoM') {
+            var select = select_query("select codigo, disponibilidad_alcantarillado from u_terreno WHERE manzana_co=" + valor + ";");
+        }
+        else if (queryexport == "oficial_vs_AAA AseoG"){
+            var select = select_query("select codigo, disponibilidad_aseo from u_terreno;");
+        }else if (queryexport === 'oficial_vs_AAA AseoB') {
+            var select = select_query("select codigo, disponibilidad_aseo from u_terreno WHERE cod_barrio=" + valor + ";");
+        }else if (queryexport === 'oficial_vs_AAA AseoL') {
+            var select = select_query("select codigo, disponibilidad_aseo from u_terreno WHERE cod_loc=" + valor + ";");
+        }else if (queryexport === 'oficial_vs_AAA AseoM') {
+            var select = select_query("select codigo, disponibilidad_aseo from u_terreno WHERE manzana_co=" + valor + ";");
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     else if (queryexport.substring(0, 23) === "estratificacion_oficial"){
         var titulo = JSON.stringify(["Codigo Localidad", "Nombre Barrio", "Codigo Manzana", "Codigo Predial", "Estratificacion Oficial", "Numero de Predios"]);
         if (queryexport == 'estratificacion_oficial G'){
@@ -170,7 +247,6 @@ function file() {
         }
     }
 	
-	
 	else if (queryexport.substring(0, 26) === "Tipo de Amenaza INUNDACION"){
         var titulo = JSON.stringify(["Codigo Localidad", "Nombre Barrio", "Codigo Manzana", "Codigo Predial", "Riesgo de Inundacion", "Numero de Predios"]);
         if (queryexport == 'Tipo de Amenaza INUNDACIONG'){
@@ -184,7 +260,24 @@ function file() {
         }
     }
 	
-	
+    
+    
+    
+    
+    
+    
+    else if (queryexport.substring(0, 17) === "Clasificacion_Uso"){
+         var titulo = JSON.stringify(["Codigo Predial", "Clasificacion"]);
+            var select = select_query("select codigo, clasificacion_uso_suelo from u_terreno where clasificacion_uso_suelo = 'Suelo de Expansion' or clasificacion_uso_suelo = 'Suelo Rural';");  
+    }
+    
+    
+    
+   
+	else if (queryexport.substring(0, 15) === "espacio_publico"){
+        alert("GESSTOR INFORMA:</br></br>No existe reporte alfanúmerico para esta consulta");
+    }
+    
 	else if (queryexport.substring(0, 24) === "Tipo de Amenaza REMOCION"){
 		var titulo = JSON.stringify(["Codigo Localidad", "Nombre Barrio", "Codigo Manzana", "Codigo Predial", "Riesgo de Remocion en Masa", "Numero de Predios"]);
         if (queryexport == 'Tipo de Amenaza REMOCIONG'){
@@ -200,16 +293,15 @@ function file() {
     }
     
     else if (queryexport.substring(0, 27) === "Distrito vs Prestadores AAA"){
-		var titulo = JSON.stringify(["Direccion o Codigo","Estado"]);
+		var titulo = JSON.stringify(["Codigo", "Direccion"]);
         if (queryexport == 'Distrito vs Prestadores AAA G'){
-            alert("El Reporte corresponde a los registros de la base AAA que no se encuentran en la Base catastral");
-			var select = select_query("select drireccion from prestadoresaaa where presenteencatastro = 'No';");
+         var select = select_query("select cod_catast, drireccion from sin_cod_catastral;");
         }else if (queryexport === 'Distrito vs Prestadores AAA B') {
-            var select = select_query("select codigo, presenteenaaa from u_terreno where cod_barrio=" + valor + ";");
+           var select = select_query("select cod_catast, drireccion from sin_cod_catastral;");
         }else if (queryexport === 'Distrito vs Prestadores AAA L') {
-            var select = select_query("select codigo, presenteenaaa from u_terreno where cod_loc=" + valor + ";");
+            var select = select_query("select cod_catast, drireccion from sin_cod_catastral;");
         }else if (queryexport === 'Distrito vs Prestadores AAA M') {
-            var select = select_query("select codigo, presenteenaaa from u_terreno where manzana_co=" + valor + ";");
+            var select = select_query("select cod_catast, drireccion from sin_cod_catastral;");
         }
     }
    

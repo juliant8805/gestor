@@ -44,14 +44,14 @@ function detectarCarga() {
             document.getElementById("icono_codigo").style.display = "block";
             document.getElementById("propietario").style.display = "block";
             document.getElementById("cedula").style.display = "block";
-            //document.getElementById("Rango Area Construccion").style.display = "block";
+            document.getElementById("Rango Area Construccion").style.display = "block";
             document.getElementById("Tipo Construccion").style.display = "block";
             document.getElementById("predios_construidos").style.display = "block";
             document.getElementById("Distrito vs Prestadores AAA").style.display = "block";
             document.getElementById("plusvalia").style.display = "block";
             document.getElementById("predios_actualizacion").style.display = "block";
-
-            //document.getElementById("Calidad Construcciones").style.display = "block";
+            document.getElementById("Rango Area Terreno").style.display = "block";
+            document.getElementById("Calidad Construcciones").style.display = "block";
             //document.getElementById("Avaluo Catastral").style.display = "block";
             modulo = "catastro";
         }
@@ -103,8 +103,10 @@ function detectarCarga() {
             document.getElementById("Tipo de Contribuyente").style.display = "block";
             //document.getElementById("predios_exentos_2016").style.display = "block";
             document.getElementById("Tipo Propietario").style.display = "block";
-            modulo = "hacienda";
-        } else if (select[0][12] === 't') {
+            document.getElementById("Impuesto Camara").style.display = "block";
+            modulo="hacienda";
+        }
+        else if (select[0][12] === 't') {
             document.getElementById("menu_circular").style.display = "block";
             document.getElementById("tipo_usuario").style.display = "block";
             document.getElementById("manual").style.display = "block";
@@ -224,12 +226,12 @@ function menu_principal() {
 }
 
 function menu_consultas() {
-    document.getElementById('busqueda_personalizada').style.display = 'block';
+    /*document.getElementById('busqueda_personalizada').style.display = 'block';
     document.getElementById('cerrar_submenu_cafe').style.display = 'block';
-    document.getElementById('cerrar_submenu_verde').style.display = 'none';
+    document.getElementById('cerrar_submenu_verde').style.display = 'none';*/
     document.getElementById('botones').style.display = 'block';
     document.getElementById('herramientas').style.display = 'none';
-    document.getElementById('transicion_capas').style.display = 'none';
+    //document.getElementById('transicion_capas').style.display = 'none';
 
     /*if (document.getElementById('botones').style.display === "" || document.getElementById('botones').style.display === "none"){
      var ca = document.cookie.split('=');
@@ -254,13 +256,13 @@ function menu_consultas() {
 }
 
 function herramientas() {
-    document.getElementById('mensaje').style.display = 'none';
-    document.getElementById('busqueda_personalizada').style.display = 'none';
+    /*document.getElementById('mensaje').style.display = 'none';
+    document.getElementById('busqueda_personalizada').style.display = 'none';*/
     document.getElementById('botones').style.display = 'none';
-    document.getElementById('cerrar_submenu_cafe').style.display = 'none';
+   // document.getElementById('cerrar_submenu_cafe').style.display = 'none';
     document.getElementById('herramientas').style.display = 'block';
-    document.getElementById('transicion_capas').style.display = 'block';
-    document.getElementById('cerrar_submenu_verde').style.display = 'block';
+    /*document.getElementById('transicion_capas').style.display = 'block';
+    document.getElementById('cerrar_submenu_verde').style.display = 'block';*/
 }
 
 
@@ -532,7 +534,7 @@ function changeImage(id) {
     } else if (id === "Avaluo Catastral") {
         document.getElementById('Avaluo Catastral').style = "background:url('./imagenes/Avaluo_Catastral.png'); background-color:#adad32; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
     } else if (id === "Tipo Propietario") {
-        document.getElementById('Tipo Propietario').style = "background:url('./imagenes/tipo_propietario.png'); background-color:#326f32; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
+        document.getElementById('Tipo Propietario').style = "background:url('./imagenes/icono_tipo_propietario.png'); background-color:#326f32; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
         document.getElementById('Avaluo Catastral').value = 0;
     } else if (id === "Conflicto Uso del Suelo") {
         document.getElementById('Conflicto Uso del Suelo').style = "background:url('./imagenes/Conflictos_Uso_Suelo.png'); background-color:#93c993; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
@@ -541,7 +543,7 @@ function changeImage(id) {
     } else if (id === "Tipo de Zona") {
         document.getElementById('Tipo de Zona').style = "background:url('./imagenes/Tipo_Zona.png'); background-color:#326f32; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
     } else if (id === "Tipo de Amenaza") {
-        document.getElementById('Tipo de Amenaza').style = "background:url('./imagenes/tipo_amenaza.png'); background-color:#93c993; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
+        document.getElementById('Tipo de Amenaza').style = "background:url('./imagenes/icono_riesgo.png'); background-color:#93c993; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
         document.getElementById('Tipo de Amenaza').value = 0;
     } else if (id === "Estructura Ecologica Principal") {
         document.getElementById('Estructura Ecologica Principal').style = "background:url('./imagenes/Estructura_Ecologica.png'); background-color:#adad32; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
@@ -555,6 +557,15 @@ function changeImage(id) {
         document.getElementById('Incremento Avaluo').style = "background:url('./imagenes/icono_incremento_avaluo.png'); background-color:#b7b7b7; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
     } else if (id === "Clasificacion_Uso") {
         document.getElementById('Clasificacion_Uso').style = "background:url('./imagenes/icono_clasificacion_uso.png'); background-color:#adad32; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
+    }
+    else if (id === "predios_actualizacion") {
+        document.getElementById('predios_actualizacion').style = "background:url('./imagenes/icono_conservacion.png'); background-color:#b7b7b7; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
+    }
+    else if (id === "propietario") {
+        document.getElementById('propietario').style = "background:url('./imagenes/propietario.png'); background-color:#adad32; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
+    }
+    else if (id === "Impuesto Camara") {
+        document.getElementById('Impuesto Camara').style = "background:url('./imagenes/icono_impuesto_camara.png'); background-color:#adad32; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
     }
 }
 ;
@@ -651,6 +662,15 @@ function normalImage(id) {
         document.getElementById('Incremento Avaluo').style = "background:url('./imagenes/icono_incremento_avaluo.png'); background-color:#a6a6a6; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
     } else if (id === "Clasificacion_Uso") {
         document.getElementById('Clasificacion_Uso').style = "background:url('./imagenes/icono_clasificacion_uso.png'); background-color:#00AD41; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
+    }
+    else if (id === "predios_actualizacion") {
+        document.getElementById('predios_actualizacion').style = "background:url('./imagenes/icono_conservacion.png'); background-color:#a6a6a6; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
+    }
+    else if (id === "propietario") {
+        document.getElementById('propietario').style = "background:url('./imagenes/propietario.png'); background-color:#00AD41; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
+    }
+    else if (id === "Impuesto Camara") {
+        document.getElementById('Impuesto Camara').style = "background:url('./imagenes/icono_impuesto_camara.png'); background-color:#00AD41; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
     }
 }
 ;

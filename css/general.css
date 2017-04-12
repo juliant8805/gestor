@@ -111,7 +111,7 @@ body{
     height: 800%;
     z-index: 2;
 }*/
-@media handheld, only screen and (min-width: 767px) {
+@media handheld, only screen and (min-width: 900px) {
     #mouse-position {
         position: absolute;
         top: 2em;
@@ -126,7 +126,14 @@ body{
     }
 }
 
-@media handheld, only screen and (min-width: 767px) {
+
+@media handheld, only screen and (max-width: 900px) {
+    #mouse-position {
+        visibility: hidden;
+    }
+}
+
+@media handheld, only screen and (min-width: 900px) {
     #barratransparencia{
         position: absolute;
         top: 2em;
@@ -138,6 +145,20 @@ body{
         background-image: url(../imagenes/fondo_barra_transparencia.png);
         background-repeat:no-repeat;
         -webkit-border-radius: 18px;
+    }
+}
+@media handheld, only screen and (max-width: 900px) {
+    #barratransparencia{
+        position: absolute;
+        top: 5em;
+        left: 33%; 
+        color: #F8F8F8;
+        width: 150px;
+        height: 28px;
+        background-image: url(../imagenes/fondo_barra_transparencia_mobil.png);
+        background-repeat:no-repeat;
+        -webkit-border-radius: 6px;
+        
     }
 }
 
@@ -176,7 +197,7 @@ body{
         width:2.5em;
     }
 }
-@media handheld, only screen and (min-width: 767px) {
+@media handheld, only screen and (min-width: 900px) {
     #menu_circular{
         position: absolute;
         top:1em;
@@ -186,7 +207,7 @@ body{
         margin-left: 0.5em;
     }
 }
-@media handheld, only screen and (max-width: 767px) {
+@media handheld, only screen and (max-width: 900px) {
     #menu_circular{
         position: absolute;
         top:0em;
@@ -197,39 +218,49 @@ body{
     }
 }
 
-@media handheld, only screen and (min-width: 767px) {
+@media handheld, only screen and (min-width: 900px) {
     #lupa_pequeña{
         position:absolute;
-        position: absolute;
-        top:2.7em;
-        left:59%;
+        top:1em;
+        right:1%;
         height:2.5em;
         width:2.5em;
         margin-left: 0.5em;   
     }
 }
-@media handheld, only screen and (max-width: 767px) {
+@media handheld, only screen and (max-width: 900px) {
     #lupa_pequeña{
         position:absolute;
-        position: absolute;
-        top:2.7em;
-        left:59%;
+        top:1em;
+        left:0.5em;
         height:2.5em;
         width:2.5em;
         margin-left: 0.5em;   
     }
 }
+@media handheld, only screen and (min-width: 900px) {
 #boton_capas{
     position:absolute;
-    position: absolute;
-    top:4.2em;
-    left:32%;
+    top:1em;
+    left:10%;
     height:2.5em;
     width:2.5em;
-    margin-left: 0.5em;   
+    margin-left: 0.5em;  
+    }
 }
+@media handheld, only screen and (max-width: 900px) {
+#boton_capas{
+    position:absolute;
+    top:1em;
+    right:0.5em;
+    height:2.5em;
+    width:2.5em;
+    margin-left: 0.5em;  
+    }
+}
+    
 
-@media handheld, only screen and (min-width: 767px) {
+@media handheld, only screen and (min-width: 900px) {
     #boton_limpiar{
         position: absolute;
         top:1.7em;
@@ -244,6 +275,25 @@ body{
         /*- See more at: http://www.corelangs.com/css/box/shadow.html#sthash.xw8GN68s.dpuf*/
     }
 }
+
+@media handheld, only screen and (max-width: 900px) {
+    #boton_limpiar{
+        position: absolute;
+        top:18em;
+        right:1em;
+        height:2.5em;
+        width:2.5em;
+        margin-left: 0.5em;
+        box-shadow: 1px -1px 1px rgba(0,0,0,0.1); -moz-box-shadow: 1px -1px 1px rgba(0,0,0,0.1);
+        -webkit-box-shadow: 5px 5px 5px rgba(0,0,0,0.1);
+        -o-box-shadow: 10px -10px 5px rgba(0,0,0,0.1); 
+        border-radius:25px;
+        /*- See more at: http://www.corelangs.com/css/box/shadow.html#sthash.xw8GN68s.dpuf*/
+    }
+}
+
+
+
 #busca_direccion{
     position: absolute;
     top: 1.7em;
@@ -289,7 +339,7 @@ body{
     -o-box-shadow: 10px -10px 5px rgba(0,0,0,0.1); 
     border-radius:25px;
 }
-@media handheld, only screen and (min-width: 767px) {
+@media handheld, only screen and (min-width: 900px) {
     #cerrar_submenu {
         position: absolute;
         top:1em;
@@ -301,6 +351,12 @@ body{
         -webkit-box-shadow: 5px 5px 5px rgba(0,0,0,0.1);
         -o-box-shadow: 10px -10px 5px rgba(0,0,0,0.1); 
         border-radius:25px;
+    }
+}
+
+@media handheld, only screen and (max-width: 900px) {
+    #cerrar_submenu {
+        visibility: hidden;
     }
 }
 #cerrar_submenu_cafe {
@@ -322,19 +378,15 @@ body{
     z-index: 2;
 }
 
-@media handheld, only screen and (max-width: 767px) {
-    #cerrar_submenu {
-        visibility: hidden;
-    }
-}
 
-@media handheld, only screen and (max-width: 767px) {
+
+@media handheld, only screen and (max-width: 900px) {
     #submenu {
         visibility: hidden;
     }
 }
 
-@media handheld, only screen and (min-width: 767px) {
+@media handheld, only screen and (min-width: 900px) {
     #submenu {
         position: absolute;
         top:0em;
@@ -442,7 +494,7 @@ body{
         width: 3.5em;
     }
 }
-@media handheld, only screen and (min-width: 767px) {
+@media handheld, only screen and (min-width: 900px) {
     #logos_cabezote {
         position: absolute;
         top:1em;
@@ -452,7 +504,7 @@ body{
 }
 
 /*dispositivo movil*/
-@media handheld, only screen and (max-width: 767px) {
+@media handheld, only screen and (max-width: 900px) {
     #logos_cabezote {
         visibility: hidden;
     }
@@ -463,7 +515,7 @@ body{
     left:2%;
     width: 130px;
 }
-@media handheld, only screen and (min-width: 767px) {
+@media handheld, only screen and (min-width: 900px) {
     #salida {
         position: absolute;
         top:1.3em;
@@ -472,9 +524,13 @@ body{
         z-index: 0;
     }
 }
-@media handheld, only screen and (max-width: 767px) {
+@media handheld, only screen and (max-width: 900px) {
     #salida {
-        visibility: hidden;
+        position: absolute;
+        top:1em;
+        right:1%;
+        width: 4em;
+        z-index: 0; 
     }
 }
 @media handheld, only screen and (min-width: 767px) {
@@ -638,7 +694,7 @@ body{
     border: 0px solid #ccc;
     border-radius: 0px;
 }
-@media handheld, only screen and (min-width: 767px) {
+@media handheld, only screen and (min-width: 900px) {
     .ol-scale-line {
         background: rgba(0,173,65,0.5);
         border-radius: 0px;
@@ -648,18 +704,15 @@ body{
         position: absolute;
     }
 }
-/*@media handheld, only screen and (max-width: 767px) {
-    .ol-scale-line {
-        background: rgba(0,173,65,0.5);
-        border-radius: 0px;
-        top: 5em;
-        right: 18em;
-        padding: 0em;
-        position: absolute;
-    }
-}*/
 
-@media handheld, only screen and (min-width: 767px) {
+@media handheld, only screen and (max-width: 900px) {
+    .ol-scale-line {
+       visibility: hidden;
+    }
+}
+
+
+@media handheld, only screen and (min-width: 900px) {
     .ol-scale-line-inner {
         border: 1px solid #FFFFFF;
         border-top: none;
@@ -671,6 +724,12 @@ body{
         padding: 0 2px;
         top:10px;
         left: 10px;
+    }
+}
+
+@media handheld, only screen and (max-width: 900px) {
+    .ol-scale-line-inner {
+       visibility: hidden;
     }
 }
 
@@ -741,7 +800,7 @@ body{
     padding-right: 0px;
     width: 1400px;
 }
-@media handheld, only screen and (min-width: 767px) {
+@media handheld, only screen and (min-width: 900px) {
     #manual{
         position: absolute;
         top: 5.8em;
@@ -749,12 +808,12 @@ body{
         width: 2em;
     }
 }
-@media handheld, only screen and (max-width: 767px) {
+@media handheld, only screen and (max-width: 900px) {
     #manual{
         visibility: hidden;
     }
 }
-@media handheld, only screen and (min-width: 767px) {
+@media handheld, only screen and (min-width: 900px) {
     .ol-zoom-extent
     {
         position: absolute;
@@ -762,11 +821,11 @@ body{
         right:2.5em
     }
 }
-@media handheld, only screen and (max-width: 767px) {
+@media handheld, only screen and (max-width: 900px) {
     .ol-zoom-extent
     {
         position: absolute;
-        top:20%;
+        top:8em;
         right:1em
     }
 }
@@ -777,13 +836,19 @@ body{
         top:36.5em
     }
 }
-@media handheld, only screen and (min-width: 767px) {
+@media handheld, only screen and (min-width: 900px) {
     .ol-zoom{
         top:25.5em;
         right:2.5em
     }
 }
-@media handheld, only screen and (min-width: 767px) {
+@media handheld, only screen and (max-width: 900px) {
+    .ol-zoom{
+        top:12em;
+        right:1em
+    }
+}
+@media handheld, only screen and (min-width: 900px) {
     #barra_general{
         position: absolute; 
         top: 2em; 
@@ -794,7 +859,7 @@ body{
         border: 0em solid transparent;
     }
 }
-@media handheld, only screen and (max-width: 767px) {
+@media handheld, only screen and (max-width: 900px) {
     #barra_general{
         position: absolute; 
         top: 1em; 
@@ -931,7 +996,7 @@ body{
 .input-group-addon{
     height: 50px;
 }
-@media handheld, only screen and (min-width: 767px) {
+@media handheld, only screen and (min-width: 900px) {
     #tipo_usuario
     {
         position: absolute;
@@ -940,6 +1005,13 @@ body{
         width: 2.1em;
     }
 }
+@media handheld, only screen and (max-width: 900px) {
+    #tipo_usuario
+    {
+       visibility: hidden;
+    }
+}
+
 @media handheld, only screen and (min-width: 767px) {
     #nombre_usuario{
         position: absolute;
@@ -951,6 +1023,11 @@ body{
         text-decoration: underline;
         z-index: 0;
         text-align: center;
+    }
+}
+@media handheld, only screen and (max-width: 900px) {
+    #nombre_usuario{
+        visibility: hidden;
     }
 }
 #prueba{
@@ -995,6 +1072,13 @@ body{
 }
 */
 #carga2{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    z-index: 1;
+}
+#carga3{
     position: absolute;
     width: 100%;
     height: 100%;
@@ -1300,14 +1384,14 @@ img.pequeña{
     border-top-color: #ffcc33;
 }
 
-@media handheld, only screen and (min-width: 767px) {
+@media handheld, only screen and (min-width: 900px) {
     .measure-control {
         position:absolute;
         right:2.5em;
         top:33.5em
     }
 }
-@media handheld, only screen and (max-width: 767px) {
+@media handheld, only screen and (max-width: 900px) {
     .measure-control {
         visibility: hidden;
     }

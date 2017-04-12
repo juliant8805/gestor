@@ -31,13 +31,14 @@
     <script src="src/app/index_evt/index_evt.js"></script>
     <script src="import/import.js"></script>
     <script src="gesstor/gesstor.js"></script>
-    <!--<script> window.oncontextmenu = function() { return false; } </script>
+    <script> window.oncontextmenu = function() { return false; } </script>
 
     <!--Highcharts-->
     <script src="src/highcharts/js/highcharts.js"></script>
     <script src="src/highcharts/js/modules/exporting.js"></script>
     <!-- <script src="src/googlecharts/googlecharts.js"></script>-->
     <div id="carga2" hidden="hidden"><img src="./image/procesando.gif" style="top:50%; left:50%; width:auto; height:auto; position:absolute"></div>
+    <div id="carga3" hidden="hidden"><img src="./image/cargando.png" style="top:50%; left:50%; width:auto; height:auto; position:absolute"></div>
     <div id="completo" hidden="hidden">		
         <div id="condiciones" >
             <img id="gesstor" src="./imagenes/imagen_condiciones.png" style="top:5%; left:10%; width:80%; height:auto">
@@ -435,15 +436,15 @@
     <img id="valid" src="imagenes/validar.jpg" onclick="validate(id)" style="display: none" data-toggle="modal" data-target="#validate" title="Validar Informacion subida">
     <img id="deshacer" src="imagenes/deshacer.jpg" onclick="validate(id)" style="display: none" data-toggle="modal" data-target="#validate" title="Deshacer cambios">
     <div id="menu_circular" hidden="hidden">
-        <img id="submenu" src="./imagenes/submenu.png">
+        <!--<img id="submenu" src="./imagenes/submenu.png">
         <img id="cerrar_submenu"  src="./imagenes/cerrar_submenu.png" onclick="cerrar_menu()">
         <img id="cerrar_submenu_cafe" hidden="hidden" src="./imagenes/cerrar_submenu_cafe.png" onclick="cerrar_menu()">
         <img id="cerrar_submenu_verde" hidden="hidden" src="./imagenes/cerrar_submenu_verde.png" onclick="cerrar_menu()">
-        <img id="boton_principal" hidden="hidden" src="imagenes/menu_principal.png" onclick="menu_principal()" title="Menú Principal"> 
+        <img id="boton_principal" hidden="hidden" src="imagenes/menu_principal.png" onclick="menu_principal()" title="Menú Principal"> -->
         <img id="lupa_pequeña" src="imagenes/lupa_submenu.png" onclick="menu_consultas()" title="Menú Consultas">
-        <img id="busqueda_personalizada" hidden="hidden" src="imagenes/busqueda_personalizada.png">
+        <!--<img id="busqueda_personalizada" hidden="hidden" src="imagenes/busqueda_personalizada.png">-->
         <img id="boton_capas" src="imagenes/menu_capas.png" title="Herramientas" onclick="herramientas()">
-        <img id="transicion_capas" hidden="hidden" src="imagenes/transicion_capas.png" onclick="herramientas()">
+        <!--<img id="transicion_capas" hidden="hidden" src="imagenes/transicion_capas.png" onclick="herramientas()">-->
     </div>
 
     <!--<img id="maria" src="./fotos_usuarios/user.png">-->
@@ -485,11 +486,11 @@
 
         <!-- construido y no construido-->
         <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_actualizacion_conservacion.png'); background-color:#006D1B; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="predios_construidos" name="predios_construidos" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>
-
-        <!--Actualizacion Conservacion-->
-        <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_actualizacion_conservacion.png'); background-color:#006D1B; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="predios_actualizacion" name="predios_actualizacion" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>
-
-        <!--plusvalia-->
+        
+         <!--Actualizacion Conservacion-->
+        <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_conservacion.png'); background-color:#a6a6a6; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="predios_actualizacion" name="predios_actualizacion" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>
+        
+         <!--plusvalia-->
         <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_plusvalia.png'); background-color:#a6a6a6; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="plusvalia" name="plusvalia" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>
 
         <select class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_disponibilidad.png'); background-color:#008E30; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="disponibilidad_AAA" name=prestadores onchange="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'>
@@ -550,8 +551,11 @@
 
         <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/tipo_contribuyente.png'); background-color:#006D1B; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="Tipo de Contribuyente" name="Tipo de Contribuyente" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button> 
 
-        <!--Impuesto Industria y Comercio<!--Tipo Propietario--> 
-        <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_tipo_propietario.png'); background-color:#00AD41; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="Tipo Propietario" name="propietario" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>		   
+        <!--Tipo Propietario--> 
+        <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_tipo_propietario.png'); background-color:#00AD41; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="Tipo Propietario" name="propietario" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>	
+        
+         <!--Impuesto Camara y Comercio--> 
+        <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_impuesto_camara.png'); background-color:#00AD41; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="Impuesto Camara" name="Impuesto Camara" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>	
 
         <!--Conflicto de Uso del Suelo-->
         <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_uso_actual.png'); background-color:#86B12D; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="Conflicto Uso del Suelo" name="conflictos" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>

@@ -182,13 +182,17 @@ map.on('singleclick', function (evt) {
             evt.coordinate, viewResolution, map.getView().getProjection(),
             {'INFO_FORMAT': infoFormat}
     );
-
+    var tamañopantalla = screen.width>800;
     if (url1) {
         //console.log(url4);
         $.ajax({
             url: url1,
             beforeSend: function () {
-                putgif();
+            if (tamañopantalla==true){
+                putgif();}
+                else{
+                    document.getElementById("carga3").style.display = "block";  
+                }
             },
             success: function (data) {
                 var features = format[3].readFeatures(data);
@@ -261,8 +265,12 @@ map.on('singleclick', function (evt) {
                     document.getElementById("panel_atr").style.display = "block";
                 }
             },
-            complete: function () {
-                quitgif();
+            complete: function(){
+                if (tamañopantalla==true){
+                quitgif(); }
+                else{
+                document.getElementById("carga3").style.display = "none";  
+                   }
             }
         });
 

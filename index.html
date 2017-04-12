@@ -47,9 +47,9 @@
     <div id="completo" hidden="hidden">		
         <div id="condiciones" >
             <img id="gesstor" src="./imagenes/imagen_condiciones.png" style="top:5%; left:10%; width:80%; height:auto">
-            
+
             <div style="margin-left:8em;  margin-top:13em"><a href="http://104.197.185.151/beta1/documentos/manual.pdf" target="_blank" style="color:blue; text-decoration: underline">Condiciones de Uso</a></div>
-            
+
             <div style="margin-left:1em;  margin-top:0.1em">
                 <input type="checkbox" value="1" name="termin" id="termin"/><label><font size="2">&nbspAcepto los T&eacute;rminos y Condiciones&nbsp&nbsp</font></label>
                 <input type="button" onclick="marcado()" id="botoncondiciones" value="Aceptar">
@@ -89,6 +89,9 @@
                 <input type="text" style="border:1px solid;width: 200%;" class="form-control input-xs" id="codigo" placeholder="Buscar C&oacute;digo Catastral Ejem: 0800101...">
                 <input type="text" style="border:1px solid;width: 200%;" class="form-control input-xs" id="propietarios" hidden="hidden" placeholder="Buscar nombre de propietario Ejem: Juan Alvarez...">
                 <input type="text" style="border:1px solid;width: 200%;" class="form-control input-xs" id="cedul" hidden="hidden" placeholder="Buscar cedula de propietario Ejem: 111...">
+
+                <input type="text" style="border:1px solid;width: 200%;" class="form-control input-xs" id="direccion_gestor" hidden="hidden" placeholder="Buscar direccion Ejem: CL 19 22 21 ó KR 24 56 32">
+
             </div>
         </div>
     </div> 
@@ -270,7 +273,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="control-group" align="center">
-                       <label for="selshape" class="control-label" align="center">Shapefile(s):</label></br>
+                        <label for="selshape" class="control-label" align="center">Shapefile(s):</label></br>
                         <div align="center">
                             <table id="table"></table></br>
                             <div class="message"></div>
@@ -399,11 +402,11 @@
         <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/matricula_inmobiliaria.png'); background-color:#00AD41; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="icono_matricula" name="personalizada1" onclick="busqueda(name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>
 
         <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/codigo.png'); background-color:#008E30; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="icono_codigo" name="personalizada2" onclick="busqueda(name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>
-        
+
         <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/propietario.png'); background-color:#00AD41; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="propietario" name="propietar" onclick="busqueda(name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>
 
         <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/cedula.png'); background-color:#008E30; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="cedula" name="cedula" onclick="busqueda(name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>
-        
+
         <!--<button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/rango_area.png'); background-color:#006D1B; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="Rango Area Terreno" name="predio" onclick="rangoarea1(id, name).then(v =>{console.log('q');})" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>-->
 
         <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/rango_area.png'); background-color:#006D1B; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="Rango Area Terreno" name="predio" onclick="rangoarea(id, name);" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>
@@ -499,9 +502,9 @@
 
         <!--Conflicto de Uso del Suelo-->
         <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_uso_actual.png'); background-color:#86B12D; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="Conflicto Uso del Suelo" name="conflictos" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>
-        
+
         <!--estructura ecologica principal-->
-         <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_estructura_ecologica.png'); background-color:#a6a6a6; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="Estructura Ecologica Principal" name="Estructura Ecologica Principal" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>
+        <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_estructura_ecologica.png'); background-color:#a6a6a6; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="Estructura Ecologica Principal" name="Estructura Ecologica Principal" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>
 
         <!--Areas de Proteccion-->
         <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_proteccion_urbanistica.png'); background-color:#a6a6a6; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="Area Proteccion Urbanistica" name="proteccion" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>
@@ -517,6 +520,7 @@
             <option value="Aseo" style="font-weight: bold; color: white;  font-size:small;">Aseo
         </select>
 
+        <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/direccion.png'); background-color:#008E30; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="dir_gestor" name="dir_gestor" onclick="busqueda(name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>
 
     </div>
     <!--<input id="direccion" type="text" class="form-control" placeholder="Buscar Direccion">-->
@@ -529,6 +533,9 @@
     <script src="src/app/Consultas/transmasivo.js"></script>
     <!--<script src="lib/app.js"></script>-->
     <script src="src/app/app.js"></script>
-
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFSDsa5eEqaKGtDhwhoc_o82DRKbjQv3M&signed_in=true&callback=initialize">
+    </script>
 </body>
 </html>

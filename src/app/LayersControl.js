@@ -472,7 +472,13 @@ var unidades = new ol.layer.Tile({
     }), name: 'Unidades'
     
 });
-
+var geocodificador = new ol.layer.Tile({
+    visible: false,
+    source: new ol.source.TileWMS({
+        url: 'http://35.184.3.4:8080/geoserver/preproduccion/wms',
+        params: {LAYERS: 'preproduccion:geo_wgs84', STYLES: ''}
+    }), name: 'Geo'
+});
 //CAPS GROUP
 var layerCatastro = new ol.layer.Group({
     layers: [predio_rural, manzana, predio, construcciones, unidades, vias, consolidado, highlightfeatures],

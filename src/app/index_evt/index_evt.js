@@ -107,6 +107,14 @@ function detectarCarga() {
             document.getElementById("Impuesto Camara").style.display = "block";
             modulo="hacienda";
         }
+        else if (select[0][12] === 't') {
+            document.getElementById("menu_circular").style.display = "block";
+            document.getElementById("tipo_usuario").style.display = "block";
+            document.getElementById("manual").style.display = "block";
+            document.getElementById("icono_codigo").style.display = "block";
+            document.getElementById("dir_gestor").style.display = "block";
+            modulo="gestor";
+        }
         else{
             //document.getElementById("Tipo de Contribuyente").style.display = "none";
             //document.getElementById("predios_exentos_2016").style.display = "none";
@@ -364,34 +372,37 @@ function busqueda(id) {
     document.getElementById('cedul').value = "";
     document.getElementById('propietarios').value = "";
     document.getElementById('input_ladomanzana').value = "";
-    if (id === "propietar")
-    {
+    document.getElementById('direccion_gestor').value = "";
+    if (id === "propietar"){
+        document.getElementById('direccion_gestor').style.display = 'none';
         document.getElementById('codigo').style.display = 'none';
         document.getElementById('cedul').style.display = 'none';
         document.getElementById('barra_codigo').style.display = 'block';
         document.getElementById('propietarios').style.display = 'block';
-    } else if (id === "cedula")
-    {
-        console.log(1);
+    } else if (id === "cedula"){
+        document.getElementById('direccion_gestor').style.display = 'none';
         document.getElementById('propietarios').style.display = 'none';
         document.getElementById('codigo').style.display = 'none';
         document.getElementById('barra_codigo').style.display = 'block';
         document.getElementById('cedul').style.display = 'block';
-    } else if (id === "personalizada1")
-    {
+    } else if (id === "personalizada1"){
         document.getElementById('barra_busqueda_matricula').style.display = 'block';
-    } else if (id === "personalizada2")
-    {
+    } else if (id === "personalizada2"){
+        document.getElementById('direccion_gestor').style.display = 'none';
         document.getElementById('propietarios').style.display = 'none';
         document.getElementById('cedul').style.display = 'none';
         document.getElementById('barra_codigo').style.display = 'block';
         document.getElementById('codigo').style.display = 'block';
-    } else if (id === "alineamiento")
-    {
+    } else if (id === "alineamiento"){
         document.getElementById('barra_alineamiento').style.display = 'block';
-    } else if (id === "Usos_Permitidos")
-    {
+    } else if (id === "Usos_Permitidos"){
         document.getElementById('barra_predioshasusos').style.display = 'block';
+    } else if (id === "dir_gestor"){
+        document.getElementById('propietarios').style.display = 'none';
+        document.getElementById('cedul').style.display = 'none';
+        document.getElementById('codigo').style.display = 'none';
+        document.getElementById('barra_codigo').style.display = 'block';
+        document.getElementById('direccion_gestor').style.display = 'block';
     }
 }
 function cerrar_menu() {

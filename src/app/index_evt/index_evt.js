@@ -5,13 +5,14 @@ function validacionusuarios() {
         var select = select_query("SELECT * FROM usuario WHERE usuario ='" + ca[0] + "' AND contrasena ='" + ca[1] + "' AND estado='t';");
         document.getElementById("carga").style.display = "none";
         document.getElementById("nombre_usuario").innerHTML = select[0][0].split(" ", 1);
-    } catch (err) {}
+    } catch (err) {
+    }
     return(select);
 }
 function detectarCarga() {
     var select = validacionusuarios();
     //console.log(select);
-    if (navigator.vendor !== "Google Inc."){
+    if (navigator.vendor !== "Google Inc.") {
         location.href = "barranquilla.html?ig=navegador";
     }
     if (select === null) {
@@ -49,13 +50,13 @@ function detectarCarga() {
             document.getElementById("Distrito vs Prestadores AAA").style.display = "block";
             document.getElementById("plusvalia").style.display = "block";
             document.getElementById("predios_actualizacion").style.display = "block";
-            
+
             //document.getElementById("Calidad Construcciones").style.display = "block";
             //document.getElementById("Avaluo Catastral").style.display = "block";
-            modulo="catastro";
+            modulo = "catastro";
         }
         //console.log(document.getElementById("icono_matricula").style.display);
-       else if (select[0][7] === 't') {
+        else if (select[0][7] === 't') {
             //document.getElementById("metrotel").style.display = "block";
             document.getElementById("menu_circular").style.display = "block";
             document.getElementById("tipo_usuario").style.display = "block";
@@ -66,9 +67,8 @@ function detectarCarga() {
             //document.getElementById("oficial_vs_AAA_uso").style.display = "block";
             document.getElementById("disponibilidad_AAA").style.display = "block";
             document.getElementById("Nomenclatura Domiciliaria").style.display = "block";
-            modulo="sui";
-        }
-        else if (select[0][9] === 't') {
+            modulo = "sui";
+        } else if (select[0][9] === 't') {
             var sele = select_query("SELECT COUNT(table_name) FROM information_schema.tables WHERE table_schema='public' AND table_name LIKE 'temp_%'");
             //console.log(sele);
             if (parseInt(sele[0][0]) > 0) {
@@ -93,9 +93,8 @@ function detectarCarga() {
             document.getElementById("Tipo de Amenaza").style.display = "block";
             document.getElementById("Estructura Ecologica Principal").style.display = "block";
             document.getElementById("Clasificacion_Uso").style.display = "block";
-            modulo="planeacion";
-        }
-        else if (select[0][10] === 't') {
+            modulo = "planeacion";
+        } else if (select[0][10] === 't') {
             document.getElementById("Avaluo Catastral").style.display = "block";
             document.getElementById("Incremento Avaluo").style.display = "block";
             document.getElementById("menu_circular").style.display = "block";
@@ -104,34 +103,32 @@ function detectarCarga() {
             document.getElementById("Tipo de Contribuyente").style.display = "block";
             //document.getElementById("predios_exentos_2016").style.display = "block";
             document.getElementById("Tipo Propietario").style.display = "block";
-            modulo="hacienda";
-        }
-        else if (select[0][12] === 't') {
+            modulo = "hacienda";
+        } else if (select[0][12] === 't') {
             document.getElementById("menu_circular").style.display = "block";
             document.getElementById("tipo_usuario").style.display = "block";
             document.getElementById("manual").style.display = "block";
             document.getElementById("icono_codigo").style.display = "block";
             document.getElementById("dir_gestor").style.display = "block";
-            modulo="gestor";
-        }
-        else{
+            modulo = "gestor";
+        } else {
             //document.getElementById("Tipo de Contribuyente").style.display = "none";
             //document.getElementById("predios_exentos_2016").style.display = "none";
             //document.getElementById("Tipo Propietario").style.display = "none"; 
             /*document.getElementById("cerrar_submenu").style.display = "none";
-            document.getElementById("cerrar_submenu_cafe").style.display = "none";
-            document.getElementById("cerrar_submenu_verde").style.display = "none";
-            document.getElementById("cerrar_submenu").style.display = "none";
-            document.getElementById("submenu").style.display = "none";
-            document.getElementById("menu_circular").style.display = "none";
-            document.getElementById("lupa_pequeña").style.display = "none";
-            document.getElementById("valid").style.display = "none";
-            document.getElementById("nombre_usuario").style.display = "none";
+             document.getElementById("cerrar_submenu_cafe").style.display = "none";
+             document.getElementById("cerrar_submenu_verde").style.display = "none";
+             document.getElementById("cerrar_submenu").style.display = "none";
+             document.getElementById("submenu").style.display = "none";
+             document.getElementById("menu_circular").style.display = "none";
+             document.getElementById("lupa_pequeña").style.display = "none";
+             document.getElementById("valid").style.display = "none";
+             document.getElementById("nombre_usuario").style.display = "none";
+             document.getElementById("tipo_usuario").style.display = "none";
+             document.getElementById("manual").style.display = "none";*/
             document.getElementById("tipo_usuario").style.display = "none";
-            document.getElementById("manual").style.display = "none";*/
-            document.getElementById("tipo_usuario").style.display = "none";
-            document.getElementById("salida").style.display = "none";              
-            modulo="totem";
+            document.getElementById("salida").style.display = "none";
+            modulo = "totem";
         }
     } catch (err) {
     }
@@ -372,36 +369,37 @@ function busqueda(id) {
     document.getElementById('propietarios').value = "";
     document.getElementById('input_ladomanzana').value = "";
     document.getElementById('direccion_gestor').value = "";
-    if (id === "propietar"){
+    if (id === "propietar") {
         document.getElementById('direccion_gestor').style.display = 'none';
         document.getElementById('codigo').style.display = 'none';
         document.getElementById('cedul').style.display = 'none';
         document.getElementById('barra_codigo').style.display = 'block';
         document.getElementById('propietarios').style.display = 'block';
-    } else if (id === "cedula"){
+    } else if (id === "cedula") {
         document.getElementById('direccion_gestor').style.display = 'none';
         document.getElementById('propietarios').style.display = 'none';
         document.getElementById('codigo').style.display = 'none';
         document.getElementById('barra_codigo').style.display = 'block';
         document.getElementById('cedul').style.display = 'block';
-    } else if (id === "personalizada1"){
+    } else if (id === "personalizada1") {
         document.getElementById('barra_busqueda_matricula').style.display = 'block';
-    } else if (id === "personalizada2"){
+    } else if (id === "personalizada2") {
         document.getElementById('direccion_gestor').style.display = 'none';
         document.getElementById('propietarios').style.display = 'none';
         document.getElementById('cedul').style.display = 'none';
         document.getElementById('barra_codigo').style.display = 'block';
         document.getElementById('codigo').style.display = 'block';
-    } else if (id === "alineamiento"){
+    } else if (id === "alineamiento") {
         document.getElementById('barra_alineamiento').style.display = 'block';
-    } else if (id === "Usos_Permitidos"){
+    } else if (id === "Usos_Permitidos") {
         document.getElementById('barra_predioshasusos').style.display = 'block';
-    } else if (id === "dir_gestor"){
+    } else if (id === "dir_gestor") {
         document.getElementById('propietarios').style.display = 'none';
         document.getElementById('cedul').style.display = 'none';
         document.getElementById('codigo').style.display = 'none';
         document.getElementById('barra_codigo').style.display = 'block';
-        document.getElementById('direccion_gestor').style.display = 'block';
+        document.getElementById('direccion_gestor').style.display = 'none';
+        document.getElementById('tabladir').style.display = 'block';
     }
 }
 function cerrar_menu() {
@@ -422,10 +420,10 @@ function cerrar_menu() {
     document.getElementById('herramientas').style.display = 'none';
 }
 $(document).ready(function () {
-	$('#marco').load(function () {
-            $(this).contents().find("img").css({'height':'970px','width':'572px'});
-		//$(this).contents().find("img").css({'background-color':'red','font-weight':'bolder','color':'white'});
-	});
+    $('#marco').load(function () {
+        $(this).contents().find("img").css({'height': '970px', 'width': '572px'});
+        //$(this).contents().find("img").css({'background-color':'red','font-weight':'bolder','color':'white'});
+    });
 });
 function open_streetview() {
     document.getElementById('marco').style.display = 'block';
@@ -443,28 +441,26 @@ function lista() {
 }
 
 function abrir_manual() {
-    if (modulo=='catastro'){
-    window.open(
-            'http://35.184.3.4/gesstor/documentos/manual_catastro.pdf',
-            '_blank' // <- This is what makes it open in a new window.
-            );}
-    else if (modulo=='planeacion'){
+    if (modulo == 'catastro') {
         window.open(
-            'http://35.184.3.4/gesstor/documentos/manual_misional_planeacion.pdf',
-            '_blank' // <- This is what makes it open in a new window.
-            );
-    }
-    else if (modulo=='sui'){
+                'http://35.184.3.4/gesstor/documentos/manual_catastro.pdf',
+                '_blank' // <- This is what makes it open in a new window.
+                );
+    } else if (modulo == 'planeacion') {
         window.open(
-            'http://35.184.3.4/gesstor/documentos/manual_sui.pdf',
-            '_blank' // <- This is what makes it open in a new window.
-            );
-    }
-    else if (modulo=='hacienda'){
+                'http://35.184.3.4/gesstor/documentos/manual_misional_planeacion.pdf',
+                '_blank' // <- This is what makes it open in a new window.
+                );
+    } else if (modulo == 'sui') {
         window.open(
-            'http://35.184.3.4/gesstor/documentos/manual_hacienda.pdf',
-            '_blank' // <- This is what makes it open in a new window.
-            );
+                'http://35.184.3.4/gesstor/documentos/manual_sui.pdf',
+                '_blank' // <- This is what makes it open in a new window.
+                );
+    } else if (modulo == 'hacienda') {
+        window.open(
+                'http://35.184.3.4/gesstor/documentos/manual_hacienda.pdf',
+                '_blank' // <- This is what makes it open in a new window.
+                );
     }
 }
 
@@ -553,14 +549,11 @@ function changeImage(id) {
         document.getElementById('alineamiento').style = "background:url('./imagenes/alineamiento.png'); background-color:#adad32; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
     } else if (id === "Usos_Permitidos") {
         document.getElementById('Usos_Permitidos').style = "background:url('./imagenes/usos_permitidos.png'); background-color:#adad32; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
-    }
-    else if (id === "plusvalia") {
+    } else if (id === "plusvalia") {
         document.getElementById('plusvalia').style = "background:url('./imagenes/icono_plusvalia.png'); background-color:#b7b7b7; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
-    }
-    else if (id === "Incremento Avaluo") {
+    } else if (id === "Incremento Avaluo") {
         document.getElementById('Incremento Avaluo').style = "background:url('./imagenes/icono_incremento_avaluo.png'); background-color:#b7b7b7; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
-    }
-    else if (id === "Clasificacion_Uso") {
+    } else if (id === "Clasificacion_Uso") {
         document.getElementById('Clasificacion_Uso').style = "background:url('./imagenes/icono_clasificacion_uso.png'); background-color:#adad32; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
     }
 }
@@ -629,7 +622,7 @@ function normalImage(id) {
     } else if (id === "Rango Area Construccion") {
         document.getElementById('Rango Area Construccion').style = "background:url('./imagenes/icono_rango_area_construccion.png'); background-color:#008E30; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
     } else if (id === "Avaluo Catastral") {
-            document.getElementById('Avaluo Catastral').style = "background:url('./imagenes/icono_vigencia_avaluos.png'); background-color:#008E30; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
+        document.getElementById('Avaluo Catastral').style = "background:url('./imagenes/icono_vigencia_avaluos.png'); background-color:#008E30; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
     } else if (id === "Tipo Propietario") {
         document.getElementById('Tipo Propietario').style = "background:url('./imagenes/icono_tipo_propietario.png'); background-color:#00AD41; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
     } else if (id === "Conflicto Uso del Suelo") {
@@ -654,11 +647,9 @@ function normalImage(id) {
         document.getElementById('Usos_Permitidos').style = "background:url('./imagenes/usos_permitidos.png'); background-color:#008E30; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
     } else if (id === "plusvalia") {
         document.getElementById('plusvalia').style = "background:url('./imagenes/icono_plusvalia.png'); background-color:#a6a6a6; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
-    }
-    else if (id === "Incremento Avaluo") {
+    } else if (id === "Incremento Avaluo") {
         document.getElementById('Incremento Avaluo').style = "background:url('./imagenes/icono_incremento_avaluo.png'); background-color:#a6a6a6; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
-    }
-    else if (id === "Clasificacion_Uso") {
+    } else if (id === "Clasificacion_Uso") {
         document.getElementById('Clasificacion_Uso').style = "background:url('./imagenes/icono_clasificacion_uso.png'); background-color:#00AD41; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
     }
 }
@@ -699,7 +690,7 @@ function ocultarpanelatributos() {
     document.getElementById("tablaatributos").style.display = "none";
 }
 function mostrarpanelatributos() {
-     document.getElementById("panel_atr").style.display = "block";
+    document.getElementById("panel_atr").style.display = "block";
     document.getElementById("botonmaximizar").style.display = "none";
     document.getElementById("botonocultarstatistics").style.display = "none";
     document.getElementById("statistics").style.display = "none";
@@ -770,21 +761,21 @@ function cerrarbarrasconsultas() {
 
 function alertDGC(mensaje)
 {
-    var dgcTiempo=500
-    var ventanaCS='<div class="dgcAlert"><div class="dgcVentana"><div class="dgcCerrar"></div><div class="dgcMensaje">'+mensaje+'<br><div class="dgcAceptar">Aceptar</div></div></div></div>';
+    var dgcTiempo = 500
+    var ventanaCS = '<div class="dgcAlert"><div class="dgcVentana"><div class="dgcCerrar"></div><div class="dgcMensaje">' + mensaje + '<br><div class="dgcAceptar">Aceptar</div></div></div></div>';
     $('body').append(ventanaCS);
-    var alVentana=$('.dgcVentana').height();
-    var alNav=$(window).height();
-    var supNav=$(window).scrollTop();
-    $('.dgcAlert').css('height',$(document).height());
-    $('.dgcVentana').css('top',((alNav-alVentana)/2+supNav-100)+'px');
-    $('.dgcAlert').css('display','block');
-    $('.dgcAlert').animate({opacity:1},dgcTiempo);
-    $('.dgcCerrar,.dgcAceptar').click(function(e) {
-        $('.dgcAlert').animate({opacity:0},dgcTiempo);
-        setTimeout("$('.dgcAlert').remove()",dgcTiempo);
+    var alVentana = $('.dgcVentana').height();
+    var alNav = $(window).height();
+    var supNav = $(window).scrollTop();
+    $('.dgcAlert').css('height', $(document).height());
+    $('.dgcVentana').css('top', ((alNav - alVentana) / 2 + supNav - 100) + 'px');
+    $('.dgcAlert').css('display', 'block');
+    $('.dgcAlert').animate({opacity: 1}, dgcTiempo);
+    $('.dgcCerrar,.dgcAceptar').click(function (e) {
+        $('.dgcAlert').animate({opacity: 0}, dgcTiempo);
+        setTimeout("$('.dgcAlert').remove()", dgcTiempo);
     });
 }
 window.alert = function (message) {
-  alertDGC(message);
+    alertDGC(message);
 };

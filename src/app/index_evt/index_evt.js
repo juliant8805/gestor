@@ -220,12 +220,12 @@ function menu_principal() {
 }
 
 function menu_consultas() {
-    document.getElementById('busqueda_personalizada').style.display = 'block';
+    /*document.getElementById('busqueda_personalizada').style.display = 'block';
     document.getElementById('cerrar_submenu_cafe').style.display = 'block';
-    document.getElementById('cerrar_submenu_verde').style.display = 'none';
+    document.getElementById('cerrar_submenu_verde').style.display = 'none';*/
     document.getElementById('botones').style.display = 'block';
     document.getElementById('herramientas').style.display = 'none';
-    document.getElementById('transicion_capas').style.display = 'none';
+    //document.getElementById('transicion_capas').style.display = 'none';
 
     /*if (document.getElementById('botones').style.display === "" || document.getElementById('botones').style.display === "none"){
      var ca = document.cookie.split('=');
@@ -250,13 +250,13 @@ function menu_consultas() {
 }
 
 function herramientas() {
-    document.getElementById('mensaje').style.display = 'none';
-    document.getElementById('busqueda_personalizada').style.display = 'none';
+    /*document.getElementById('mensaje').style.display = 'none';
+    document.getElementById('busqueda_personalizada').style.display = 'none';*/
     document.getElementById('botones').style.display = 'none';
-    document.getElementById('cerrar_submenu_cafe').style.display = 'none';
+   // document.getElementById('cerrar_submenu_cafe').style.display = 'none';
     document.getElementById('herramientas').style.display = 'block';
-    document.getElementById('transicion_capas').style.display = 'block';
-    document.getElementById('cerrar_submenu_verde').style.display = 'block';
+    /*document.getElementById('transicion_capas').style.display = 'block';
+    document.getElementById('cerrar_submenu_verde').style.display = 'block';*/
 }
 
 

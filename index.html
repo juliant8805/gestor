@@ -31,12 +31,19 @@
     <script src="src/app/index_evt/index_evt.js"></script>
     <script src="import/import.js"></script>
     <script> window.oncontextmenu = function() { return false; } </script>
+    
+        
+        <!--tamaño pantalla
+        <script language="JavaScript"> 
+        document.writeln(screen.width + " x " + screen.height) 
+        </script>-->
 
     <!--Highcharts-->
     <script src="src/highcharts/js/highcharts.js"></script>
     <script src="src/highcharts/js/modules/exporting.js"></script>
     <!-- <script src="src/googlecharts/googlecharts.js"></script>-->
     <div id="carga2" hidden="hidden"><img src="./image/procesando.gif" style="top:50%; left:50%; width:auto; height:auto; position:absolute"></div>
+    <div id="carga3" hidden="hidden"><img src="./image/cargando.png" style="top:50%; left:50%; width:auto; height:auto; position:absolute"></div>
     <div id="completo" hidden="hidden">		
         <div id="condiciones" >
             <img id="gesstor" src="./imagenes/imagen_condiciones.png" style="top:5%; left:10%; width:80%; height:auto">
@@ -369,15 +376,15 @@
     <img id="valid" src="imagenes/validar.jpg" onclick="validate(id)" style="display: none" data-toggle="modal" data-target="#validate" title="Validar Informacion subida">
     <img id="deshacer" src="imagenes/deshacer.jpg" onclick="validate(id)" style="display: none" data-toggle="modal" data-target="#validate" title="Deshacer cambios">
     <div id="menu_circular" hidden="hidden">
-        <img id="submenu" src="./imagenes/submenu.png">
+        <!--<img id="submenu" src="./imagenes/submenu.png">
         <img id="cerrar_submenu"  src="./imagenes/cerrar_submenu.png" onclick="cerrar_menu()">
         <img id="cerrar_submenu_cafe" hidden="hidden" src="./imagenes/cerrar_submenu_cafe.png" onclick="cerrar_menu()">
         <img id="cerrar_submenu_verde" hidden="hidden" src="./imagenes/cerrar_submenu_verde.png" onclick="cerrar_menu()">
-        <img id="boton_principal" hidden="hidden" src="imagenes/menu_principal.png" onclick="menu_principal()" title="Menú Principal"> 
+        <img id="boton_principal" hidden="hidden" src="imagenes/menu_principal.png" onclick="menu_principal()" title="Menú Principal"> -->
         <img id="lupa_pequeña" src="imagenes/lupa_submenu.png" onclick="menu_consultas()" title="Menú Consultas">
-        <img id="busqueda_personalizada" hidden="hidden" src="imagenes/busqueda_personalizada.png">
+        <!--<img id="busqueda_personalizada" hidden="hidden" src="imagenes/busqueda_personalizada.png">-->
         <img id="boton_capas" src="imagenes/menu_capas.png" title="Herramientas" onclick="herramientas()">
-        <img id="transicion_capas" hidden="hidden" src="imagenes/transicion_capas.png" onclick="herramientas()">
+        <!--<img id="transicion_capas" hidden="hidden" src="imagenes/transicion_capas.png" onclick="herramientas()">-->
     </div>
 
     <!--<img id="maria" src="./fotos_usuarios/user.png">-->

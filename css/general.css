@@ -294,6 +294,13 @@ body{
 
 
 
+#busca_direccion{
+    position: absolute;
+    top: 1.7em;
+    left: 81%;
+    width: 6.4em;
+    margin-left: 0.5em;
+}
 /*@media handheld, only screen and (max-width: 767px) {*/
 #subirshape{
     position: absolute;
@@ -1224,12 +1231,12 @@ select{
     font-size:11px;
 }
 #panel_atributos_puntos_aaa{
-   position:absolute;
-   max-width: 26em;
-   height: 25em;
-   top:8em;
-   left:0em;  
-   font-size:11px;
+    position:absolute;
+    max-width: 26em;
+    height: 25em;
+    top:8em;
+    left:0em;  
+    font-size:11px;
 }
 #botonmostrarpanelatributossui{
     position: absolute;

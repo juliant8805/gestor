@@ -30,13 +30,8 @@
     <script src="src/app/LayersControl.js"></script>
     <script src="src/app/index_evt/index_evt.js"></script>
     <script src="import/import.js"></script>
+    <script src="gesstor/gesstor.js"></script>
     <script> window.oncontextmenu = function() { return false; } </script>
-    
-        
-        <!--tamaño pantalla
-        <script language="JavaScript"> 
-        document.writeln(screen.width + " x " + screen.height) 
-        </script>-->
 
     <!--Highcharts-->
     <script src="src/highcharts/js/highcharts.js"></script>
@@ -84,6 +79,40 @@
         </div>
     </div>
     <div class="row" id="barra_codigo" hidden="hidden">
+        <label style="color: white;">Buscar Dirección</label>
+        <table id="tabladir" hidden="hidden">
+        <tr>
+            <td style="width:50px;">
+                <select id="dir_g1" class="form-control input-xs">
+                    <option value="CALLE">CL</option>
+                    <option value="CARRERA">KR</option>
+                    <option value="DIAGONAL">DG</option>
+                    <option value="TRANSVERSAL">TV</option>
+                </select>
+            </td>
+            <td style="width:48px;">
+                <input id="dir1" type="text" class="form-control input-xs" style="border:1px solid" onKeypress="if (event.keyCode === 32) event.returnValue = false;">
+            </td>
+            <td style="width:50px;">
+                <select id="dir_g2" class="form-control input-xs">
+                    <option>CL</option>
+                    <option>KR</option>
+                    <option>DG</option>
+                    <option>TV</option>
+                </select>
+            </td>
+            <td style="width:48px;">
+                <input id="dir2" type="text" class="form-control input-xs" style="border:1px solid;" onKeypress="if (event.keyCode === 32) event.returnValue = false;">
+            </td>
+            <td style="width:6px;">-</td>
+            <td style="width:40px;">
+                <input id="dir3" type="text" class="form-control input-xs" style="border:1px solid;" onKeypress="if (event.keyCode === 32) event.returnValue = false;">
+            </td>
+            <td style="width:50px;">
+                <img id="busca_direccion" src="./imagenes/buscar.jpg" onclick="busca_dir()">
+            </td>
+        </tr>
+        </table>
         <div class="col-xs-2"> 
             <div class="input-group textarea">
                 <input type="text" style="border:1px solid;width: 200%;" class="form-control input-xs" id="codigo" placeholder="Buscar C&oacute;digo Catastral Ejem: 0800101...">
@@ -91,10 +120,38 @@
                 <input type="text" style="border:1px solid;width: 200%;" class="form-control input-xs" id="cedul" hidden="hidden" placeholder="Buscar cedula de propietario Ejem: 111...">
 
                 <input type="text" style="border:1px solid;width: 200%;" class="form-control input-xs" id="direccion_gestor" hidden="hidden" placeholder="Buscar direccion Ejem: CL 19 22 21 ó KR 24 56 32">
+                <!--<div class="col-xs-6">-->
 
+                <!--</div>-->
+                <!--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Acción <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="#" value="calle">CL</a></li>
+                    <li><a href="#" value="carrera">KR</a></li>
+                    <li><a href="#" value="diagonal">DG</a></li>
+                    <li><a href="#" value="tranversal">TV</a></li>
+                </ul>-->
+                <!--</div>
+                
+                <div class="col-xs-6">
+                    <div class="input-group">
+                        <input type="text" class="form-control">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Acción <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" value="calle">CL</a></li>
+                                <li><a href="#" value="carrera">KR</a></li>
+                                <li><a href="#" value="diagonal">DG</a></li>
+                                <li><a href="#" value="tranversal">TV</a></li>
+                            </ul>
+                        </div>
+                        <input type="text" class="form-control input-xs" style="border:1px solid;width: 300%;" onKeypress="if (event.keyCode === 32)
+                                    event.returnValue = false;">
+                    </div>
+                </div>-->
             </div>
+
         </div>
-    </div> 
+    </div>
     <div class="row" id="barra_alineamiento" hidden="hidden">
         <div class="col-xs-2"> 
             <div class="input-group textarea" style="width: 1200%">
@@ -479,19 +536,19 @@
         <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_rango_area_construccion.png'); background-color:#008E30; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="Rango Area Construccion" name="predio" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>
 
         <!--Avaluos Catastral-->
-         <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_vigencia_avaluos.png'); background-color:#008E30; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="Avaluo Catastral" name="Avaluo Catastral" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>
-        
-         <!--Incremento Avaluo Catastral-->
-         <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_incremento_avaluo.png'); background-color:#a6a6a6; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="Incremento Avaluo" name="Incremento Avaluo" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>
-        
-        
+        <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_vigencia_avaluos.png'); background-color:#008E30; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="Avaluo Catastral" name="Avaluo Catastral" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>
+
+        <!--Incremento Avaluo Catastral-->
+        <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_incremento_avaluo.png'); background-color:#a6a6a6; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="Incremento Avaluo" name="Incremento Avaluo" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>
+
+
         <!--<select class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_vigencia_avaluos.png'); background-color:#006D1B; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="Avaluo Catastral" name="vigen" onchange="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'>
             <option disabled selected>
             <option value="2016" style="font-weight: bold; color: white;  font-size:small;">Vigencia 2016
             <option value="2015" style="font-weight: bold; color: white;  font-size:small;">Vigencia 2015
             <option value="2014" style="font-weight: bold; color: white;  font-size:small;">Vigencia 2014
         </select>-->
-        
+
         <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/tipo_contribuyente.png'); background-color:#006D1B; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="Tipo de Contribuyente" name="Tipo de Contribuyente" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button> 
 
         <!--Tipo Propietario--> 
@@ -508,10 +565,10 @@
 
         <!--Areas de Proteccion-->
         <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_proteccion_urbanistica.png'); background-color:#a6a6a6; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="Area Proteccion Urbanistica" name="proteccion" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>
-        
+
         <!--urbano rural o de expansion-->
         <button type="button" class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/icono_clasificacion_uso.png'); background-color:#00AD41; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="Clasificacion_Uso" name="Clasificacion_Uso" onclick="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'></button>
-        
+
         <!--uso AAA-->
         <select class="col-xs-6 col-sm-4 col-md-3 col-lg-1" style="display: none; background:url('./imagenes/oficial_vs_AAA_uso.png'); background-color:#a6a6a6; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;" id="oficial_vs_AAA_uso" name=prestadores onchange="rangoarea(id, name)" onmouseover='changeImage(this.id)' onmouseout='normalImage(this.id)'>
             <option disabled selected>

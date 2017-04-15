@@ -433,44 +433,6 @@ function addressSource(requestString, responseFunc) {
     });
 
 }
-function codeAddress(val) {
-
-    //obtengo la direccion del formulario
-    //val.split(":");
-    var address = 'barranquilla ' + val.split(":")[1];
-    geocoder = new google.maps.Geocoder();
-    //var latLng = new google.maps.LatLng(11.0041072,-74.80698129999996);
-    //console.log(address);
-    //console.log(results[0].geometry.location);
-    //hago la llamada al geodecoder
-    geocoder.geocode({'address': address}, function (results, status) {
-        //console.log(address);
-        //si el estado de la llamado es OK
-        if (status == google.maps.GeocoderStatus.OK) {
-            //console.log(results[0]);
-            console.log(results[0].geometry.viewport.b.b);
-            console.log(results[0].geometry.viewport.f.b);
-            //console.log(results[0].geometry.location);
-            //console.log(results[0].formatted_address);
-            //centro el mapa en las coordenadas obtenidas
-            //map.setCenter(results[0].geometry.location);
-            //coloco el marcador en dichas coordenadas
-            //marker.setPosition(results[0].geometry.location);
-            //actualizo el formulario      
-            //updatePosition(results[0].geometry.location);
-
-            //Añado un listener para cuando el markador se termine de arrastrar
-            //actualize el formulario con las nuevas coordenadas
-            //google.maps.event.addListener(marker, 'dragend', function () {
-            //updatePosition(marker.getPosition());
-            //});
-        } else {
-            //si no es OK devuelvo error
-            alert("No podemos encontrar la direcci&oacute;n, error: " + status);
-        }
-    });
-}
-
 function addressSelect(event, ui) {
     //console.log(ui);
     //var select = validacionusuarios();
@@ -495,7 +457,6 @@ function addressSelect(event, ui) {
     }
     var feat = ui.item.feature;
     globalstyle = "sinconsulta";
-
     document.getElementById('mensaje').style.display = 'none';
     predio.setVisible(true);
     var view = map.getView();

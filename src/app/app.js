@@ -152,7 +152,7 @@ map = new ol.Map({
     view: new ol.View({
         center: center,
         zoom: zoom,
-        extent: [-8360194.483519, 1214264.520807, -8302594.687951, 1245861.102880],
+        extent: [-8335000.251688, 1222940.382305, -8319098.961148, 1244200.340471],
         maxZoom: 21, minZoom: 12
     })
 });
@@ -344,20 +344,9 @@ map.on('singleclick', function (evt) {
                             } else {
                                 cell2.innerHTML = sel[i];
                             }
-                        }
-                        document.getElementById("panel_atr").style.display = "block";
-                        document.getElementById("botonminimizar").style.display = "block";
-                        var c = feature.values_.geom.flatCoordinates.length - 1;
-                        for (var i = 0; i <= c; i = i + 3) {
-                            var a = feature.values_.geom.flatCoordinates[i];
-                            feature.values_.geom.flatCoordinates[i] = feature.values_.geom.flatCoordinates[i + 1];
-                            feature.values_.geom.flatCoordinates[i + 1] = a;
-                        }
-                        feature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
-                        highlightfeatures.setStyle(PredioStyle);
-                        var markerSourceph = highlightfeatures.getSource();
-                        markerSourceph.clear();
-                        markerSourceph.addFeature(feature);
+                            
+                         }   
+                        
                     } 
                 
                         else if (ph < 800) {
@@ -676,12 +665,8 @@ map.on('singleclick', function (evt) {
                             } else {
                                 cell2.innerHTML = sel[i];
                             }
-                        }
-
-                    
-                    } 
-
-                    
+                        } 
+                    }  
                     document.getElementById("panel_atr").style.display = "block";
                     document.getElementById("botonminimizar").style.display = "block";
 
@@ -696,6 +681,7 @@ map.on('singleclick', function (evt) {
                     var markerSourcenoph = highlightfeatures.getSource();
                     markerSourcenoph.clear();
                     markerSourcenoph.addFeature(feature);
+                    
                 }
             },
             complete: function(){

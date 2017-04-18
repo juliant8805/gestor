@@ -29,9 +29,14 @@ function busca_dir() {
         geocoder.geocode({'address': address}, function (results, status) {
             //si el estado de la llamado es OK
             if (status == google.maps.GeocoderStatus.OK) {
+                //console.log(results);
                 //console.log(results[0].geometry.viewport.b.b);
                 //console.log(results[0].geometry.viewport.f.b);
-                addmarker(results[0].geometry.viewport.f.b, results[0].geometry.viewport.b.b);
+                var long = ((results[0].geometry.viewport.b.b + results[0].geometry.viewport.b.f)/2);
+                var lat = ((results[0].geometry.viewport.f.b + results[0].geometry.viewport.f.f)/2);
+                //console.log(long);
+                //console.log(lat);
+                addmarker(lat, long);
             } else {
                 //si no es OK devuelvo error
                 //alert("No podemos encontrar la direcci&oacute;n, error: " + status);

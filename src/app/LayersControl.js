@@ -18,9 +18,17 @@ var ortofotourbana = new ol.layer.Tile({
         url: "http://35.184.3.4/ortofoto/{z}/{x}/{y}.png"
     }), name: 'Ortofoto 2016 Distrito'
 });
+
+var mapabase = new ol.layer.Tile({
+    visible: true,
+    source: new ol.source.XYZ({
+        url: "http://35.184.3.4/mapa_base/{z}/{x}/{y}.jpg"
+    }), name: 'Mapa Base'
+});
+
 var streetmap = new ol.layer.Tile({
     source: new ol.source.OSM(),
-    visible: true,
+    visible: false,
     /*minResolution:2,
     maxResolution:20,*/
     name: 'Street Map'
@@ -45,7 +53,7 @@ var bing = new ol.layer.Tile({
     source: new ol.source.BingMaps({
         key: 'LAx1oGVyN8TZwSTH1RC1~hnxyYFGev93MbI6hBUQOZQ~AjSJCfyU_TmBIhT5SRRpRIOBHVnA0zTKFRKEVuP-XHE3LAMKr-1ZcqtTq4YTRLds',
         imagerySet: 'Aerial'
-    }), name: 'Imagen Bing'
+    }), name: 'Satelite'
 });
 var predio = new ol.layer.Tile({
     //preload: Infinity,
@@ -534,7 +542,7 @@ var layerOrtofoto= new ol.layer.Group({
 });
 
 var layerBase = new ol.layer.Group({
-    layers: [bing, streetmap, bingarranque],
+    layers: [mapabase, bing, streetmap, bingarranque],
     name: 'Capas Base'
 });
 /*var consol = new ol.layer.Group({

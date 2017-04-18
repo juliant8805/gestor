@@ -222,7 +222,7 @@ body{
     #lupa_pequeña{
         position:absolute;
         top:1em;
-        right:1%;
+        right:5%;
         height:2.5em;
         width:2.5em;
         margin-left: 0.5em;   
@@ -242,7 +242,7 @@ body{
 #boton_capas{
     position:absolute;
     top:1em;
-    left:10%;
+    left:15%;
     height:2.5em;
     width:2.5em;
     margin-left: 0.5em;  
@@ -263,8 +263,8 @@ body{
 @media handheld, only screen and (min-width: 900px) {
     #boton_limpiar{
         position: absolute;
-        top:1.7em;
-        left:67%;
+        top:2em;
+        left:66%;
         height:2.5em;
         width:2.5em;
         margin-left: 0.5em;

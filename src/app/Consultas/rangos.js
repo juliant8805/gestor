@@ -1826,6 +1826,7 @@ function rango(style) {
                 estdistica(select, style, param, totales);
                 predio.getSource().updateParams({'STYLES': 'Nomenclatura Domiciliaria'});
                 map.getView().fitExtent(predio.getExtent(), map.getSize());
+                queryexport = style + ' G';
             } else if (document.getElementById("barrio").value !== '') {
                 var valor = "'" + values + "'";
                 try{
@@ -1845,6 +1846,7 @@ function rango(style) {
                 estdistica(select, style, param, totales);
                 var filtro = '"cod_barrio=' + valor + '"';
                 predio.getSource().updateParams({'STYLES': 'Nomenclatura Domiciliaria', 'CQL_FILTER': eval(filtro)});
+                queryexport = style + ' B';
             } else if (document.getElementById("localidad").value !== '') {
                 var valor = "'" + values + "'";
                 try{
@@ -1864,6 +1866,7 @@ function rango(style) {
                 estdistica(select, style, param, totales);
                 var filtro = '"cod_loc=' + valor + '"';
                 predio.getSource().updateParams({'STYLES': 'Nomenclatura Domiciliaria', 'CQL_FILTER': eval(filtro)});
+                queryexport = style + ' L';
             } else if (document.getElementById("manzana").value !== '') {
                  var valor = "'" + values + "'";
                 try{
@@ -1883,6 +1886,7 @@ function rango(style) {
                 estdistica(select, style, param, totales);
                 var filtro = '"manzana_co=' + valor + '"';
                 predio.getSource().updateParams({'STYLES': 'Nomenclatura Domiciliaria', 'CQL_FILTER': eval(filtro)});
+                queryexport = style + ' M';
             }
         }
 
@@ -2587,6 +2591,7 @@ function rango(style) {
             var param = [['Espacio Público Existente (Hectáreas)'], ['Espacion Público Propuesto (Hectáreas)']];      
             espacio_pubico.getSource().updateParams({'STYLES': ''});
             var titulo = "Espacio Público (hectáreas)";
+            queryexport = style + ' G';
             estdistica(select, titulo, param, totales);
             map.getView().fitExtent(espacio_pubico.getExtent(), map.getSize());
             estadistica_espacio_publico(select, param, totales, porcentajes);
@@ -2600,6 +2605,7 @@ function rango(style) {
             construcciones.setVisible(false);
             predio.setVisible(true);
             alert("GESSTOR INFORMA:</br></br>No se encuentra información suficiente para establecer cuales predios generan Efecto de plusvalía");
+            queryexport = style + ' G';
             try{
                 var select = select_query("select sum(numeropredios) from u_terreno");}catch(err){}
 				if (!select){select=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
@@ -2612,6 +2618,7 @@ function rango(style) {
                 predio.getSource().updateParams({'STYLES': 'sin_informacion'});
                 estdistica(select, titulo, param, totales);
                 map.getView().fitExtent(predio.getExtent(), map.getSize());  
+                
         }
         
          else if (style === "predios_actualizacion") {
@@ -2629,10 +2636,11 @@ function rango(style) {
                 var total2 = select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");
                 var total3 = select_query("select sum(numeropredios) from u_terreno");
                 var totales = total1.concat(total2, total3);
-                var titulo = "Predios Generadores de Plusvalia";
+                var titulo = "Predios Susceptibles a Actualización o Conservación Catastral";
                 predio.getSource().updateParams({'STYLES': 'sin_informacion'});
                 estdistica(select, titulo, param, totales);
                 map.getView().fitExtent(predio.getExtent(), map.getSize());  
+                queryexport = style + ' G';
         }
         
   

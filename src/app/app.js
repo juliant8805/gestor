@@ -483,40 +483,54 @@ map.on('singleclick', function (evt) {
                             select[0] = "<b>Codigo Manzana</b>";
                             select[1] = "<b>Codigo Catastral Nuevo</b>";
                             select[2] = "<b>Codigo Catastral Anterior</b>";
+                            
+                           // select[2] = "<b>Matricula Inmobiliaria</b>";
+                            
+                            
                             select[3] = "<b>Dirección</b>";
                             select[4] = "<b>Código ZHG</b>";
                             select[5] = "<b>Valor m2 ZHG</b>";
-                            select[6] = "<b>Código ZHF</b>";
-                            select[7] = "<b>Uso Permitido</b>";
-                            select[8] = "<b>Uso Actual</b>";
-                            select[9] = "<b>Fotografias</b>";
+                            select[6] = "<b>Código ZHF</b>";   
+                            select[7] = "<b>Destino</b>";
+                            select[8] = "<b>Avalúo Catastral 2017</b>";
+                            //select[7] = "<b>Tarifa</b>";
+                            select[9] = "<b>Impuesto Predial 2017</b>";      
+                            select[10] = "<b>Uso Permitido</b>";
+                            select[11] = "<b>Uso Actual</b>";
+                            select[12] = "<b>Fotografias</b>";
                             sel[0] = values.manzana_co;
                             sel[1] = values.codigo;
                             sel[2] = values.codigo_ant;
+                            
+                            
+                            
                             sel[3] = direccion[0];
                             sel[4] = values.zhg;
                             sel[5] = values.valor_m2_zhg;
-                            sel[6] = values.zhf;
-                            sel[7] = values.norma_uso;
-                            sel[8] = values.uso_actual_zhf;
-                            sel[9] = document.createElement("a");
-                            sel[9].id = "img1";
-                            sel[9].style = "width: 30px; height: 50px;";
-                            sel[9].target = "marco";
-                            sel[9].setAttribute("onclick", "open_streetview()");
-                            sel[9].href = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";
-                            imag[9] = document.createElement("img");
-                            imag[9].id = "im1";
-                            imag[9].className = "pequeña";
-                            imag[9].src = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";
-                            stv[9] = document.createElement("a");
-                            stv[9].id = "imgstreet1";
-                            stv[9].target = "marco";
-                            stv[9].href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
-                            stv[9].setAttribute("onclick", "open_streetview()");
-                            ig[9] = document.createElement("img");
-                            ig[9].src = "./imagenes/streetview.png";
-                            var campos = 9;
+                            sel[6] = values.zhf;  
+                            sel[7] = values.destino_hacienda;
+                            sel[8] = values.avaluo_hacienda;
+                            sel[9] = values.impuesto_hacienda;    
+                            sel[10] = values.norma_uso;
+                            sel[11] = values.uso_actual_zhf;
+                            sel[12] = document.createElement("a");
+                            sel[12].id = "img1";
+                            sel[12].style = "width: 30px; height: 50px;";
+                            sel[12].target = "marco";
+                            sel[12].setAttribute("onclick", "open_streetview()");
+                            sel[12].href = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";
+                            imag[12] = document.createElement("img");
+                            imag[12].id = "im1";
+                            imag[12].className = "pequeña";
+                            imag[12].src = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";
+                            stv[12] = document.createElement("a");
+                            stv[12].id = "imgstreet1";
+                            stv[12].target = "marco";
+                            stv[12].href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
+                            stv[12].setAttribute("onclick", "open_streetview()");
+                            ig[12] = document.createElement("img");
+                            ig[12].src = "./imagenes/streetview.png";
+                            var campos = 12;
                         } else if (modulo === 'hacienda') {
                             select[0] = "<b>Codigo Manzana</b>";
                             select[1] = "<b>Codigo Catastral Nuevo</b>";

@@ -1928,7 +1928,7 @@ function rango(style) {
                 estdistica(select, style, param, totales);
                 map.getView().fitExtent(predio.getExtent(), map.getSize());
                 predio.getSource().updateParams({'STYLES': style, 'CQL_FILTER': eval(filtro)});
-                queryexport = style + ' M';
+                queryexport = style + ' G';
           }
            else if (document.getElementById("barrio").value !== '') {
                 var valor = "'" + values + "'";
@@ -1955,6 +1955,7 @@ function rango(style) {
                 estdistica(select, style, param, totales);
                 var filtro = '"cod_barrio=' + valor + '"';
                 predio.getSource().updateParams({'STYLES': style, 'CQL_FILTER': eval(filtro)});
+                queryexport = style + ' B';
             } else if (document.getElementById("localidad").value !== '') {
                 var valor = "'" + values + "'";
                 try{
@@ -1980,6 +1981,7 @@ function rango(style) {
                 estdistica(select, style, param, totales);
                 var filtro = '"cod_loc=' + valor + '"';
                 predio.getSource().updateParams({'STYLES': style, 'CQL_FILTER': eval(filtro)});
+                queryexport = style + ' L';
             } else if (document.getElementById("manzana").value !== '') {
                var valor = "'" + values + "'";
                 try{
@@ -2005,6 +2007,7 @@ function rango(style) {
                 estdistica(select, style, param, totales);
                 var filtro = '"manzana_co=' + valor + '"';
                 predio.getSource().updateParams({'STYLES': style, 'CQL_FILTER': eval(filtro)});
+                queryexport = style + ' M';
             } 
             
             
@@ -2116,6 +2119,7 @@ function rango(style) {
             construcciones.setVisible(false);
             predio.setVisible(true);
             alert("GESSTOR INFORMA:</br></br>No se encuentra información suficiente para ejecutar esta consulta");
+            queryexport = style + ' G';
             try{
                 var select = select_query("select sum(numeropredios) from u_terreno");}catch(err){}
 				if (!select){select=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}

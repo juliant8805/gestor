@@ -472,6 +472,24 @@ var construcciones = new ol.layer.Tile({
     
 });
 
+var paramento = new ol.layer.Tile({
+    visible: false,
+    source: new ol.source.TileWMS({
+        url: 'http://35.184.3.4:8080/geoserver/preproduccion/wms',
+        params: {LAYERS: 'preproduccion:paramento', STYLES: ''}
+    }), name: 'Paramento'
+    
+});
+
+var antejardin = new ol.layer.Tile({
+    visible: false,
+    source: new ol.source.TileWMS({
+        url: 'http://35.184.3.4:8080/geoserver/preproduccion/wms',
+        params: {LAYERS: 'preproduccion:antejardin', STYLES: ''}
+    }), name: 'Antejardin'
+    
+});
+
 var unidades = new ol.layer.Tile({
     visible: false,
     source: new ol.source.TileWMS({
@@ -545,17 +563,16 @@ var layerBase = new ol.layer.Group({
     layers: [mapabase, bing, streetmap, bingarranque],
     name: 'Capas Base'
 });
-/*var consol = new ol.layer.Group({
-    layers: [consolidado],
-    name: 'Consolidado_p'
+
+
+var layerCartobasica = new ol.layer.Group({
+    layers: [paramento, antejardin, paramento],
+    name: 'Cartografia Básica'
 });
-/**
- * Build a tree layer from the map layers with visible and opacity 
- * options.
- * 
- * @param {type} layer
- * @returns {String}
- */
+
+
+
+
 function buildLayerTree(layer) {
     var elem;
     var name = layer.get('name') ? layer.get('name') : "Group";

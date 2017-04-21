@@ -82,13 +82,15 @@ function file() {
     else if (queryexport.substring(0, 16) === "Avaluo Catastral"){
         var titulo = JSON.stringify(["Codigo Predial", "Avaluo Catastral"]);
         if (queryexport === 'Avaluo Catastral G') {
-            var select = select_query("select cod_anteri, avaluo_int from preliquidacion_2017;");
+             alert("GESSTOR INFORMA:</br></br>La base es demasiado grande para exportarla completa, por favor primero filtre por Localidad, Barrio o Manzana");
+             quitgif(); 
         } else if (queryexport === 'Avaluo Catastral B') {
             var select = select_query("select cod_anteri, avaluo_int from preliquidacion_2017 WHERE barrio=" + valor + ";");
         } else if (queryexport === 'Avaluo Catastral L') {
             var select = select_query("select cod_anteri, avaluo_int from preliquidacion_2017 WHERE cod_loc=" + valor + ";");
         } else if (queryexport === 'Avaluo Catastral M') {
-            var select = select_query("select cod_anteri, avaluo_int from preliquidacion_2017 WHERE manzana_co=" + valor + ";");
+             alert("GESSTOR INFORMA:</br></br>No existe reporte alfanumerico para el nivel manzana en esta consulta");
+             quitgif();
         }
     }
     
@@ -325,6 +327,27 @@ function file() {
         quitgif(); 
     }
     
+     else if (queryexport.substring(0, 16) === "Tipo Propietario"){
+        alert("GESSTOR INFORMA:</br></br>No existe reporte alfanúmerico para esta consulta");
+        quitgif(); 
+    }
+      
+    
+     else if (queryexport.substring(0, 21) === "Tipo de Contribuyente"){
+		var titulo = JSON.stringify(["Codigo", "Tipo de Contribuyente"]);
+        if (queryexport == 'Tipo de Contribuyente G'){
+        var select = select_query("select codigo, tipo_de_contribuyente from u_terreno;"); 
+        }
+         else if (queryexport === 'Tipo de Contribuyente B') {
+            var select = select_query("select codigo, tipo_de_contribuyente from u_terreno where cod_barrio=" + valor + ";");
+         }
+         else if (queryexport === 'Tipo de Contribuyente L') {
+            var select = select_query("select codigo, tipo_de_contribuyente from u_terreno where cod_loc=" + valor + ";");
+         }
+         else if (queryexport === 'Tipo de Contribuyente M') {
+            var select = select_query("select codigo, tipo_de_contribuyente from u_terreno where manzana_co=" + valor + ";");
+         }
+     }
     
     
     

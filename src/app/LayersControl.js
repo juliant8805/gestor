@@ -18,9 +18,17 @@ var ortofotourbana = new ol.layer.Tile({
         url: "http://35.184.3.4/ortofoto/{z}/{x}/{y}.png"
     }), name: 'Ortofoto 2016 Distrito'
 });
+
+var mapabase = new ol.layer.Tile({
+    visible: true,
+    source: new ol.source.XYZ({
+        url: "http://35.184.3.4/mapa_base/{z}/{x}/{y}.jpg"
+    }), name: 'Mapa Base'
+});
+
 var streetmap = new ol.layer.Tile({
     source: new ol.source.OSM(),
-    visible: true,
+    visible: false,
     /*minResolution:2,
     maxResolution:20,*/
     name: 'Street Map'
@@ -45,7 +53,7 @@ var bing = new ol.layer.Tile({
     source: new ol.source.BingMaps({
         key: 'LAx1oGVyN8TZwSTH1RC1~hnxyYFGev93MbI6hBUQOZQ~AjSJCfyU_TmBIhT5SRRpRIOBHVnA0zTKFRKEVuP-XHE3LAMKr-1ZcqtTq4YTRLds',
         imagerySet: 'Aerial'
-    }), name: 'Imagen Bing'
+    }), name: 'Satelite'
 });
 var predio = new ol.layer.Tile({
     //preload: Infinity,
@@ -464,6 +472,24 @@ var construcciones = new ol.layer.Tile({
     
 });
 
+var paramento = new ol.layer.Tile({
+    visible: false,
+    source: new ol.source.TileWMS({
+        url: 'http://35.184.3.4:8080/geoserver/preproduccion/wms',
+        params: {LAYERS: 'preproduccion:paramento', STYLES: ''}
+    }), name: 'Paramento'
+    
+});
+
+var antejardin = new ol.layer.Tile({
+    visible: false,
+    source: new ol.source.TileWMS({
+        url: 'http://35.184.3.4:8080/geoserver/preproduccion/wms',
+        params: {LAYERS: 'preproduccion:antejardin', STYLES: ''}
+    }), name: 'Antejardin'
+    
+});
+
 var unidades = new ol.layer.Tile({
     visible: false,
     source: new ol.source.TileWMS({
@@ -534,20 +560,19 @@ var layerOrtofoto= new ol.layer.Group({
 });
 
 var layerBase = new ol.layer.Group({
-    layers: [bing, streetmap, bingarranque],
+    layers: [mapabase, bing, streetmap, bingarranque],
     name: 'Capas Base'
 });
-/*var consol = new ol.layer.Group({
-    layers: [consolidado],
-    name: 'Consolidado_p'
+
+
+var layerCartobasica = new ol.layer.Group({
+    layers: [paramento, antejardin, paramento],
+    name: 'Cartografia Básica'
 });
-/**
- * Build a tree layer from the map layers with visible and opacity 
- * options.
- * 
- * @param {type} layer
- * @returns {String}
- */
+
+
+
+
 function buildLayerTree(layer) {
     var elem;
     var name = layer.get('name') ? layer.get('name') : "Group";

@@ -3,6 +3,7 @@ function busca_dir() {
     var sel = select_query("SELECT direccion FROM geo_wgs84 WHERE direccion='" + dir + "' LIMIT 1;");
     if (sel) {
         var sele = select_query("SELECT max(placa) FROM geo_wgs84 WHERE direccion ='" + dir + "';");
+        console.log(sele);
         if (document.getElementById('dir3').value > +sele[0][0]) {
             var placa = +sele[0][0];
         } else if (document.getElementById('dir3').value < 1) {
@@ -11,11 +12,14 @@ function busca_dir() {
             var placa = document.getElementById('dir3').value;
         }
         var dirc = dir + " " + placa;
-        var select = select_query("SELECT placa,direcci, ST_AsText(geom) FROM geo_wgs84 WHERE direcci='" + dirc + "';");
+        var parametro = "preproduccion:dir_geo";
+        //var select = select_query("SELECT placa,direcci, ST_AsText(geom) FROM geo_wgs84 WHERE direcci='" + dirc + "';");
+        var select = search(parametro, dirc);
+        console.log(select);
         if (select) {
-            //console.log("ok");
+            console.log("ok");
             var coord = select[0][2].split("(")[1].split(")")[0].split(" ");
-            addmarker(+coord[1], +coord[0]);
+            //addmarker(+coord[1], +coord[0]);
         } else {
             console.log("mmm");
         }
@@ -32,8 +36,8 @@ function busca_dir() {
                 //console.log(results);
                 //console.log(results[0].geometry.viewport.b.b);
                 //console.log(results[0].geometry.viewport.f.b);
-                var long = ((results[0].geometry.viewport.b.b + results[0].geometry.viewport.b.f)/2);
-                var lat = ((results[0].geometry.viewport.f.b + results[0].geometry.viewport.f.f)/2);
+                var long = ((results[0].geometry.viewport.b.b + results[0].geometry.viewport.b.f) / 2);
+                var lat = ((results[0].geometry.viewport.f.b + results[0].geometry.viewport.f.f) / 2);
                 //console.log(long);
                 //console.log(lat);
                 addmarker(lat, long);
@@ -66,3 +70,33 @@ function addmarker(long, lat) {
     markerSource.clear();
     markerSource.addFeature(feat);
 }// END addmarkerr()
+
+function search(param, requestString) {
+    var viewParamsStr = viewparamsToStr({
+        query: requestString
+    });
+    var wfsParams = {
+        service: 'WFS',
+        version: '2.0.0',
+        request: 'GetFeature',
+        typeName: param,
+        outputFormat: 'application/json',
+        srsname: 'EPSG:3857',
+        viewparams: viewParamsStr
+    };
+    var temp = $.ajax({
+        url: url,
+        data: wfsParams,
+        type: "GET",
+        dataType: "json",
+        async: false,
+        success: function (data, status, xhr) {
+                return data;
+        },
+        error: function () {
+            console.log("error1");
+        }
+    });
+    //console.log(temp);
+    return temp.responseJSON.features;
+}

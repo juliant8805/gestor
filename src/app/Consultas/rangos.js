@@ -27,7 +27,7 @@ function rango(style) {
     document.getElementById('leyenda_transmetro').style.display = 'none';
     document.getElementById('mensaje').style.display = 'none';
     try {
-        //rango de area de terreno
+       
         if (style === "Rango Area Terreno") {
             layerEstratificacionOficial.setVisible(false);
             layermetrotel.setVisible(false);

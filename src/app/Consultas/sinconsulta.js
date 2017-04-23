@@ -14,7 +14,7 @@ function general() {
         var valor = "'" + values + "'";
         var filtro='"cod_barrio='+valor+'"';
         predio.getSource().updateParams({'STYLES': 'predios_sin_consulta_localidad', 'CQL_FILTER':eval(filtro)});  
-	   try{
+	   try{    
                 var totalprediosbarrio = select_query("select sum(numeropredios) from u_terreno WHERE cod_barrio=" + valor + ";");}catch(err){};
 				if (!totalprediosbarrio){totalprediosbarrio=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");;}
                 var table = document.getElementById("tblatt");

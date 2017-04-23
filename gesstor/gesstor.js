@@ -3,7 +3,7 @@ function busca_dir() {
     var sel = select_query("SELECT direccion FROM geo_wgs84 WHERE direccion='" + dir + "' LIMIT 1;");
     if (sel) {
         var sele = select_query("SELECT max(placa) FROM geo_wgs84 WHERE direccion ='" + dir + "';");
-        console.log(sele);
+        //console.log(sele);
         if (document.getElementById('dir3').value > +sele[0][0]) {
             var placa = +sele[0][0];
         } else if (document.getElementById('dir3').value < 1) {
@@ -17,9 +17,9 @@ function busca_dir() {
         var select = search(parametro, dirc);
         console.log(select);
         if (select) {
-            console.log("ok");
+            //console.log("ok");
             var coord = select[0][2].split("(")[1].split(")")[0].split(" ");
-            //addmarker(+coord[1], +coord[0]);
+            addmarker(+coord[1], +coord[0]);
         } else {
             console.log("mmm");
         }
@@ -70,33 +70,3 @@ function addmarker(long, lat) {
     markerSource.clear();
     markerSource.addFeature(feat);
 }// END addmarkerr()
-
-function search(param, requestString) {
-    var viewParamsStr = viewparamsToStr({
-        query: requestString
-    });
-    var wfsParams = {
-        service: 'WFS',
-        version: '2.0.0',
-        request: 'GetFeature',
-        typeName: param,
-        outputFormat: 'application/json',
-        srsname: 'EPSG:3857',
-        viewparams: viewParamsStr
-    };
-    var temp = $.ajax({
-        url: url,
-        data: wfsParams,
-        type: "GET",
-        dataType: "json",
-        async: false,
-        success: function (data, status, xhr) {
-                return data;
-        },
-        error: function () {
-            console.log("error1");
-        }
-    });
-    //console.log(temp);
-    return temp.responseJSON.features;
-}

@@ -39,12 +39,22 @@ function rango(style) {
             construcciones.setVisible(false);
             predio.setVisible(true);
             if (document.getElementById("barrio").value === '' && document.getElementById("localidad").value === '' && document.getElementById("manzana").value === '') {   
+                //new
+                var select = search("preproduccion:TotalPredios");
+                var param = [['0-100m2'],['100-1.000m2'],['1.000-10.000m2'],['mayor a 10.000m2'], ['Sin Area de Terreno']];
+                var total1 = search("preproduccion:AreaTerrenoHacienda", 1, 100);
+                var total2 = search("preproduccion:AreaTerrenoHacienda", 101, 1000);
+                var total3 = search("preproduccion:AreaTerrenoHacienda", 1001, 10000);
+                var total4 = search("preproduccion:AreaTerrenoHacienda", 10001);
+                var total5 = search("preproduccion:AreaTerrenoHacienda", 0, 0);
+                /*old
                 try{
-                var select = select_query("select sum(numeropredios) from u_terreno;");}catch(err){}
+                var select = select_query("select sum(numeropredios) from u_terreno;");console.log(select);}catch(err){}
                 if (!select){select=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                
                 var param = [['0-100m2'],['100-1.000m2'],['1.000-10.000m2'],['mayor a 10.000m2'], ['Sin Area de Terreno']];
                 try{
-                var total1 = select_query("SELECT sum(numeropredios) FROM u_terreno where area_terreno_hacienda Between 1 And 100");}catch(err){}
+                var total1 = select_query("SELECT sum(numeropredios) FROM u_terreno where area_terreno_hacienda Between 1 And 100");console.log(total1);}catch(err){}
                 if (!total1){total1=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
                 try{
                 var total2 = select_query("SELECT sum(numeropredios) FROM u_terreno where area_terreno_hacienda Between 101 And 1000");}catch(err){}
@@ -57,20 +67,28 @@ function rango(style) {
                 if (!total4){total4=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
                 try{
                 var total5 = select_query("SELECT sum(numeropredios) FROM u_terreno where area_terreno_hacienda = 0");}catch(err){}
-                if (!total5){total5=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                if (!total5){total5=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}*/
                 var totales = total1.concat(total2, total3, total4, total5);
                 predio.getSource().updateParams({'STYLES': style});
                 estdistica(select, style, param, totales);
                 map.getView().fitExtent(predio.getExtent(), map.getSize());
                 queryexport = style + ' G';
             } else if (document.getElementById("barrio").value !== '') {
-                var valor = "'" + values + "'";
-                try{
-                var select = select_query("select sum(numeropredios) from u_terreno where cod_barrio=" + valor + "");}catch(err){}
-                if (!select){select=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
+                //var valor = "'" + values + "'";
+                var select = search("preproduccion:TotalPrediosEsp", values);
+                var param = [['0-100m2'],['100-1.000m2'],['1.000-10.000m2'],['mayor a 10.000m2'], ['Sin Area de Terreno']];
+                var total1 = search("preproduccion:TotalPrediosEsp", values, 1, 100);
+                var total2 = search("preproduccion:TotalPrediosEsp", values, 101, 1000);
+                var total3 = search("preproduccion:TotalPrediosEsp", values, 1001, 10000);
+                var total4 = search("preproduccion:TotalPrediosEsp", values, 10000);
+                var total5 = search("preproduccion:TotalPrediosEsp", values, 0, 0);
+                //console.log(total11)
+                //try{
+                //var select = select_query("select sum(numeropredios) from u_terreno where cod_barrio=" + valor + "");console.log(select)}catch(err){}
+                /*if (!select){select=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
                 var param = [['0-100m2'],['100-1.000m2'],['1.000-10.000m2'],['mayor a 10.000m2'], ['Sin Area de Terreno']];
                 try{
-                var total1 = select_query("SELECT sum(numeropredios) FROM u_terreno where area_terreno_hacienda Between 1 And 100 AND cod_barrio=" + valor + "");}catch(err){}
+                var total1 = select_query("SELECT sum(numeropredios) FROM u_terreno where area_terreno_hacienda Between 1 And 100 AND cod_barrio=" + valor + "");console.log(total1);}catch(err){}
                 if (!total1){total1=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
                 try{
                 var total2 = select_query("SELECT sum(numeropredios) FROM u_terreno where area_terreno_hacienda Between 101 And 1000 AND cod_barrio=" + valor + "");}catch(err){}
@@ -83,7 +101,7 @@ function rango(style) {
                 if (!total4){total4=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
                 try{
                 var total5 = select_query("SELECT sum(numeropredios) FROM u_terreno where area_terreno_hacienda = 0 AND cod_barrio=" + valor + "");}catch(err){}
-                if (!total5){total5=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");} 
+                if (!total5){total5=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}*/ 
                 var totales = total1.concat(total2, total3, total4, total5);
                 estdistica(select, style, param, totales);
                 var filtro = '"cod_barrio=' + valor + '"';

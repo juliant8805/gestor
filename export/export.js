@@ -5,21 +5,23 @@ var exportar = async function (x) {
 };
 function file() {
     var req = new ajaxRequest();
-    try{
-        var valor = "'" + values + "'";
-    }catch(err){}
+    //new
     if (queryexport.substring(0, 18) === "Rango Area Terreno"){
         var titulo = JSON.stringify(["Codigo Predial", "Area Terreno"]);
         if (queryexport === 'Rango Area Terreno G') {
             alert("GESSTOR INFORMA:</br></br>La base es demasiado grande para exportarla completa, por favor primero filtre por Localidad, Barrio o Manzana");
             quitgif();
-        } else if (queryexport === 'Rango Area Terreno B') {
+        } else {
+            var select = search("preproduccion:ReportRangoArea", values);
+        }
+        //old
+        /*else if (queryexport === 'Rango Area Terreno B') {
             var select = select_query("select codigo, area_terreno_hacienda from u_terreno WHERE cod_barrio=" + valor + ";");
         } else if (queryexport === 'Rango Area Terreno L') {
             var select = select_query("select codigo, area_terreno_hacienda from u_terreno WHERE cod_loc=" + valor + ";");
         } else if (queryexport === 'Rango Area Terreno M') {
             var select = select_query("select codigo, area_terreno_hacienda from u_terreno WHERE manzana_co=" + valor + ";");
-        }
+        }*/
     }
     
     else if (queryexport.substring(0, 17) === "Tipo Construccion"){

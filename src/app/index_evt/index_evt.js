@@ -1,23 +1,17 @@
-window.onload = detectarCarga;
-function validacionusuarios() {
-    var ca = document.cookie.split('=');
-    try {
-        var select = select_query("SELECT * FROM usuario WHERE usuario ='" + ca[0] + "' AND contrasena ='" + ca[1] + "' AND estado='t';");
-        document.getElementById("carga").style.display = "none";
-        document.getElementById("nombre_usuario").innerHTML = select[0][0].split(" ", 1);
-    } catch (err) {
-    }
-    return(select);
-}
-function detectarCarga() {
-    var select = validacionusuarios();
+//window.onload = detectarCarga;
+window.oncontextmenu = function() { return false; };
+$(document).on('ready',function(){
+//codigo aquí
+var select = validacionusuarios();
     //console.log(select);
     if (navigator.vendor !== "Google Inc.") {
         location.href = "barranquilla.html?ig=navegador";
     }
     if (select === null) {
         location.href = "barranquilla.html?ig=error";
-    } else {
+    }
+    /*registro de inrgeso de usuarios
+    else {
         try {
             var select1 = select_query("SELECT count(*) AS count FROM reguser WHERE usuario = '" + ca[0] + "'");
             if (select1[0][0] === 0) {
@@ -31,12 +25,12 @@ function detectarCarga() {
             //console.log(arrayResult);
         } catch (err) {
         }
-    }
+    }*/
     //console.log(document.getElementById("nombre_usuario").innerHTML);
     //vista de iconos por perfil
     //console.log(select);
     try {
-        if (select[0][5] === 't') {
+        if (select[0][5] === true) {
             document.getElementById("menu_circular").style.display = "block";
             document.getElementById("tipo_usuario").style.display = "block";
             document.getElementById("manual").style.display = "block";
@@ -62,7 +56,7 @@ function detectarCarga() {
             var a = document.getElementsByTagName("head")[0];
             a || (a = document.body.parentNode.appendChild(document.createElement("head")));
             a.appendChild(b);
-        } else if (select[0][7] === 't') {
+        } else if (select[0][7] === true) {
             //document.getElementById("metrotel").style.display = "block";
             document.getElementById("menu_circular").style.display = "block";
             document.getElementById("tipo_usuario").style.display = "block";
@@ -74,7 +68,7 @@ function detectarCarga() {
             document.getElementById("disponibilidad_AAA").style.display = "block";
             document.getElementById("Nomenclatura Domiciliaria").style.display = "block";
             modulo = "sui";
-        } else if (select[0][9] === 't') {
+        } else if (select[0][9] === true) {
             var sele = select_query("SELECT COUNT(table_name) FROM information_schema.tables WHERE table_schema='public' AND table_name LIKE 'temp_%'");
             //console.log(sele);
             if (parseInt(sele[0][0]) > 0) {
@@ -100,7 +94,14 @@ function detectarCarga() {
             document.getElementById("Estructura Ecologica Principal").style.display = "block";
             document.getElementById("Clasificacion_Uso").style.display = "block";
             modulo = "planeacion";
-        } else if (select[0][10] === 't') {
+            var b = document.createElement("script");
+            b.type = "text/javascript";
+            b.charset = "UTF-8";
+            b.src = "import/import.js";
+            var a = document.getElementsByTagName("head")[0];
+            a || (a = document.body.parentNode.appendChild(document.createElement("head")));
+            a.appendChild(b);
+        } else if (select[0][10] === true) {
             document.getElementById("Avaluo Catastral").style.display = "block";
             document.getElementById("Incremento Avaluo").style.display = "block";
             document.getElementById("menu_circular").style.display = "block";
@@ -111,13 +112,20 @@ function detectarCarga() {
             document.getElementById("Tipo Propietario").style.display = "block";
             document.getElementById("Impuesto Camara").style.display = "block";
             modulo = "hacienda";
-        } else if (select[0][12] === 't') {
+        } else if (select[0][12] === true) {
             document.getElementById("menu_circular").style.display = "block";
             document.getElementById("tipo_usuario").style.display = "block";
             document.getElementById("manual").style.display = "block";
             document.getElementById("icono_codigo").style.display = "block";
             document.getElementById("dir_gestor").style.display = "block";
             modulo = "gestor";
+            var b = document.createElement("script");
+            b.type = "text/javascript";
+            b.charset = "UTF-8";
+            b.src = "gesstor/gesstor.js";
+            var a = document.getElementsByTagName("head")[0];
+            a || (a = document.body.parentNode.appendChild(document.createElement("head")));
+            a.appendChild(b);
         } else {
             //document.getElementById("Tipo de Contribuyente").style.display = "none";
             //document.getElementById("predios_exentos_2016").style.display = "none";
@@ -136,11 +144,32 @@ function detectarCarga() {
             document.getElementById("tipo_usuario").style.display = "none";
             document.getElementById("salida").style.display = "none";
             modulo = "totem";
+            var b = document.createElement("script");
+            b.type = "text/javascript";
+            b.charset = "UTF-8";
+            b.src = "totem/totem.js";
+            var a = document.getElementsByTagName("head")[0];
+            a || (a = document.body.parentNode.appendChild(document.createElement("head")));
+            a.appendChild(b);
         }
     } catch (err) {
     }
+});
+function validacionusuarios() {
+    var ca = document.cookie.split('=');
+    try {
+        //var selec = select_query("SELECT * FROM usuario WHERE usuario ='" + ca[0] + "' AND contrasena ='" + ca[1] + "' AND estado='t';");
+        //console.log(selec);
+        var select = search ("preproduccion:ValidateUser", ca[0],ca[1]);
+        //console.log(select);
+        document.getElementById("carga").style.display = "none";
+        document.getElementById("nombre_usuario").innerHTML = select[0][0].split(" ", 1);
+    } catch (err) {
+    }
+    return(select);
 }
 changestyles = 0;
+/*passwordchange
 function password() {
     var ca = document.cookie.split('=');
     //hex_md5(document.getElementById("p").value);
@@ -155,7 +184,7 @@ function password() {
         alert("La contraseña nueva y su confirmacion no coinciden");
     }
     return;
-}
+}*/
 function mostrar(consulta) {
     //document.getElementById('barra_direccion').style.display = 'none';
     document.getElementById('barra_sitio').style.display = 'none';
@@ -269,7 +298,6 @@ function herramientas() {
     /*document.getElementById('transicion_capas').style.display = 'block';
      document.getElementById('cerrar_submenu_verde').style.display = 'block';*/
 }
-
 
 function limpiar_consulta() {
     globalstyle = "sinconsulta";
@@ -493,7 +521,7 @@ function marcado() {
         return false;
     }
 }
-;
+
 function changeImage(id) {
     if (id === "icono_matricula") {
         document.getElementById('icono_matricula').style = "background:url('./imagenes/botones_consultas/buscar_matricula/matricula_inmobiliaria.png'); background-color:#93c993; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
@@ -572,7 +600,7 @@ function changeImage(id) {
         document.getElementById('Impuesto Camara').style = "background:url('./imagenes/icono_impuesto_camara.png'); background-color:#adad32; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
     }
 }
-;
+
 function normalImage(id) {
     if (id === "icono_matricula") {
         document.getElementById('icono_matricula').style = "background:url('./imagenes/botones_consultas/buscar_matricula/matricula_inmobiliaria.png'); background-color:#00AD41; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
@@ -676,7 +704,7 @@ function normalImage(id) {
         document.getElementById('Impuesto Camara').style = "background:url('./imagenes/icono_impuesto_camara.png'); background-color:#00AD41; min-height: 40px; border:0px; background-repeat:no-repeat; background-position: 50%; min-height: 35px;";
     }
 }
-;
+
 function comparacion_imagenes() {
     window.open(
             'http://104.197.185.151/calidad/control/comparacion_imagenes/map.control.swipe.html',
@@ -722,7 +750,6 @@ function mostrarpanelatributos() {
     document.getElementById("botonmostrarpanelatributos").style.display = "none";
     //document.getElementById("botonocultarpanelatributos").style.display = "block";
 }
-
 
 function mapposi(coord, giro) {
     var coo = coord.toString(function () {
@@ -782,8 +809,7 @@ function cerrarbarrasconsultas() {
     document.getElementById("barra_predioshasusos").style.display = "none";
 }
 
-function alertDGC(mensaje)
-{
+function alertDGC(mensaje) {
     var dgcTiempo = 500
     var ventanaCS = '<div class="dgcAlert"><div class="dgcVentana"><div class="dgcCerrar"></div><div class="dgcMensaje">' + mensaje + '<br><div class="dgcAceptar">Aceptar</div></div></div></div>';
     $('body').append(ventanaCS);

@@ -293,9 +293,12 @@ map.on('singleclick', function (evt) {
                     var feature = features[0];
                     var values = feature.getProperties();
                     var ph = values.ph;
-                    var codigo = "'" + values.codigo + "'";
+                    //var codigo = "'" + values.codigo + "'";
                     //console.log(codigo);
-                    var direccion = select_query("select direccion from sec08001 where codigo = " + codigo + "");
+                    //var direccio = select_query("select direccion from sec08001 where codigo = " + codigo + "");
+                    //console.log(direccio);
+                    var direccion = search("preproduccion:DireccionRegistro", values.codigo);
+                    //console.log(direccion);
                     if (direccion === null) {
                         var direccion = [];
                         direccion[0] = "Sin Direccion";

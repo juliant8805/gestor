@@ -7,7 +7,7 @@ var select = validacionusuarios();
     if (navigator.vendor !== "Google Inc.") {
         location.href = "barranquilla.html?ig=navegador";
     }
-    if (select === null) {
+    if (select === null || select === undefined) {
         location.href = "barranquilla.html?ig=error";
     }
     /*registro de inrgeso de usuarios
@@ -180,7 +180,6 @@ function validacionusuarios() {
         //var selec = select_query("SELECT * FROM usuario WHERE usuario ='" + ca[0] + "' AND contrasena ='" + ca[1] + "' AND estado='t';");
         //console.log(selec);
         var select = search ("preproduccion:ValidateUser", ca[0],ca[1]);
-        //console.log(select);
         document.getElementById("carga").style.display = "none";
         document.getElementById("nombre_usuario").innerHTML = select[0][0].split(" ", 1);
     } catch (err) {

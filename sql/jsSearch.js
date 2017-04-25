@@ -1,10 +1,14 @@
+var url = 'http://35.184.3.4:8080/geoserver/ows?';
 function search(param, request, request1, request2) {
-    //console.log(request1);
+    
     if (request1 === undefined && request2 === undefined) {
         var viewParamsStr = viewparamsToStr({
             query: request
         });
     } else if (request2 === undefined) {
+        console.log(request);
+    console.log(request1);
+    console.log(request2);
         var viewParamsStr = viewparamsToStr({
             query: request,
             query1: request1
@@ -16,7 +20,7 @@ function search(param, request, request1, request2) {
             query2: request2
         });
     }
-    //console.log(viewParamsStr);
+    console.log(viewParamsStr);
     var wfsParams = {
         service: 'WFS',
         version: '2.0.0',
@@ -48,4 +52,13 @@ function search(param, request, request1, request2) {
         }
     }
     return arr;
+}
+//FORMAT STRING
+function viewparamsToStr(obj) {
+    var str = '';
+    $.each(obj, function (k, v) {
+        str.length && (str += ';');
+        str += k + ':' + v;
+    });
+    return str;
 }

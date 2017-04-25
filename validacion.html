@@ -1,7 +1,7 @@
 <html lang="es">
     <head>
         <meta charset="utf-8">
-        <script src="sql/js_sql.js"></script>
+        <script src="sql/jsSearch.js"></script>
         <title>Geoportal Barranquilla</title>
     </head>
     <body>
@@ -10,21 +10,22 @@
                 //alert("dd");
                 var ca = document.cookie.split('=');
                 //alert(ca);
-                var select = select_query("SELECT * FROM usuario WHERE usuario ='" + ca[0] + "' AND contrasena ='" + ca[1] + "' AND estado='t';");
+                //var select = select_query("SELECT * FROM usuario WHERE usuario ='" + ca[0] + "' AND contrasena ='" + ca[1] + "' AND estado='t';");
+                var select = search("preproduccion:ValidateUser", ca[0], ca[1]);
                 //console.log(select);
                 if (select === null) {
                     //alert("ad");
                     location.href = "barranquilla.html?ig=error";
                 } else {
                     //alert("ad");
-                    if(select[0][11]==='t'){
+                    if (select[0][11] === 't') {
                         //alert("aSd");
                         location.href = "administracion.html";
-                    }else{
+                    } else {
                         location.href = "index.html";
                     }
                 }
-            };
+            }
         </script>
     </body>
 </html>

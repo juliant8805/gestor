@@ -245,16 +245,6 @@ $("#input_predioshasusos").autocomplete({
     select: predioshasusosSelect
 });
 
-//FORMAT STRING
-function viewparamsToStr(obj) {
-    var str = '';
-    $.each(obj, function (k, v) {
-        str.length && (str += ';');
-        str += k + ':' + v;
-    });
-    return str;
-}
-
 function addressSource(requestString, responseFunc) {
     //console.log(requestString);
     //globalstyle = "sinconsulta";

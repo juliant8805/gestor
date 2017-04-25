@@ -21,13 +21,8 @@ function rango(style) {
     document.getElementById('leyenda_transmetro').style.display = 'none';
     document.getElementById('mensaje').style.display = 'none';
     if (style === "Rango Area Terreno") {
-        layerEstratificacionOficial.setVisible(false);
-        layermetrotel.setVisible(false);
-        layerindustriaycomercio.setVisible(false);
-        layerprediosexentos2016.setVisible(false);
-        estacionestransmetro.setVisible(false);
         viastransmasivo.setVisible(false);
-        layerSUI.setVisible(false);
+        estacionestransmetro.setVisible(false);
         construcciones.setVisible(false);
         predio.setVisible(true);
         if (document.getElementById("barrio").value === '' && document.getElementById("localidad").value === '' && document.getElementById("manzana").value === '') {
@@ -53,18 +48,138 @@ function rango(style) {
             var total5 = search("preproduccion:TotalPrediosEsp", values, 0, 0);
             var totales = total1.concat(total2, total3, total4, total5);
             estdistica(select, style, param, totales);
+            var valor = "'" + values + "'";
             if (document.getElementById("barrio").value !== '') {
-                var filtro = '"cod_barrio=' + values + '"';
-                predio.getSource().updateParams({'STYLES': style, 'CQL_FILTER': eval(filtro)});
+                var filtro = '"cod_barrio=' + valor + '"';
+               
             } else if (document.getElementById("localidad").value !== '') {
-                var filtro = '"cod_loc=' + values + '"';
-                predio.getSource().updateParams({'STYLES': style, 'CQL_FILTER': eval(filtro)});
+                var filtro = '"cod_loc=' + valor + '"';
+                
             } else if (document.getElementById("manzana").value !== '') {
-                var filtro = '"manzana_co=' + values + '"';
-                predio.getSource().updateParams({'STYLES': style, 'CQL_FILTER': eval(filtro)});
+                var filtro = '"manzana_co=' + valor + '"';   
             }
+            predio.getSource().updateParams({'STYLES': style, 'CQL_FILTER': eval(filtro)});
             queryexport = style;
         }
-
     }
+    
+    //propiedad horizontal
+     else if (style === "Tipo Construccion") { 
+        estacionestransmetro.setVisible(false);
+        viastransmasivo.setVisible(false);
+        construcciones.setVisible(false);
+        predio.setVisible(true);
+        if (document.getElementById("barrio").value === '' && document.getElementById("localidad").value === '' && document.getElementById("manzana").value === '') {
+            var select = search("preproduccion:TotalPredios");
+            var param = [['NPH'], ['PH']];
+            var total1 = search("preproduccion:PropiedadHorizontal", 0, 0);
+            var total2 = search("preproduccion:PropiedadHorizontal", 1, 1);
+            var totales = total1.concat(total2);
+            predio.getSource().updateParams({'STYLES': style});
+            estdistica(select, style, param, totales);
+            map.getView().fitExtent(predio.getExtent(), map.getSize());
+            queryexport = style + ' G';
+        } else {
+            var select = search("preproduccion:PropiedadHorizontalFiltro", values);
+            var param = [['NPH'], ['PH']];
+            var total1 = search("preproduccion:PropiedadHorizontalFiltro", values, 0, 0);
+            var total2 = search("preproduccion:PropiedadHorizontalFiltro", values, 1, 1);
+            var totales = total1.concat(total2);
+            estdistica(select, style, param, totales);
+            var valor = "'" + values + "'";
+            if (document.getElementById("barrio").value !== '') {
+            var filtro = '"cod_barrio=' + valor + '"';   
+            } else if (document.getElementById("localidad").value !== '') {
+                var filtro = '"cod_loc=' + valor + '"';   
+            } else if (document.getElementById("manzana").value !== '') {
+                var filtro = '"manzana_co=' + valor + '"';    
+            }
+            predio.getSource().updateParams({'STYLES': style, 'CQL_FILTER': eval(filtro)});
+            queryexport = style;
+        }
+    }   
+
+
+//distrito vs AAA
+     else if (style === "Distrito vs Prestadores AAA") { 
+        estacionestransmetro.setVisible(false);
+        viastransmasivo.setVisible(false);
+        construcciones.setVisible(false);
+        predio.setVisible(true);
+        puntos_aaa.setVisible(true);
+        if (document.getElementById("barrio").value === '' && document.getElementById("localidad").value === '' && document.getElementById("manzana").value === '') {
+            var select = search("preproduccion:TotalPredios");
+            var param = [['Predios Coincidentes'], ['Predios En base catastral y no en AAA'], ['Registros AAA sin codigo catastral']];
+            var total1 = search("preproduccion:DistritovsPrestadores", 'Si');
+            var total2 = search("preproduccion:DistritovsPrestadores", 'No');  
+            var total3 = search("preproduccion:PrestadoresAAA", '999'); 
+            var totales = total1.concat(total2, total3);
+            predio.getSource().updateParams({'STYLES': style});
+            estdistica(select, style, param, totales);
+            map.getView().fitExtent(predio.getExtent(), map.getSize());
+            queryexport = style + ' G';
+        } else {
+            var select = search("preproduccion:DistritovsPrestadoresFiltro", values);
+            var param = [['Predios Coincidentes'], ['Predios En base catastral y no en AAA']/*, ['Registros AAA sin codigo catastral']*/];
+            var total1 = search("preproduccion:DistritovsPrestadoresFiltro", values, 'Si');
+            var total2 = search("preproduccion:DistritovsPrestadoresFiltro", values, 'No');
+            var totales = total1.concat(total2);
+            estdistica(select, style, param, totales);
+            var valor = "'" + values + "'";
+            if (document.getElementById("barrio").value !== '') {
+                var filtro = '"cod_barrio=' + valor + '"';   
+            } else if (document.getElementById("localidad").value !== '') {
+                var filtro = '"cod_loc=' + valor + '"';  
+            } else if (document.getElementById("manzana").value !== '') {
+                var filtro = '"manzana_co=' + valor + '"';  
+            }
+            predio.getSource().updateParams({'STYLES': style, 'CQL_FILTER': eval(filtro)});
+            queryexport = style;
+        }
+    } 
+    
+    else if (style === "predios_construidos") { 
+        estacionestransmetro.setVisible(false);
+        viastransmasivo.setVisible(false);
+        construcciones.setVisible(false);
+        predio.setVisible(true);
+        if (document.getElementById("barrio").value === '' && document.getElementById("localidad").value === '' && document.getElementById("manzana").value === '') {
+            var select = search("preproduccion:TotalPredios");
+            var param = [['Predios Coincidentes'], ['Predios En base catastral y no en AAA'], ['Registros AAA sin codigo catastral']];
+            var total1 = search("preproduccion:DistritovsPrestadores", 'Si');
+            var total2 = search("preproduccion:DistritovsPrestadores", 'No');  
+            var total3 = search("preproduccion:PrestadoresAAA", '999'); 
+            var totales = total1.concat(total2, total3);
+            predio.getSource().updateParams({'STYLES': style});
+            estdistica(select, style, param, totales);
+            map.getView().fitExtent(predio.getExtent(), map.getSize());
+            queryexport = style + ' G';
+        } else {
+            var select = search("preproduccion:DistritovsPrestadoresFiltro", values);
+            var param = [['Predios Coincidentes'], ['Predios En base catastral y no en AAA']/*, ['Registros AAA sin codigo catastral']*/];
+            var total1 = search("preproduccion:DistritovsPrestadoresFiltro", values, 'Si');
+            var total2 = search("preproduccion:DistritovsPrestadoresFiltro", values, 'No');
+            var totales = total1.concat(total2);
+            estdistica(select, style, param, totales);
+            var valor = "'" + values + "'";
+            if (document.getElementById("barrio").value !== '') {
+                var filtro = '"cod_barrio=' + valor + '"';   
+            } else if (document.getElementById("localidad").value !== '') {
+                var filtro = '"cod_loc=' + valor + '"';  
+            } else if (document.getElementById("manzana").value !== '') {
+                var filtro = '"manzana_co=' + valor + '"';  
+            }
+            predio.getSource().updateParams({'STYLES': style, 'CQL_FILTER': eval(filtro)});
+            queryexport = style;
+        }
+    } 
+    
+    
+    
+    
 }
+
+
+
+
+

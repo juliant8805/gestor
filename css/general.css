@@ -1295,6 +1295,14 @@ select{
     width: 3em;
 }
 
+#botonmaximizarpuntosaaa{
+    position: absolute;
+    top:12em;
+    left: 0em;
+    height: 3em;
+    width: 3em;
+}
+
 #botonminimizarph{
     position: absolute;
     top:0em;
@@ -1332,14 +1340,6 @@ select{
     left: 0em;
     height: 3em;
     width: 3em;
-}
-#botonmaximizarpuntosaaa{
-    position: absolute;
-    top:0em;
-    right: 0em;
-    height: 2em;
-    width: 2em;
-    opacity: 0.9;
 }
 img.pequeña{
     width: 30px; 

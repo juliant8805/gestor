@@ -409,6 +409,19 @@ function busqueda(id) {
         document.getElementById('tabladir').style.display = 'block';
     }
 }
+
+function ocultarpanelatributosaaa(){
+   document.getElementById('mensaje').style.display = 'none'; 
+   document.getElementById('tablaatributospuntosaaa').style.display = 'none'; 
+   document.getElementById('botonmaximizarpuntosaaa').style.display = 'block';   
+}
+function mostrarpanelatributosaaa(){
+   document.getElementById('mensaje').style.display = 'none'; 
+   document.getElementById('tablaatributospuntosaaa').style.display = 'block'; 
+   document.getElementById('botonmaximizarpuntosaaa').style.display = 'none';   
+}
+
+
 function cerrar_menu() {
     document.getElementById('mensaje').style.display = 'none';
     document.getElementById('botones').style.display = 'none';

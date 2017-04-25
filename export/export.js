@@ -37,12 +37,45 @@ function file() {
         }
     }
 
+    else if (queryexport.substring(0, 19) === "predios_construidos"){
+        var titulo = JSON.stringify(["Codigo Predial", "Localidad","Barrio", "Area Construida M2", "# Predios"]);
+        if (queryexport === 'predios_construidos G') {
+            alert("GESSTOR INFORMA:</br></br>La base de datos es demasiado grande y al exportarla completa puede tardar demasiado tiempo, por favor primero filtre por Localidad, Barrio o Manzana");
+            quitgif();
+        } else {
+            var select = search("preproduccion:ReportAreaConstruida", values);
+        }
+    }
     
+    else if (queryexport.substring(0, 21) === "predios_actualizacion"){
+            alert("GESSTOR INFORMA:</br></br>No existe reporte alfanumérico para esta consulta");
+            quitgif(); 
+    }
     
+    else if (queryexport.substring(0, 9) === "plusvalia"){
+        alert("GESSTOR INFORMA:</br></br>No existe reporte alfanumérico para esta consulta");
+        quitgif(); 
+    }
     
+    else if (queryexport.substring(0, 23) === "Rango Area Construccion"){
+         var titulo = JSON.stringify(["Codigo Predial","Localidad","Barrio","Area Construida M2","# Predios"]);
+        if (queryexport === 'Rango Area Construccion G') {
+            alert("GESSTOR INFORMA:</br></br>La base de datos es demasiado grande y al exportarla completa puede tardar demasiado tiempo, por favor primero filtre por Localidad, Barrio o Manzana");
+            quitgif();
+        } else {
+            var select = search("preproduccion:ReportRangoAreaConstruccion", values);
+        }      
+    }
     
-    
-    
+    else if (queryexport.substring(0, 22) === "Calidad Construcciones"){       
+        var titulo = JSON.stringify(["Codigo Predial","Localidad","Barrio","Puntaje Construccion"]);
+        if (queryexport === 'Calidad Construcciones G') {
+            alert("GESSTOR INFORMA:</br></br>La base de datos es demasiado grande y al exportarla completa puede tardar demasiado tiempo, por favor primero filtre por Localidad, Barrio o Manzana");
+            quitgif();
+        } else {
+            var select = search("preproduccion:ReportCalidadConstruccion", values);
+        }   
+    }
     
     /* 
     else if (queryexport.substring(0, 19) === "predios_construidos"){
@@ -74,18 +107,7 @@ function file() {
     }
      
     
-    else if (queryexport.substring(0, 19) === "predios_construidos"){
-        var titulo = JSON.stringify(["Codigo Predial", "Area Construida"]);
-        if (queryexport === 'predios_construidos G') {
-            var select = select_query("select codigo, area_construida_hacienda from u_terreno;");
-        } else if (queryexport === 'predios_construidos B') {
-            var select = select_query("select codigo, area_construida_hacienda from u_terreno WHERE cod_barrio=" + valor + ";");
-        } else if (queryexport === 'predios_construidos L') {
-            var select = select_query("select codigo, area_construida_hacienda from u_terreno WHERE cod_loc=" + valor + ";");
-        } else if (queryexport === 'predios_construidos M') {
-            var select = select_query("select codigo, area_construida_hacienda from u_terreno WHERE manzana_co=" + valor + ";");
-        }
-    }
+    
     
     else if (queryexport.substring(0, 16) === "Avaluo Catastral"){
         var titulo = JSON.stringify(["Codigo Predial", "Avaluo Catastral"]);
@@ -311,10 +333,7 @@ function file() {
         }
     }
     
-    else if (queryexport.substring(0, 9) === "plusvalia"){
-        alert("GESSTOR INFORMA:</br></br>No existe reporte alfanúmerico para esta consulta");
-        quitgif(); 
-    }
+    
     
      else if (queryexport.substring(0, 16) === "Tipo Propietario"){
         alert("GESSTOR INFORMA:</br></br>No existe reporte alfanúmerico para esta consulta");
@@ -340,6 +359,12 @@ function file() {
     
     
     */
+    
+    
+    
+    
+    
+    
    
     var arr = JSON.stringify(select);
     arr = arr.replace(/\./g, ",");

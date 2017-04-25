@@ -591,8 +591,6 @@ function addressSelect(event, ui) {
                     var stv = [];
                     var ig = [];
                     var codfoto = values.codigo_ant.substring(0, 17);
-
-
                     select[0] = "<b>Codigo Manzana</b>";
                     select[1] = "<b>Codigo Catastral Nuevo</b>";
                     select[2] = "<b>Codigo Catastral Anterior</b>";
@@ -600,10 +598,17 @@ function addressSelect(event, ui) {
                     select[4] = "<b>Código ZHG</b>";
                     select[5] = "<b>Valor m2 ZHG</b>";
                     select[6] = "<b>Código ZHF</b>";
-                    select[7] = "<b>Uso Permitido</b>";
-                    select[8] = "<b>Uso Actual</b>";
-                    select[9] = "<b>Fotografias</b>";
-
+                    select[7] = "<b>Destino</b>";
+                    select[8] = "<b>Avalúo Catastral 2017</b>";
+                    select[9] = "<b>Impuesto Predial 2017</b>";  
+                   
+                    select[10] = "<b>Uso Permitido</b>";
+                    select[11] = "<b>Uso Actual</b>";
+                    
+                    select[12] = "<b>Área de Terreno</b>";
+                    select[13] = "<b>Área Construida</b>";
+                    
+                    select[14] = "<b>Fotografias</b>";
                     sel[0] = values.manzana_co;
                     sel[1] = values.codigo;
                     sel[2] = values.codigo_ant;
@@ -611,27 +616,33 @@ function addressSelect(event, ui) {
                     sel[4] = values.zhg;
                     sel[5] = values.valor_m2_zhg;
                     sel[6] = values.zhf;
-                    sel[7] = values.norma_uso;
-                    sel[8] = values.uso_actual_zhf;
-
-                    sel[9] = document.createElement("a");
-                    sel[9].id = "img1";
-                    sel[9].style = "width: 30px; height: 50px;";
-                    sel[9].target = "marco";
-                    sel[9].setAttribute("onclick", "open_streetview()");
-                    //sel[7].onclick = "open_streetview()";
-                    sel[9].href = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";
-                    imag[9] = document.createElement("img");
-                    imag[9].id = "im1";
-                    imag[9].className = "pequeña";
-                    imag[9].src = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";
-                    stv[9] = document.createElement("a");
-                    stv[9].id = "imgstreet1";
-                    stv[9].target = "marco";
-                    stv[9].href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
-                    stv[9].setAttribute("onclick", "open_streetview()");
-                    ig[9] = document.createElement("img");
-                    ig[9].src = "./imagenes/streetview.png";
+                    sel[7] = values.destino_hacienda;
+                    sel[8] = values.avaluo_hacienda;
+                    sel[9] = values.impuesto_hacienda; 
+                    sel[10] = values.norma_uso;
+                    sel[11] = values.uso_actual_zhf;
+                    
+                    
+                    sel[12] = values.area_terreno_hacienda;
+                    sel[13] = values.area_construida_hacienda;
+                    
+                    sel[14] = document.createElement("a");
+                    sel[14].id = "img1";
+                    sel[14].style = "width: 30px; height: 50px;";
+                    sel[14].target = "marco";
+                    sel[14].setAttribute("onclick", "open_streetview()");
+                    sel[14].href = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";
+                    imag[14] = document.createElement("img");
+                    imag[14].id = "im1";
+                    imag[14].className = "pequeña";
+                    imag[14].src = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";
+                    stv[14] = document.createElement("a");
+                    stv[14].id = "imgstreet1";
+                    stv[14].target = "marco";
+                    stv[14].href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
+                    stv[14].setAttribute("onclick", "open_streetview()");
+                    ig[14] = document.createElement("img");
+                    ig[14].src = "./imagenes/streetview.png";
 
                     for (i = 0; i < select.length; i++) {
                         row = table.insertRow(i + 1);
@@ -639,7 +650,7 @@ function addressSelect(event, ui) {
                         cell2 = row.insertCell(1);
                         cell1.innerHTML = select[i];
 
-                        if (i === 9) {
+                        if (i === 14) {
                             cell2.appendChild(sel[i]);
                             //cell2.appendChild(imag[i]);
                             sel[i].appendChild(imag[i]);

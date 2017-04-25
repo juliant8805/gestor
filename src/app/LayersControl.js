@@ -21,6 +21,8 @@ var ortofotourbana = new ol.layer.Tile({
 
 var mapabase = new ol.layer.Tile({
     visible: true,
+    //minResolution:2,
+    maxResolution:20,
     source: new ol.source.XYZ({
         url: "http://35.184.3.4/mapa_base/{z}/{x}/{y}.jpg"
     }), name: 'Mapa Base'
@@ -472,6 +474,41 @@ var construcciones = new ol.layer.Tile({
     
 });
 
+var unidades = new ol.layer.Tile({
+    visible: false,
+    source: new ol.source.TileWMS({
+        url: 'http://35.184.3.4:8080/geoserver/preproduccion/wms',
+        params: {LAYERS: 'preproduccion:u_unidad', STYLES: ''}
+    }), name: 'Unidades'
+    
+});
+var geocodificador = new ol.layer.Tile({
+    visible: false,
+    source: new ol.source.TileWMS({
+        url: 'http://35.184.3.4:8080/geoserver/preproduccion/wms',
+        params: {LAYERS: 'preproduccion:geo_wgs84', STYLES: ''}
+    }), name: 'Geo'
+});
+
+//Restitucion
+
+var canalsencillo = new ol.layer.Tile({
+    visible: false,
+    source: new ol.source.TileWMS({
+        url: 'http://35.184.3.4:8080/geoserver/preproduccion/wms',
+        params: {LAYERS: 'preproduccion:canal_sencillo', STYLES: ''}
+    }), name: 'Canal Sencillo'  
+});
+
+var canaldoble = new ol.layer.Tile({
+    visible: false,
+    source: new ol.source.TileWMS({
+        url: 'http://35.184.3.4:8080/geoserver/preproduccion/wms',
+        params: {LAYERS: 'preproduccion:canal_doble', STYLES: ''}
+    }), name: 'Canal Doble'
+    
+});
+
 var paramento = new ol.layer.Tile({
     visible: false,
     source: new ol.source.TileWMS({
@@ -490,21 +527,56 @@ var antejardin = new ol.layer.Tile({
     
 });
 
-var unidades = new ol.layer.Tile({
+var cerca = new ol.layer.Tile({
     visible: false,
     source: new ol.source.TileWMS({
         url: 'http://35.184.3.4:8080/geoserver/preproduccion/wms',
-        params: {LAYERS: 'preproduccion:u_unidad', STYLES: ''}
-    }), name: 'Unidades'
+        params: {LAYERS: 'preproduccion:cerca', STYLES: ''}
+    }), name: 'Cerca'
     
 });
-var geocodificador = new ol.layer.Tile({
+
+var cicloruta = new ol.layer.Tile({
     visible: false,
     source: new ol.source.TileWMS({
         url: 'http://35.184.3.4:8080/geoserver/preproduccion/wms',
-        params: {LAYERS: 'preproduccion:geo_wgs84', STYLES: ''}
-    }), name: 'Geo'
+        params: {LAYERS: 'preproduccion:cicloruta', STYLES: ''}
+    }), name: 'Cicloruta'
+    
 });
+
+var construccionagual = new ol.layer.Tile({
+    visible: false,
+    source: new ol.source.TileWMS({
+        url: 'http://35.184.3.4:8080/geoserver/preproduccion/wms',
+        params: {LAYERS: 'preproduccion:construccion_agua_l', STYLES: ''}
+    }), name: 'Construccion Agua L'
+    
+});
+
+var curvanivel = new ol.layer.Tile({
+    visible: false,
+    source: new ol.source.TileWMS({
+        url: 'http://35.184.3.4:8080/geoserver/preproduccion/wms',
+        params: {LAYERS: 'preproduccion:curva_nivel', STYLES: ''}
+    }), name: 'Curva de Nivel'
+    
+});
+
+var laguna = new ol.layer.Tile({
+    visible: false,
+    source: new ol.source.TileWMS({
+        url: 'http://35.184.3.4:8080/geoserver/preproduccion/wms',
+        params: {LAYERS: 'preproduccion:laguna', STYLES: ''}
+    }), name: 'Laguna'
+    
+});
+
+var layerCartobasica = new ol.layer.Group({
+    layers: [laguna, curvanivel, construccionagual, cicloruta, cerca, canaldoble, canalsencillo, paramento, antejardin, paramento],
+    name: 'Cartografia Básica'
+});
+
 //CAPS GROUP
 var layerCatastro = new ol.layer.Group({
     layers: [predio_rural, manzana, predio, construcciones, unidades, vias, consolidado, highlightfeatures],
@@ -565,10 +637,7 @@ var layerBase = new ol.layer.Group({
 });
 
 
-var layerCartobasica = new ol.layer.Group({
-    layers: [paramento, antejardin, paramento],
-    name: 'Cartografia Básica'
-});
+
 
 
 

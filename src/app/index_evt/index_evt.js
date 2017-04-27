@@ -1,5 +1,5 @@
 //window.onload = detectarCarga;
-window.oncontextmenu = function() { return false; };
+//window.oncontextmenu = function() { return false; };
 $(document).on('ready',function(){
 //codigo aquí
 var select = validacionusuarios();
@@ -171,6 +171,13 @@ var select = validacionusuarios();
             a || (a = document.body.parentNode.appendChild(document.createElement("head")));
             a.appendChild(b);
         }
+        //$("#map").removeAttr("hidden").show();
+        $("#logos_cabezote").removeAttr("hidden").show();
+        $("#barratransparencia").removeAttr("hidden").show();
+        $("#posicionbarra").removeAttr("hidden").show();
+        $("#boton_limpiar").removeAttr("hidden").show();
+        $("#mouse-position").removeAttr("hidden").show();
+        $("#salida").removeAttr("hidden").show();
     } catch (err) {
     }
 });

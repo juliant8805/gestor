@@ -61,8 +61,8 @@
     <button id="botonmostrarstatistics" hidden="hidden" onclick="mostrarstatistics();" style="background:url('./imagenes/mostrarstatistics.png'); background-repeat:no-repeat;"></button>
     <button id="botonmostrarpanelatributos" hidden="hidden" onclick="mostrarpanelatributos();" style="background:url('./imagenes/mostrarstatistics.png'); background-repeat:no-repeat;"></button>
     <button id="botonocultarpanelatributos" hidden="hidden" onclick="ocultarpanelatributos();" style="background:url('./imagenes/ocultarstatistics.png'); background-repeat:no-repeat;"></button>
-    <div id="mouse-position"></div>
-    <div id="barratransparencia">
+    <div id="mouse-position" hidden="hidden"></div>
+    <div id="barratransparencia" hidden="hidden">
         <br>
         <input type="range" min="0" max="1" step="0.1" value="0" onchange="ortofotourbana.setOpacity(Number(this.value))"/>
     </div>
@@ -278,12 +278,12 @@
         <button id="botonminimizarpuntosaaa" hidden="hidden" onclick="ocultarpanelatributosaaa();" style="background:url('./imagenes/minimizar.png'); background-repeat:no-repeat;"></button>   
     </div> 
     <button id="botonmaximizarpuntosaaa" hidden="hidden" onclick="mostrarpanelatributosaaa();" style="background:url('./imagenes/maximizar.png'); background-repeat:no-repeat;"></button>
-
+    <!--
     <div>
         <input type="text" value="Submit">
     </div>
-
-    <div id="posicionbarra">
+    -->
+    <div id="posicionbarra" hidden="hidden">
         <div class="navbar navbar-inverse navbar-fixed-top" id="barra_general">
             <div class="input-group input-group-xs" id="lista_general" >					
                 <span class="input-group-addon" id="botonlista">
@@ -410,7 +410,7 @@
         </div>
     </div>
     <div>
-        <input type="button" id="boton3d" value="GESSTOR 3D" onclick="javascript:window.open('http://35.184.3.4/cesium/Apps/gesstor3d.html');" />
+        <!--<input type="button" id="boton3d" value="GESSTOR 3D" onclick="javascript:window.open('http://35.184.3.4/cesium/Apps/gesstor3d.html');" />-->
 
         <iframe name="marco" hidden="hidden" id="marco"></iframe>
         <!-- <img id="botoncerrarstreetview" src="./imagenes/ocultar.png">-->
@@ -427,9 +427,9 @@
 
     <!--<img id="cerrar_submenu" hidden="hidden" src="./imagenes/cerrar_submenu.png" onclick="cerrar_menu()">-->
     <img id="gesstor" src="./imagenes/gesstor.png">
-    <img id="logos_cabezote" src="./imagenes/logos_cabezote.png">
+    <img id="logos_cabezote" src="./imagenes/logos_cabezote.png" hidden="hidden">
     <!--<<img id="logos_cabezote" src="./imagenes/logos_cabezote.png" data-toggle="modal" data-target="#charge">-->
-    <img id="boton_limpiar" src="imagenes/limpiar.png" onclick="limpiar_consulta()" title="Limpiar Consulta">
+    <img id="boton_limpiar" src="imagenes/limpiar.png" onclick="limpiar_consulta()" title="Limpiar Consulta" hidden="hidden">
     <img id="subirshape" src="imagenes/subirshape.jpg" style="display: none" data-toggle="modal" data-target="#charge" title="Subir shapefile">
     <img id="valid" src="imagenes/validar.jpg" onclick="validate(id)" style="display: none" data-toggle="modal" data-target="#validate" title="Validar Informacion subida">
     <img id="deshacer" src="imagenes/deshacer.jpg" onclick="validate(id)" style="display: none" data-toggle="modal" data-target="#validate" title="Deshacer cambios">
@@ -446,7 +446,7 @@
     </div>
 
     <!--<img id="maria" src="./fotos_usuarios/user.png">-->
-    <a href="barranquilla.html"><img id="salida" src="./imagenes/foto_usuario.png" title="Salir"></a>
+    <a href="barranquilla.html"><img id="salida" src="./imagenes/foto_usuario.png" title="Salir" hidden="hidden"></a>
 
     <img id="manual" src="./imagenes/manual.png" hidden="hidden" onclick="abrir_manual()" title="Manual de Usuario">
     <div id="herramientas" class='container' hidden="hidden">

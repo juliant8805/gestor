@@ -77,6 +77,23 @@ function file() {
         }   
     }
     
+    else if (queryexport.substring(0, 26) === "Tipo de Amenaza INUNDACION"){
+         var titulo = JSON.stringify(["Codigo Predial","Localidad","Barrio","Amenaza Inundacion","# de Predios"]);
+         var select = search("preproduccion:ReportInundacion");
+         quitgif();
+    }
+    
+    else if (queryexport.substring(0, 24) === "Tipo de Amenaza REMOCION"){
+         var titulo = JSON.stringify(["Codigo Predial","Localidad","Barrio","Amenaza Remocion","# de Predios"]);
+         if (queryexport === 'Tipo de Amenaza REMOCIONG') {
+            alert("GESSTOR INFORMA:</br></br>La base de datos es demasiado grande y al exportarla completa puede tardar demasiado tiempo, por favor primero filtre por Localidad, Barrio o Manzana");
+            quitgif();
+        } else {
+            alert("listo");
+            //var select = search("preproduccion:ReportCalidadConstruccion", values);
+        } 
+    }
+    
     /* 
     else if (queryexport.substring(0, 19) === "predios_construidos"){
         var titulo = JSON.stringify(["Codigo Predial", "Area Construida"]);

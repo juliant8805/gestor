@@ -71,10 +71,7 @@ var select = validacionusuarios();
             e.src = "src/app/app/Consultas/sinconsulta.js";
             var f = document.getElementsByTagName("head")[0];
             f || (f = document.body.parentNode.appendChild(document.createElement("head")));
-            f.appendChild(f);*/
-            
-            
-            
+            f.appendChild(f);*/        
         } else if (select[0][7] === true) {
             //document.getElementById("metrotel").style.display = "block";
             document.getElementById("menu_circular").style.display = "block";
@@ -88,20 +85,21 @@ var select = validacionusuarios();
             document.getElementById("Nomenclatura Domiciliaria").style.display = "block";
             modulo = "sui";
         } else if (select[0][9] === true) {
-            var sele = select_query("SELECT COUNT(table_name) FROM information_schema.tables WHERE table_schema='public' AND table_name LIKE 'temp_%'");
+            modulo = "planeacion";
+            //var sele = select_query("SELECT COUNT(table_name) FROM information_schema.tables WHERE table_schema='public' AND table_name LIKE 'temp_%'");
             //console.log(sele);
-            if (parseInt(sele[0][0]) > 0) {
+            /*if (parseInt(sele[0][0]) > 0) {
                 //console.log(sele);        
                 document.getElementById("valid").style.display = "block";
             }
             var sel = select_query("SELECT COUNT(table_name) FROM information_schema.tables WHERE table_schema='public' AND table_name LIKE 'post_%'");
             if (parseInt(sel[0][0]) > 0) {
                 document.getElementById("deshacer").style.display = "block";
-            }
+            }*/
             document.getElementById("menu_circular").style.display = "block";
             document.getElementById("tipo_usuario").style.display = "block";
             document.getElementById("manual").style.display = "block";
-            document.getElementById("subirshape").style.display = "block";
+            //document.getElementById("subirshape").style.display = "block";
             document.getElementById("alineamiento").style.display = "block";
             document.getElementById("Usos_Permitidos").style.display = "block";
             document.getElementById("espacio_publico").style.display = "block";
@@ -112,15 +110,25 @@ var select = validacionusuarios();
             document.getElementById("Tipo de Amenaza").style.display = "block";
             document.getElementById("Estructura Ecologica Principal").style.display = "block";
             document.getElementById("Clasificacion_Uso").style.display = "block";
-            modulo = "planeacion";
+              
             var b = document.createElement("script");
             b.type = "text/javascript";
             b.charset = "UTF-8";
-            b.src = "import/import.js";
+            b.src = "src/app/planeacion/ConsultasPlaneacion.js";
             var a = document.getElementsByTagName("head")[0];
             a || (a = document.body.parentNode.appendChild(document.createElement("head")));
             a.appendChild(b);
-        } else if (select[0][10] === true) {
+            
+            var d = document.createElement("script");
+            d.type = "text/javascript";
+            d.charset = "UTF-8";
+            d.src = "sql/js_sql.js";
+            var c = document.getElementsByTagName("head")[0];
+            c || (c = document.body.parentNode.appendChild(document.createElement("head")));
+            c.appendChild(d);
+        } 
+        
+        else if (select[0][10] === true) {
             document.getElementById("Avaluo Catastral").style.display = "block";
             document.getElementById("Incremento Avaluo").style.display = "block";
             document.getElementById("menu_circular").style.display = "block";
@@ -131,7 +139,9 @@ var select = validacionusuarios();
             document.getElementById("Tipo Propietario").style.display = "block";
             document.getElementById("Impuesto Camara").style.display = "block";
             modulo = "hacienda";
-        } else if (select[0][12] === true) {
+        } 
+        
+        else if (select[0][12] === true) {
             document.getElementById("menu_circular").style.display = "block";
             document.getElementById("tipo_usuario").style.display = "block";
             document.getElementById("manual").style.display = "block";

@@ -1278,9 +1278,8 @@ function predioshasusosSelect(event, ui) {
                 if (features && features.length >= 1 && features[0]) {
                     var feature = features[0];
                     var values = feature.getProperties();
-                    var referencia = "'" + values.referencia + "'";
-                    var grupo = select_query("SELECT actividad FROM predioshasusos where referencia =" + referencia + "");
-                    //var tablahasusos = ("<table max-width=20 border=1>"); 
+                    var referencia = values.referencia;
+                    var grupo = search("preproduccion:PrediosHasUsosReferencia", referencia);
                     var table = document.getElementById("tblatt");
                     table.innerHTML = "";
                     var row = table.insertRow(0);
@@ -1309,26 +1308,16 @@ function predioshasusosSelect(event, ui) {
                     stv[2].target = "marco";
                     stv[2].href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
                     stv[2].setAttribute("onclick", "open_streetview()");
-
                     ig[2] = document.createElement("img");
-
                     ig[2].src = "./imagenes/streetview.png";
-
                     for (i = 0; i < select.length; i++) {
                         row = table.insertRow(i + 1);
                         cell1 = row.insertCell(0);
                         cell2 = row.insertCell(1);
                         cell1.innerHTML = select[i];
-
                         if (i === 2) {
-                            //cell2.appendChild(sel[i]);
-                            //cell2.appendChild(imag[i]);
-                            //sel[i].appendChild(imag[i]);
                             cell2.appendChild(stv[i]);
-                            //cell2.appendChild(ig[i]);
                             stv[i].appendChild(ig[i]);
-
-                            //document.getElementById("ig").onclick=open_streetview();
                         } else {
                             cell2.innerHTML = sel[i];
                         }

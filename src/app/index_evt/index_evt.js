@@ -56,6 +56,25 @@ var select = validacionusuarios();
             var a = document.getElementsByTagName("head")[0];
             a || (a = document.body.parentNode.appendChild(document.createElement("head")));
             a.appendChild(b);
+            
+            var d = document.createElement("script");
+            d.type = "text/javascript";
+            d.charset = "UTF-8";
+            d.src = "sql/js_sql.js";
+            var c = document.getElementsByTagName("head")[0];
+            c || (c = document.body.parentNode.appendChild(document.createElement("head")));
+            c.appendChild(d);
+            
+          /*  var e = document.createElement("script");
+            e.type = "text/javascript";
+            e.charset = "UTF-8";
+            e.src = "src/app/app/Consultas/sinconsulta.js";
+            var f = document.getElementsByTagName("head")[0];
+            f || (f = document.body.parentNode.appendChild(document.createElement("head")));
+            f.appendChild(f);*/
+            
+            
+            
         } else if (select[0][7] === true) {
             //document.getElementById("metrotel").style.display = "block";
             document.getElementById("menu_circular").style.display = "block";
@@ -436,6 +455,19 @@ function busqueda(id) {
         document.getElementById('tabladir').style.display = 'block';
     }
 }
+
+function ocultarpanelatributosaaa(){
+   document.getElementById('mensaje').style.display = 'none'; 
+   document.getElementById('tablaatributospuntosaaa').style.display = 'none'; 
+   document.getElementById('botonmaximizarpuntosaaa').style.display = 'block';   
+}
+function mostrarpanelatributosaaa(){
+   document.getElementById('mensaje').style.display = 'none'; 
+   document.getElementById('tablaatributospuntosaaa').style.display = 'block'; 
+   document.getElementById('botonmaximizarpuntosaaa').style.display = 'none';   
+}
+
+
 function cerrar_menu() {
     document.getElementById('mensaje').style.display = 'none';
     document.getElementById('botones').style.display = 'none';
@@ -827,3 +859,6 @@ function alertDGC(mensaje) {
 window.alert = function (message) {
     alertDGC(message);
 };
+
+
+   

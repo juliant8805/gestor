@@ -27,7 +27,7 @@ function rango(style) {
     document.getElementById('leyenda_transmetro').style.display = 'none';
     document.getElementById('mensaje').style.display = 'none';
     try {
-        //rango de area de terreno
+       
         if (style === "Rango Area Terreno") {
             layerEstratificacionOficial.setVisible(false);
             layermetrotel.setVisible(false);
@@ -577,7 +577,7 @@ function rango(style) {
         }
 
         //tipo de construccion   
-        else if (style === "Tipo Construccion") {
+       /* else if (style === "Tipo Construccion") {
             layerEstratificacionOficial.setVisible(false);
             layermetrotel.setVisible(false);
             layerindustriaycomercio.setVisible(false);
@@ -659,9 +659,9 @@ function rango(style) {
                 predio.getSource().updateParams({'STYLES': style, 'CQL_FILTER': eval(filtro)});
                 queryexport = style + ' M';
             }
-        }
+        }*/
         //Distrito vs Prestadores
-        else if (style === "Distrito vs Prestadores AAA") {
+       /* else if (style === "Distrito vs Prestadores AAA") {
             layerEstratificacionOficial.setVisible(false);
             layermetrotel.setVisible(false);
             layerindustriaycomercio.setVisible(false);
@@ -759,7 +759,7 @@ function rango(style) {
                 predio.getSource().updateParams({'STYLES': style, 'CQL_FILTER': eval(filtro)});
                 queryexport = style + ' M';
             }
-        }
+        }*/
         //estratificion metrotel
         else if (style === "metrotel") {
             layerEstratificacionOficial.setVisible(false);

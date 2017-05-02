@@ -1,11 +1,4 @@
-var urlsqlphp="./sql/connect.php";
-var db_name = "Barranquilla";
-function select_query(query) {
-    var c = "selectQuery";
-    var xmlresp = doRequest(c, query);
-    //alert(xmlresp);
-    return responseContent(xmlresp);
-}
+
 function update_query(query) {
     var c = "updateQuery";
     var xmlresp = doRequest(c, query);

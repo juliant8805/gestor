@@ -65,7 +65,7 @@ function estdistica(select, titulo, param, totales) {
             color[i]='#7fbf7f';
         }else if(param[i][0]==='Regimen Simplificado'){
             color[i]='#ffae19';
-        }else if(param[i][0]==='N/A'){
+        }else if(param[i][0]==='No Aplica'){
             color[i]='#7f7fff';
         }else if(param[i][0]==='Agente Retenedor'){
             color[i]='#e31a1c';

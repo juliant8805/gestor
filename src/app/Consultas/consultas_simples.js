@@ -559,7 +559,6 @@ function addressSelect(event, ui) {
         });
     } else if (modulo === 'catastro') {
         predio.setVisible(true);
-
         $.ajax({
             url: url,
             success: function (data) {
@@ -581,6 +580,20 @@ function addressSelect(event, ui) {
                     var stv = [];
                     var ig = [];
                     var codfoto = values.codigo_ant.substring(0, 17);
+                    var direccion = ui.item.direccionoriginal;
+                    if (values.ph_calc==1){
+                        var datoshaciendaph = search("preproduccion:ConsultaHaciendaPh", direccion);
+                        var areaterreno = datoshaciendaph["0"][0];
+                        var areaconstruida = datoshaciendaph["0"][1];
+                        var impuestopredial = datoshaciendaph["0"][2];
+                        var avaluohacienda = datoshaciendaph["0"][3];   
+                    }
+                    else{
+                        var areaterreno = values.area_terreno_hacienda;
+                        var areaconstruida = values.area_construida_hacienda; 
+                        var impuestopredial = values.impuesto_hacienda; 
+                        var avaluohacienda = values.avaluo_hacienda;
+                    }
                     select[0] = "<b>Codigo Manzana</b>";
                     select[1] = "<b>Codigo Catastral Nuevo</b>";
                     select[2] = "<b>Codigo Catastral Anterior</b>";
@@ -591,13 +604,10 @@ function addressSelect(event, ui) {
                     select[7] = "<b>Destino</b>";
                     select[8] = "<b>Avalúo Catastral 2017</b>";
                     select[9] = "<b>Impuesto Predial 2017</b>";  
-                   
                     select[10] = "<b>Uso Permitido</b>";
-                    select[11] = "<b>Uso Actual</b>";
-                    
+                    select[11] = "<b>Uso Actual</b>"; 
                     select[12] = "<b>Área de Terreno</b>";
-                    select[13] = "<b>Área Construida</b>";
-                    
+                    select[13] = "<b>Área Construida</b>"; 
                     select[14] = "<b>Fotografias</b>";
                     sel[0] = values.manzana_co;
                     sel[1] = values.codigo;
@@ -607,15 +617,12 @@ function addressSelect(event, ui) {
                     sel[5] = values.valor_m2_zhg;
                     sel[6] = values.zhf;
                     sel[7] = values.destino_hacienda;
-                    sel[8] = values.avaluo_hacienda;
-                    sel[9] = values.impuesto_hacienda; 
+                    sel[8] = avaluohacienda;
+                    sel[9] = impuestopredial; 
                     sel[10] = values.norma_uso;
-                    sel[11] = values.uso_actual_zhf;
-                    
-                    
-                    sel[12] = values.area_terreno_hacienda;
-                    sel[13] = values.area_construida_hacienda;
-                    
+                    sel[11] = values.uso_actual_zhf;  
+                    sel[12] = areaterreno;
+                    sel[13] = areaconstruida;     
                     sel[14] = document.createElement("a");
                     sel[14].id = "img1";
                     sel[14].style = "width: 30px; height: 50px;";
@@ -680,6 +687,20 @@ function addressSelect(event, ui) {
                     var stv = [];
                     var ig = [];
                     var codfoto = values.codigo_ant.substring(0, 17);
+                    var direccion = ui.item.direccionoriginal;
+                    if (values.ph_calc==1){
+                        var datoshaciendaph = search("preproduccion:ConsultaHaciendaPh", direccion);
+                        var areaterreno = datoshaciendaph["0"][0];
+                        var areaconstruida = datoshaciendaph["0"][1];
+                        var impuestopredial = datoshaciendaph["0"][2];
+                        var avaluohacienda = datoshaciendaph["0"][3];   
+                    }
+                    else{
+                        var areaterreno = values.area_terreno_hacienda;
+                        var areaconstruida = values.area_construida_hacienda; 
+                        var impuestopredial = values.impuesto_hacienda; 
+                        var avaluohacienda = values.avaluo_hacienda;
+                    }
                     select[0] = "<b>Codigo Manzana</b>";
                     select[1] = "<b>Codigo Catastral Nuevo</b>";
                     select[2] = "<b>Codigo Catastral Anterior</b>";
@@ -697,10 +718,10 @@ function addressSelect(event, ui) {
                     sel[3] = ui.item.direccionoriginal;
                     sel[4] = values.estrato_hacienda;
                     sel[5] = values.destino_hacienda;
-                    sel[6] = values.avaluo_hacienda;
-                    sel[7] = values.impuesto_hacienda; 
-                    sel[8] = values.area_terreno_hacienda;
-                    sel[9] = values.area_construida_hacienda;  
+                    sel[6] = avaluohacienda;
+                    sel[7] = impuestopredial;
+                    sel[8] = areaterreno;
+                    sel[9] = areaconstruida;  
                     sel[10] = document.createElement("a");
                     sel[10].id = "img1";
                     sel[10].style = "width: 30px; height: 50px;";

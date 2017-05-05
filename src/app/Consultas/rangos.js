@@ -1908,8 +1908,6 @@ function rango(style) {
             }
         }
 
-
-
         //tipo de contribuyente
         else if (style === "Tipo de Contribuyente") {
             layerEstratificacionOficial.setVisible(false);

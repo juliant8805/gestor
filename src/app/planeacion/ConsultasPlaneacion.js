@@ -58,7 +58,7 @@ function rango(style) {
                 var filtro = '"manzana_co=' + valor + '"';   
             }
             predio.getSource().updateParams({'STYLES': 'Inundacion', 'CQL_FILTER': eval(filtro)});
-            queryexport = style;
+            queryexport = style + ' INUNDACIONF' ;
         }
     }
     
@@ -106,7 +106,7 @@ function rango(style) {
                 var filtro = '"manzana_co=' + valor + '"';   
             }
             predio.getSource().updateParams({'STYLES': 'Remocion', 'CQL_FILTER': eval(filtro)});
-            queryexport = style;
+            queryexport = style + ' REMOCIONF';
         }
     }
     
@@ -206,7 +206,7 @@ function rango(style) {
              predio.getSource().updateParams({'STYLES': 'sin_informacion'});
              estdistica(select, titulo, param, totales);
              map.getView().fitExtent(predio.getExtent(), map.getSize());  
-             queryexport = style + ' G';   
+             queryexport = style;   
         } 
     else if (style === "Area Proteccion Urbanistica") {
              estacionestransmetro.setVisible(false);

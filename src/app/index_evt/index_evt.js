@@ -84,6 +84,21 @@ var select = validacionusuarios();
             document.getElementById("disponibilidad_AAA").style.display = "block";
             document.getElementById("Nomenclatura Domiciliaria").style.display = "block";
             modulo = "sui";
+            var b = document.createElement("script");
+            b.type = "text/javascript";
+            b.charset = "UTF-8";
+            b.src = "src/app/sui/ConsultasSui.js";
+            var a = document.getElementsByTagName("head")[0];
+            a || (a = document.body.parentNode.appendChild(document.createElement("head")));
+            a.appendChild(b);
+            
+            var d = document.createElement("script");
+            d.type = "text/javascript";
+            d.charset = "UTF-8";
+            d.src = "sql/js_sql.js";
+            var c = document.getElementsByTagName("head")[0];
+            c || (c = document.body.parentNode.appendChild(document.createElement("head")));
+            c.appendChild(d);
         } else if (select[0][9] === true) {
             modulo = "planeacion";
             //var sele = select_query("SELECT COUNT(table_name) FROM information_schema.tables WHERE table_schema='public' AND table_name LIKE 'temp_%'");

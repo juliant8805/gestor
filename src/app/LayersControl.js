@@ -492,6 +492,14 @@ var geocodificador = new ol.layer.Tile({
 
 //Restitucion
 
+var limitevia = new ol.layer.Tile({
+    visible: false,
+    source: new ol.source.TileWMS({
+        url: 'http://35.184.3.4:8080/geoserver/preproduccion/wms',
+        params: {LAYERS: 'preproduccion:limite_via', STYLES: ''}
+    }), name: 'Limite de Via'  
+});
+
 var canalsencillo = new ol.layer.Tile({
     visible: false,
     source: new ol.source.TileWMS({
@@ -572,8 +580,51 @@ var laguna = new ol.layer.Tile({
     
 });
 
+var lineademarcacion = new ol.layer.Tile({
+    visible: false,
+    source: new ol.source.TileWMS({
+        url: 'http://35.184.3.4:8080/geoserver/preproduccion/wms',
+        params: {LAYERS: 'preproduccion:linea_demarcacion', STYLES: ''}
+    }), name: 'Linea de Demarcacion'
+    
+});
+
+var muro = new ol.layer.Tile({
+    visible: false,
+    source: new ol.source.TileWMS({
+        url: 'http://35.184.3.4:8080/geoserver/preproduccion/wms',
+        params: {LAYERS: 'preproduccion:muro', STYLES: ''}
+    }), name: 'Muro'
+    
+});
+
+var puente_l = new ol.layer.Tile({
+    visible: false,
+    source: new ol.source.TileWMS({
+        url: 'http://35.184.3.4:8080/geoserver/preproduccion/wms',
+        params: {LAYERS: 'preproduccion:puente_l', STYLES: ''}
+    }), name: 'Puente L'
+    
+});
+
+var red_alta_tension = new ol.layer.Tile({
+    visible: false,
+    source: new ol.source.TileWMS({
+        url: 'http://35.184.3.4:8080/geoserver/preproduccion/wms',
+        params: {LAYERS: 'preproduccion:red_alta_tension', STYLES: ''}
+    }), name: 'Red Alta Tension'    
+});
+
+var tuberia = new ol.layer.Tile({
+    visible: false,
+    source: new ol.source.TileWMS({
+        url: 'http://35.184.3.4:8080/geoserver/preproduccion/wms',
+        params: {LAYERS: 'preproduccion:tuberia', STYLES: ''}
+    }), name: 'Tuberia'    
+});
+
 var layerCartobasica = new ol.layer.Group({
-    layers: [laguna, curvanivel, construccionagual, cicloruta, cerca, canaldoble, canalsencillo, paramento, antejardin, paramento],
+    layers: [tuberia, red_alta_tension, puente_l, muro, lineademarcacion, limitevia, laguna, curvanivel, construccionagual, cicloruta, cerca, canaldoble, canalsencillo, paramento, antejardin, paramento],
     name: 'Cartografia Básica'
 });
 

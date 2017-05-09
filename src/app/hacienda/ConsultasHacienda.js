@@ -68,7 +68,11 @@ function rango(style) {
             var total4 = search("preproduccion:AvaluoCatastralFiltro", values, 100000001, 500000000);
             var total5 = search("preproduccion:AvaluoCatastralFiltro", values, 500000001, 9999999999999);
             var totales = total1.concat(total2, total3, total4, total5);
-            estdistica(select, style, param, totales);
+            var valoravaluo = search("preproduccion:AvaluoTotalFiltro", values); 
+            var valoravaluo = formatNumber.new(valoravaluo); 
+            var titulo = "Total Avalúo Catastral: " + valoravaluo;   
+            //console.log(titulo);
+            estdistica(select, titulo, param, totales);
             var valor = "'" + values + "'";
             if (document.getElementById("barrio").value !== '') {
                 var filtro = '"cod_barrio=' + valor + '"';   

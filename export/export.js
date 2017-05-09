@@ -53,7 +53,7 @@ function file() {
     }
     
     else if (queryexport.substring(0, 9) === "plusvalia"){
-        alert("GESSTOR INFORMA:</br></br>No existe reporte alfanumérico para esta consulta");
+        alert("GESSTOR INFORMA:</br></br>No se encuentran datos alfanuméricos para generar el reporte");
         quitgif(); 
     }
     
@@ -79,8 +79,13 @@ function file() {
     
     else if (queryexport.substring(0, 26) === "Tipo de Amenaza INUNDACION"){
          var titulo = JSON.stringify(["Codigo Predial","Localidad","Barrio","Amenaza Inundacion","# de Predios"]);
+         if (queryexport === 'Tipo de Amenaza INUNDACIONG') {
          var select = search("preproduccion:ReportInundacion");
          quitgif();
+         }
+         else if(queryexport === 'Tipo de Amenaza INUNDACIONF'){
+         var select = search("preproduccion:ReportInundacionFiltro", values); 
+         }
     }
     
     else if (queryexport.substring(0, 24) === "Tipo de Amenaza REMOCION"){
@@ -88,41 +93,97 @@ function file() {
          if (queryexport === 'Tipo de Amenaza REMOCIONG') {
             alert("GESSTOR INFORMA:</br></br>La base de datos es demasiado grande y al exportarla completa puede tardar demasiado tiempo, por favor primero filtre por Localidad, Barrio o Manzana");
             quitgif();
+        } else if (queryexport === 'Tipo de Amenaza REMOCIONF') {
+            var select = search("preproduccion:ReportRemosion", values); 
+        } 
+    }
+     
+    else if (queryexport.substring(0, 23) === "estratificacion_oficial"){
+         var titulo = JSON.stringify(["Codigo Predial", "Localidad","Barrio", "Estrato", "# Predios"]);
+        if (queryexport === 'estratificacion_oficial G') {
+            alert("GESSTOR INFORMA:</br></br>La base de datos es demasiado grande y al exportarla completa puede tardar demasiado tiempo, por favor primero filtre por Localidad, Barrio o Manzana");
+            quitgif();
         } else {
-            alert("listo");
-            //var select = search("preproduccion:ReportCalidadConstruccion", values);
+            var select = search("preproduccion:ReportEstratificacion", values);
+        }
+    }
+    
+    else if (queryexport.substring(0, 15) === "espacio_publico"){
+        alert("GESSTOR INFORMA:</br></br>No se encuentran datos alfanuméricos para generar el reporte");
+        quitgif(); 
+    }
+    
+     else if (queryexport.substring(0, 17) === "Clasificacion_Uso"){
+         alert("GESSTOR INFORMA:</br></br>El reporte corresponde a los predios urbanos que se encuentran en zona de expansión urbana");
+         quitgif(); 
+         var titulo = JSON.stringify(["Codigo Predial", "Localidad","Barrio", "Uso", "# Predios"]);
+         var select = search("preproduccion:ReportClasificacionUso");
+    }
+    
+     else if (queryexport.substring(0, 30) === "Estructura Ecologica Principal"){
+         alert("GESSTOR INFORMA:</br></br>No se encuentran datos alfanuméricos para generar el reporte");
+         quitgif(); 
+    }
+    
+    else if (queryexport.substring(0, 27) === "Area Proteccion Urbanistica"){
+         alert("GESSTOR INFORMA:</br></br>No se encuentran datos alfanuméricos para generar el reporte");
+         quitgif(); 
+    }
+     
+    else if (queryexport.substring(0, 16) === "Avaluo Catastral"){
+        var titulo = JSON.stringify(["Codigo Predial", "Localidad","Barrio", "Avaluo Catastral", "Direccion"]);
+        if (queryexport === 'Avaluo Catastral G') {
+             alert("GESSTOR INFORMA:</br></br>La base es demasiado grande para exportarla completa, por favor primero filtre por Localidad, Barrio o Manzana");
+             quitgif(); 
+        } 
+        else {
+        var select = search("preproduccion:ReportAvaluoCatastral", values);
         } 
     }
     
-    /* 
-    else if (queryexport.substring(0, 19) === "predios_construidos"){
-        var titulo = JSON.stringify(["Codigo Predial", "Area Construida"]);
-        if (queryexport === 'predios_construidos G') {
-             alert("GESSTOR INFORMA:</br></br>La base es demasiado grande para exportarla completa, por favor primero filtre por Localidad, Barrio o Manzana");
-            quitgif();
-        } else if (queryexport === 'predios_construidos B') {
-            var select = select_query("select codigo, area_construida_hacienda from u_terreno WHERE cod_barrio=" + valor + ";");
-        } else if (queryexport === 'predios_construidos L') {
-            var select = select_query("select codigo, area_construida_hacienda from u_terreno WHERE cod_loc=" + valor + ";");
-        } else if (queryexport === 'predios_construidos M') {
-            var select = select_query("select codigo, area_construida_hacienda from u_terreno WHERE manzana_co=" + valor + ";");
+    else if (queryexport.substring(0, 21) === "Tipo de Contribuyente"){
+		var titulo = JSON.stringify(["Codigo Predial", "Localidad","Barrio", "Tipo de Contribuyente", "# Predios"]);
+        if (queryexport == 'Tipo de Contribuyente G'){
+        var select = search("preproduccion:ReportTipoContribuyente");
         }
+        else{
+        var select = search("preproduccion:ReportTipoContribuyenteFiltro", values);
+     }
     }
-       
-    else if (queryexport.substring(0, 22) === "Calidad Construcciones"){
-        var titulo = JSON.stringify(["Codigo Predial", "Puntaje"]);
-        if (queryexport === 'Calidad Construcciones G') {
+    
+    else if (queryexport.substring(0, 16) === "Tipo Propietario"){
+        alert("GESSTOR INFORMA:</br></br>No se encuentran datos alfanuméricos para generar el reporte");
+        quitgif(); 
+    }
+    
+    else if (queryexport.substring(0, 15) === "Impuesto Camara"){
+        alert("GESSTOR INFORMA:</br></br>No se encuentran datos alfanuméricos para generar el reporte");
+        quitgif(); 
+    }
+    
+    else if (queryexport.substring(0, 17) === "Incremento Avaluo"){
+        alert("GESSTOR INFORMA:</br></br>No se encuentran datos alfanuméricos para generar el reporte");
+        quitgif(); 
+    }
+    
+    else if (queryexport.substring(0, 14) === "oficial_vs_AAA"){
+        var titulo = JSON.stringify(["Codigo Predial", "Localidad","Barrio", "Estrato Oficial", "Estrato Prestador", "# Predios"]);
+        if (queryexport == "oficial_vs_AAA AcueductoG"){
             alert("GESSTOR INFORMA:</br></br>La base es demasiado grande para exportarla completa, por favor primero filtre por Localidad, Barrio o Manzana");
-            quitgif();
-        } else if (queryexport === 'Calidad Construcciones B') {
-            var select = select_query("select codigo, puntaje from u_terreno WHERE cod_barrio=" + valor + ";");
-        } else if (queryexport === 'Calidad Construcciones L') {
-            var select = select_query("select codigo, puntaje from u_terreno WHERE cod_loc=" + valor + ";");
-        } else if (queryexport === 'Calidad Construcciones M') {
-            var select = select_query("select codigo, puntaje from u_terreno WHERE manzana_co=" + valor + ";");
-        }
+            quitgif();    
+        }else if (queryexport == "oficial_vs_AAA AcueductoF"){
+            var select = search("preproduccion:ReportDiferenciaEstratoAcueducto", values);
+        }else if (queryexport == "oficial_vs_AAA AlcantarilladoG"){
+            alert("GESSTOR INFORMA:</br></br>La base es demasiado grande para exportarla completa, por favor primero filtre por Localidad, Barrio o Manzana");
+            quitgif();  
+        }else if (queryexport == "oficial_vs_AAA AlcantarilladoF"){
+            var select = search("preproduccion:ReportDiferenciaEstratoAlcantarillado", values);
+        } 
+        
     }
-     
+
+    /* 
+    
     
     
     

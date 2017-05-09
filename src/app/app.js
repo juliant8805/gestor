@@ -314,7 +314,6 @@ map.on('singleclick', function (evt) {
                         var ig = [];
                         var codfoto = values.codigo_ant.substring(0, 17);
                         if (modulo === 'planeacion') {
-                            console.log(modulo);
                             select[0] = "<b>Codigo Manzana</b>";
                             select[1] = "<b>Codigo Catastral Nuevo</b>";
                             select[2] = "<b>Codigo Catastral Anterior</b>";
@@ -353,6 +352,7 @@ map.on('singleclick', function (evt) {
                             var estacueducto = values.estrato_acueducto;
                             var estalcantarillado = values.estrato_alcantarillado;
                             var estaseo = values.estrato_aseo;
+            
                             if (estacueducto === 11) {
                                 estacueducto = 'Industria (11)';
                             }

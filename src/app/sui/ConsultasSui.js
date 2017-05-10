@@ -80,7 +80,7 @@ function rango(style) {
             var titulo = "Est Oficial vs Est Acueducto";
             estdistica(select, titulo, param, totales);
             map.getView().fitExtent(predio.getExtent(), map.getSize());
-            queryexport = style + ' AcueductoG';   
+            queryexport = style + ' G';   
            } 
            else {
             var select = search("preproduccion:TotalPrediosSinConsulta", values);
@@ -118,7 +118,7 @@ function rango(style) {
             var titulo = "Est Oficial vs Est Alcantarillado";
             estdistica(select, titulo, param, totales);
             map.getView().fitExtent(predio.getExtent(), map.getSize());
-            queryexport = style + ' AlcantarilladoG';   
+            queryexport = style + ' G';  
            } 
            else {
             var select = search("preproduccion:TotalPrediosSinConsulta", values);
@@ -177,7 +177,7 @@ function rango(style) {
                 var filtro = '"manzana_co=' + valor + '"';  
             }
             predio.getSource().updateParams({'STYLES': 'Oficial vs AAA Aseo', 'CQL_FILTER': eval(filtro)});
-            queryexport = style;              
+            queryexport = style + ' AseoF';               
            }                   
          }              
     }          
@@ -219,7 +219,7 @@ function rango(style) {
                 var filtro = '"manzana_co=' + valor + '"';  
             }
             predio.getSource().updateParams({'STYLES': 'Disponibilidad Acueducto', 'CQL_FILTER': eval(filtro)});
-            queryexport = style;              
+            queryexport = style + ' AcueductoF';            
            }                   
         }
          
@@ -260,7 +260,7 @@ function rango(style) {
                 var filtro = '"manzana_co=' + valor + '"';  
             }
             predio.getSource().updateParams({'STYLES': 'Disponibilidad Alcantarillado', 'CQL_FILTER': eval(filtro)});
-            queryexport = style;                  
+            queryexport = style + ' AlcantarilladoF';                   
            }                   
          } 
          
@@ -300,7 +300,7 @@ function rango(style) {
                 var filtro = '"manzana_co=' + valor + '"';  
             }
             predio.getSource().updateParams({'STYLES': 'Disponibilidad Aseo', 'CQL_FILTER': eval(filtro)});
-            queryexport = style;                  
+            queryexport = style + ' AseoF';                    
            }                   
          }          
     }    

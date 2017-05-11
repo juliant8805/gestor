@@ -25,12 +25,13 @@ function busca_dir() {
         var val = document.getElementById('dir_g1').value + " " + document.getElementById('dir1').value + " " + document.getElementById('dir2').value + " " + document.getElementById('dir3').value;
         //obtengo la direccion del formulario
         var address = 'barranquilla ' + val;
-        geocoder = new google.maps.Geocoder();
+        geocoder = new google.maps.Geocoder();        
         //hago la llamada al geodecoder
-        geocoder.geocode({'address': address}, function (results, status) {
+        geocoder.geocode({'address': address}, function(results, status) {
             //si el estado de la llamado es OK
             if (status == google.maps.GeocoderStatus.OK) {
-                console.log(results);
+                //console.log(address);
+                //console.log(results);
                 //console.log(results[0].geometry.viewport.b.b);
                 //console.log(results[0].geometry.viewport.f.b);
                 var long = ((results[0].geometry.viewport.b.b + results[0].geometry.viewport.b.f) / 2);

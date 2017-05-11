@@ -1,8 +1,8 @@
 //window.onload = detectarCarga;
 window.oncontextmenu = function() { return false; };
-$(document).on('ready',function(){
+$(document).on('ready', function () {
 //codigo aquí
-var select = validacionusuarios();
+    var select = validacionusuarios();
     //console.log(select);
     if (navigator.vendor !== "Google Inc.") {
         location.href = "barranquilla.html?ig=navegador";
@@ -11,21 +11,21 @@ var select = validacionusuarios();
         location.href = "barranquilla.html?ig=error";
     }
     /*registro de inrgeso de usuarios
-    else {
-        try {
-            var select1 = select_query("SELECT count(*) AS count FROM reguser WHERE usuario = '" + ca[0] + "'");
-            if (select1[0][0] === 0) {
-                document.getElementById("completo").style.display = 'block';
-            }
-            var f = new Date();
-            //var hora = f.getHours
-            var fecha = f.getFullYear() + "/" + (f.getMonth() + 1) + "/" + f.getDate() + " " + f.getHours() + ":" + f.getMinutes() + ":" + f.getSeconds();
-            //console.log(fecha);
-            update_query("INSERT INTO reguser (usuario,fecha) VALUES('" + select[0][3] + "','" + fecha + "');");
-            //console.log(arrayResult);
-        } catch (err) {
-        }
-    }*/
+     else {
+     try {
+     var select1 = select_query("SELECT count(*) AS count FROM reguser WHERE usuario = '" + ca[0] + "'");
+     if (select1[0][0] === 0) {
+     document.getElementById("completo").style.display = 'block';
+     }
+     var f = new Date();
+     //var hora = f.getHours
+     var fecha = f.getFullYear() + "/" + (f.getMonth() + 1) + "/" + f.getDate() + " " + f.getHours() + ":" + f.getMinutes() + ":" + f.getSeconds();
+     //console.log(fecha);
+     update_query("INSERT INTO reguser (usuario,fecha) VALUES('" + select[0][3] + "','" + fecha + "');");
+     //console.log(arrayResult);
+     } catch (err) {
+     }
+     }*/
     //console.log(document.getElementById("nombre_usuario").innerHTML);
     //vista de iconos por perfil
     //console.log(select);
@@ -56,7 +56,6 @@ var select = validacionusuarios();
             var a = document.getElementsByTagName("head")[0];
             a || (a = document.body.parentNode.appendChild(document.createElement("head")));
             a.appendChild(b);
-            
             var d = document.createElement("script");
             d.type = "text/javascript";
             d.charset = "UTF-8";
@@ -64,17 +63,16 @@ var select = validacionusuarios();
             var c = document.getElementsByTagName("head")[0];
             c || (c = document.body.parentNode.appendChild(document.createElement("head")));
             c.appendChild(d);
-            
-          /*  var e = document.createElement("script");
-            e.type = "text/javascript";
-            e.charset = "UTF-8";
-            e.src = "src/app/app/Consultas/sinconsulta.js";
-            var f = document.getElementsByTagName("head")[0];
-            f || (f = document.body.parentNode.appendChild(document.createElement("head")));
-            f.appendChild(f);*/
-            
-            
-            
+            /*  var e = document.createElement("script");
+             e.type = "text/javascript";
+             e.charset = "UTF-8";
+             e.src = "src/app/app/Consultas/sinconsulta.js";
+             var f = document.getElementsByTagName("head")[0];
+             f || (f = document.body.parentNode.appendChild(document.createElement("head")));
+             f.appendChild(f);*/
+
+
+
         } else if (select[0][7] === true) {
             //document.getElementById("metrotel").style.display = "block";
             document.getElementById("menu_circular").style.display = "block";
@@ -179,7 +177,7 @@ function validacionusuarios() {
     try {
         //var selec = select_query("SELECT * FROM usuario WHERE usuario ='" + ca[0] + "' AND contrasena ='" + ca[1] + "' AND estado='t';");
         //console.log(selec);
-        var select = search ("preproduccion:ValidateUser", ca[0],ca[1]);
+        var select = search("preproduccion:ValidateUser", ca[0], ca[1]);
         document.getElementById("carga").style.display = "none";
         document.getElementById("nombre_usuario").innerHTML = select[0][0].split(" ", 1);
     } catch (err) {
@@ -188,21 +186,21 @@ function validacionusuarios() {
 }
 changestyles = 0;
 /*passwordchange
-function password() {
-    var ca = document.cookie.split('=');
-    //hex_md5(document.getElementById("p").value);
-    var select = select_query("SELECT * FROM usuario WHERE usuario ='" + ca[0] + "' AND contrasena ='" + hex_md5(document.getElementById('password').value) + "';");
-    //console.log(select);
-    if (select === null) {
-        alert("Contraseña incorrecta");
-    } else if (document.getElementById("newpassword").value === document.getElementById("cpassword").value) {
-        var arrayResult = update_query("UPDATE usuario SET contrasena='" + hex_md5(document.getElementById('newpassword').value) + "' WHERE usuario='" + ca[0] + "';");
-        $('#myModal').modal('hide');
-    } else {
-        alert("La contraseña nueva y su confirmacion no coinciden");
-    }
-    return;
-}*/
+ function password() {
+ var ca = document.cookie.split('=');
+ //hex_md5(document.getElementById("p").value);
+ var select = select_query("SELECT * FROM usuario WHERE usuario ='" + ca[0] + "' AND contrasena ='" + hex_md5(document.getElementById('password').value) + "';");
+ //console.log(select);
+ if (select === null) {
+ alert("Contraseña incorrecta");
+ } else if (document.getElementById("newpassword").value === document.getElementById("cpassword").value) {
+ var arrayResult = update_query("UPDATE usuario SET contrasena='" + hex_md5(document.getElementById('newpassword').value) + "' WHERE usuario='" + ca[0] + "';");
+ $('#myModal').modal('hide');
+ } else {
+ alert("La contraseña nueva y su confirmacion no coinciden");
+ }
+ return;
+ }*/
 function mostrar(consulta) {
     //document.getElementById('barra_direccion').style.display = 'none';
     document.getElementById('barra_sitio').style.display = 'none';
@@ -226,7 +224,6 @@ function mostrar(consulta) {
     document.getElementById('manzana').value = "";
     document.getElementById('matricula').value = "";
     document.getElementById('direccion').value = "";
-
     if (consulta === 'consulta_direccion') {
         document.getElementById('barra_direccion').style.display = 'block';
         localidad.setVisible(false);
@@ -384,7 +381,6 @@ function limpiar_consulta() {
     document.getElementById("tablaatributosprediosph").style.display = "none";
     document.getElementById("botonmaximizarph").style.display = "none";
     predio.getSource().updateParams({'STYLES': 'predios_sin_consulta', 'CQL_FILTER': null});
-
 }
 function busqueda_personalizada() {
     if (document.getElementById('personalizada').style.display === "" || document.getElementById('personalizada').style.display === "none")
@@ -395,7 +391,6 @@ function busqueda_personalizada() {
         document.getElementById('rango_area').style.display = 'block';
         document.getElementById('tipo_construccion').style.display = 'block';
         document.getElementById('estrato').style.display = 'block';
-
     } else
     {
         document.getElementById('personalizada').style.display = 'none';
@@ -456,15 +451,15 @@ function busqueda(id) {
     }
 }
 
-function ocultarpanelatributosaaa(){
-   document.getElementById('mensaje').style.display = 'none'; 
-   document.getElementById('tablaatributospuntosaaa').style.display = 'none'; 
-   document.getElementById('botonmaximizarpuntosaaa').style.display = 'block';   
+function ocultarpanelatributosaaa() {
+    document.getElementById('mensaje').style.display = 'none';
+    document.getElementById('tablaatributospuntosaaa').style.display = 'none';
+    document.getElementById('botonmaximizarpuntosaaa').style.display = 'block';
 }
-function mostrarpanelatributosaaa(){
-   document.getElementById('mensaje').style.display = 'none'; 
-   document.getElementById('tablaatributospuntosaaa').style.display = 'block'; 
-   document.getElementById('botonmaximizarpuntosaaa').style.display = 'none';   
+function mostrarpanelatributosaaa() {
+    document.getElementById('mensaje').style.display = 'none';
+    document.getElementById('tablaatributospuntosaaa').style.display = 'block';
+    document.getElementById('botonmaximizarpuntosaaa').style.display = 'none';
 }
 
 
@@ -494,7 +489,6 @@ $(document).ready(function () {
 function open_streetview() {
     document.getElementById('marco').style.display = 'block';
     document.getElementById('botoncerrarstreetview').style.display = 'block';
-
 }/*
  function close_streetview() {
  console.log(algo);
@@ -543,7 +537,6 @@ window.onclick = function (event) {
         }
     }
 };
-
 function marcado() {
     if (document.getElementById("termin").checked === true) {
         document.getElementById('completo').style.display = 'none';
@@ -856,9 +849,63 @@ function alertDGC(mensaje) {
         setTimeout("$('.dgcAlert').remove()", dgcTiempo);
     });
 }
+
+function wfs() {
+    //var geometry = "63.00,23.00";
+    var postData = '<DescribeFeatureType service="WFS" xmlns="http://www.opengis.net/wfs" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wfs http://35.184.3.4:8080/geoserver/schemas/wfs/1.1.0/wfs.xsd">\
+        <authentication>\
+            <username>desarrollo</username>\
+            <password>produccion2017</password>\
+        </authentication>\
+    </DescribeFeatureType>';
+    /*var postData = '<Transaction service="WFS" xmlns="http://www.opengis.net/wfs" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wfs http://35.184.3.4:8080/geoserver/schemas/wfs/1.1.0/wfs.xsd">\
+        <authentication>\
+            <username>desarrollo</username>\
+            <password>produccion2017</password>\
+        </authentication>\
+        <Insert xmlns="http://www.opengis.net/wfs">\
+            <usuario>\
+                <nombre>popeye</nombre>\
+            </usuario>\
+        </Insert>\
+    </Transaction>';
+    /*var postData =
+     '<Transaction xmlns="http://www.opengis.net/wfs" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:test_wfs_edit="test_wfs" xmlns:gml="http://www.opengis.net/gml" version="1.1.0" service="WFS" xsi:schemaLocation="http://www.domain.com/app">\
+     <Insert xmlns="http://www.opengis.net/wfs">\
+     <test_wfs_edit:wfs_punkt_test >\
+     <test_wfs_edit:geom >\
+     <gml:Point srsName="EPSG:4326">\
+     <gml:coordinates cs="," >' + geometry + '</gml:coordinates>\
+     </gml:Point>\
+     </wfs_edit_test:geom>\
+     <wfs_edit_test:date >' + date + '</wfs_edit_test:date>\
+     <wfs_edit_test:id>' + id + '</wfs_edit_test:id>\
+     </wfs_edit_test:order>\
+     </Insert>\
+     </Transaction>';*/
+    rooturl = 'http://35.184.3.4:8080/geoserver/preproduccion/ows?';
+    /*service = 'wfs';
+     version = '1.1.0';
+     request = 'GetCapabilities';*/
+    $.ajax({
+        type: "POST",
+        url: rooturl,
+        dataType: "xml",
+        contentType: "text/xml",
+        data: postData,
+        success: function (xml) {
+            console.log(xml);
+            //alert('success');
+        },
+        error: function (xml) {
+            console.log('error');
+        }
+    });
+}
+
 window.alert = function (message) {
     alertDGC(message);
 };
 
 
-   
+

@@ -47,7 +47,7 @@ var measuring = false;
 measureControl = function (opt_options) {
     var options = opt_options || {};
     var button = document.createElement('button');
-    button.innerHTML = '<img src="../gesstor/imagenes/measure-control.png" />';
+    button.innerHTML = '<img src="../barranquilla/imagenes/measure-control.png" />';
     var this_ = this;
     var handleMeasure = function (e) {
         if (!measuring) {

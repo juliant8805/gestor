@@ -980,7 +980,7 @@ body{
 }
 #barras{
     opacity: 0.6;
-    background-image:url('/gesstor/imagenes/barras.png');	
+    background-image:url('/barranquilla/imagenes/barras.png');	
     width:0.5em;
     height: 0.1em;
     background-position:center;
@@ -1422,7 +1422,24 @@ td{
 
 
 
-
+@media handheld, only screen and (min-width: 900px) {
+    #boton_geocoder{
+        position:absolute;
+        top:1.7em;
+        left:55em; 
+        height:3em;
+        width:3em;    
+  }
+}
+@media handheld, only screen and (max-width: 900px) {
+    #boton_geocoder{
+        position:absolute;
+        left:2.5em;
+        top:5em;
+        height:1em;
+        width:1em;
+  }
+}
 
 
 

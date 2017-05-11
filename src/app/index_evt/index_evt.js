@@ -177,7 +177,8 @@ var select = validacionusuarios();
             document.getElementById("tipo_usuario").style.display = "block";
             document.getElementById("manual").style.display = "block";
             document.getElementById("icono_codigo").style.display = "block";
-            document.getElementById("dir_gestor").style.display = "block";
+            //document.getElementById("dir_gestor").style.display = "block";
+            document.getElementById("boton_geocoder").style.display = "block";
             modulo = "gestor";
             var b = document.createElement("script");
             b.type = "text/javascript";
@@ -494,7 +495,7 @@ function busqueda(id) {
         document.getElementById('barra_alineamiento').style.display = 'block';
     } else if (id === "Usos_Permitidos") {
         document.getElementById('barra_predioshasusos').style.display = 'block';
-    } else if (id === "dir_gestor") {
+    } else if (id === "boton_geocoder") {
         document.getElementById('propietarios').style.display = 'none';
         document.getElementById('cedul').style.display = 'none';
         document.getElementById('codigo').style.display = 'none';

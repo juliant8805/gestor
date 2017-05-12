@@ -1,9 +1,9 @@
 function busca_dir() {
     var dir = document.getElementById('dir_g1').value + " " + document.getElementById('dir1').value + " " + document.getElementById('dir_g2').value + " " + document.getElementById('dir2').value;
-    var sel = select_query("SELECT direccion FROM geo_wgs84 WHERE direccion='" + dir + "' LIMIT 1;");
-    if (sel) {
-        var sele = select_query("SELECT max(placa) FROM geo_wgs84 WHERE direccion ='" + dir + "';");
-        //console.log(sele);
+    var sel = search("preproduccion:DireccionGesstor", dir);
+    if (sel.length>0) {
+        console.log("base");
+        var sele = search("preproduccion:DireccionGesstorSele", dir);
         if (document.getElementById('dir3').value > +sele[0][0]) {
             var placa = +sele[0][0];
         } else if (document.getElementById('dir3').value < 1) {
@@ -13,26 +13,24 @@ function busca_dir() {
         }
         var dirc = dir + " " + placa;
         var parametro = "preproduccion:dir_geo";
-        //var select = select_query("SELECT placa,direcci, ST_AsText(geom) FROM geo_wgs84 WHERE direcci='" + dirc + "';");
         var select = search(parametro, dirc);
-        console.log(select);
         if (select) {
-            //console.log("ok");
             var coord = select[0][2].split("(")[1].split(")")[0].split(" ");
             addmarker(+coord[1], +coord[0]);
         } else {
-            console.log("mmm");
+            //console.log("mmm");
         }
     } else {
+        console.log("google");
         var val = document.getElementById('dir_g1').value + " " + document.getElementById('dir1').value + " " + document.getElementById('dir2').value + " " + document.getElementById('dir3').value;
-        console.log(val);
         //obtengo la direccion del formulario
         var address = 'barranquilla ' + val;
-        geocoder = new google.maps.Geocoder();
+        geocoder = new google.maps.Geocoder();        
         //hago la llamada al geodecoder
-        geocoder.geocode({'address': address}, function (results, status) {
+        geocoder.geocode({'address': address}, function(results, status) {
             //si el estado de la llamado es OK
             if (status == google.maps.GeocoderStatus.OK) {
+                //console.log(address);
                 //console.log(results);
                 //console.log(results[0].geometry.viewport.b.b);
                 //console.log(results[0].geometry.viewport.f.b);

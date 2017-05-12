@@ -102,8 +102,6 @@ function rango(style) {
 
 //distrito vs AAA
      else if (style === "Distrito vs Prestadores AAA") { 
-        estacionestransmetro.setVisible(false);
-        viastransmasivo.setVisible(false);
         construcciones.setVisible(false);
         predio.setVisible(true);
         puntos_aaa.setVisible(true);
@@ -119,8 +117,8 @@ function rango(style) {
             map.getView().fitExtent(predio.getExtent(), map.getSize());
             queryexport = style + ' G';
         } else {
-             var select = search("preproduccion:TotalPrediosSinConsulta", values);
-            var param = [['Predios Coincidentes'], ['Predios En base catastral y no en AAA']/*, ['Registros AAA sin codigo catastral']*/];
+            var select = search("preproduccion:TotalPrediosSinConsulta", values);
+            var param = [['Predios Coincidentes'], ['Predios En base catastral y no en AAA']];
             var total1 = search("preproduccion:DistritovsPrestadoresFiltro", values, 'Si');
             var total2 = search("preproduccion:DistritovsPrestadoresFiltro", values, 'No');
             var totales = total1.concat(total2);

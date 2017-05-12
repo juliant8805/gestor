@@ -1815,18 +1815,18 @@ function rango(style) {
         }
         //nomenclatura no estandarizada
         else if (style === "Nomenclatura Domiciliaria") {
-            layerEstratificacionOficial.setVisible(false);
-            layermetrotel.setVisible(false);
-            layerindustriaycomercio.setVisible(false);
-            layerSUI.setVisible(false);
-            layerprediosexentos2016.setVisible(false);
-            estacionestransmetro.setVisible(false);
-            viastransmasivo.setVisible(false);
-            espacio_pubico.setVisible(false);
-            layerespaciopublico.setVisible(false);
-            construcciones.setVisible(false);
-            predio.setVisible(true);
-            if (document.getElementById("barrio").value === '' && document.getElementById("localidad").value === '' && document.getElementById("manzana").value === '') {
+                layerEstratificacionOficial.setVisible(false);
+                layermetrotel.setVisible(false);
+                layerindustriaycomercio.setVisible(false);
+                layerSUI.setVisible(false);
+                layerprediosexentos2016.setVisible(false);
+                estacionestransmetro.setVisible(false);
+                viastransmasivo.setVisible(false);
+                espacio_pubico.setVisible(false);
+                layerespaciopublico.setVisible(false);
+                construcciones.setVisible(false);
+                predio.setVisible(true);
+                if (document.getElementById("barrio").value === '' && document.getElementById("localidad").value === '' && document.getElementById("manzana").value === '') {
                 try{
                 var select = select_query("select sum(numeropredios) from u_terreno;");}catch(err){}
 				if (!select){select=select_query("SELECT COUNT(nombre) FROM localidades where nombre = 'nada'");}
@@ -1907,8 +1907,6 @@ function rango(style) {
                 queryexport = style + ' M';
             }
         }
-
-
 
         //tipo de contribuyente
         else if (style === "Tipo de Contribuyente") {

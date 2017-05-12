@@ -13,7 +13,7 @@
                 //console.log(ca);
                 //var select = select_query("SELECT * FROM usuario WHERE usuario ='" + ca[0] + "' AND contrasena ='" + ca[1] + "' AND estado='t';");
                 var select = search("preproduccion:ValidateUser", ca[0], ca[1]);
-                console.log(select);
+                //console.log(select);
                 if (select === null || select.length === 0) {
                     //alert("ad");
                     location.href = "barranquilla.html?ig=error";

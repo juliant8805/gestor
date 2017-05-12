@@ -11,15 +11,10 @@ var infoFormat = 'application/vnd.ogc.gml/3.1.1';
 var center = [-8327000, 1230000];
 var zoom = 12;
 // =========================================================================
-// override the axis orientation for WMS GetFeatureInfo
 var proj = new ol.proj.Projection({
     code: 'http://www.opengis.net/gml/srs/epsg.xml#4326',
     axis: 'enu'
 });
-//ol.proj.addEquivalentProjections([ol.proj.get('EPSG:4326'), proj]);
-// create a GML format to read WMS GetFeatureInfo response
-//var format = new ol.format.GML({featureNS: featureNS, featureType: featureType});
-//var format1 = new ol.format.GML({featureNS: featureNS, featureType: featureType1});
 var format = [];
 var wmsSource = [];
 for (var i = 0; i <= featureType.length - 1; i++)
@@ -33,37 +28,12 @@ for (var i = 0; i <= featureType.length - 1; i++)
         },
         serverType: 'geoserver'
     });
-}
-;
-// create a new popup with a close box
-// the popup will draw itself in the popup div container
-// autoPan means the popup will pan the map if it's not visible (at the edges of the map).
+};
 var popup = new app.Popup({
     element: document.getElementById('popup'),
     closeBox: true,
     autoPan: true
 });
-// the tiled WMS source for our local GeoServer layer
-/*
- var wmsSource = new ol.source.TileWMS({
- url : url,
- params : {
- 'LAYERS' : featurePrefix + ':' + featureType1,
- 'TILED' : true
- },
- serverType : 'geoserver'
- });*/
-// create a vector layer to contain the feature to be highlighted
-/*var highlight = new ol.layer.Vector({
- image: new ol.style.Icon({
- anchor: [0.5, 1],
- opacity: 1,
- scale: 0.3,
- src: './imagenes/ubicacion.png'
- }),
- source: new ol.source.Vector()
- });*/
-
 var highlight = new ol.layer.Vector({
     style: new ol.style.Style({
         stroke: new ol.style.Stroke({
@@ -73,31 +43,11 @@ var highlight = new ol.layer.Vector({
     }),
     source: new ol.source.Vector()
 });
-
-/*var highlightfeatures = new ol.layer.Vector({
- style : new ol.style.Style({
- stroke : new ol.style.Stroke({
- color : '#00FFFF',
- width : 3
- })
- }),
- source : new ol.source.Vector()
- });*/
-
-
-// when the popup is closed, clear the highlight
-/*$(popup).on('close', function () {
- highlight.getSource().clear();
- });*/
-// create the OpenLayers Map object
-// we add a layer switcher to the map with two groups:
-// 1. background, which will use radio buttons
-// 2. default (overlays), which will use checkboxes
 var measuring = false;
 measureControl = function (opt_options) {
     var options = opt_options || {};
     var button = document.createElement('button');
-    button.innerHTML = '<img src="../gesstor/imagenes/measure-control.png" />';
+    button.innerHTML = '<img src="../barranquilla/imagenes/measure-control.png" />';
     var this_ = this;
     var handleMeasure = function (e) {
         if (!measuring) {
@@ -346,10 +296,8 @@ map.on('singleclick', function (evt) {
                                 stv[i].appendChild(ig[i]);
                             } else {
                                 cell2.innerHTML = sel[i];
-                            }
-                            
-                         }   
-                        
+                            } 
+                         }    
                     } 
                 
                         else if (ph < 800) {
@@ -399,10 +347,12 @@ map.on('singleclick', function (evt) {
                             ig[7] = document.createElement("img");
                             ig[7].src = "./imagenes/streetview.png";
                             var campos = 7;
-                        } else if (modulo === 'sui') {
+                        }  
+                            else if (modulo === 'sui') {
                             var estacueducto = values.estrato_acueducto;
                             var estalcantarillado = values.estrato_alcantarillado;
                             var estaseo = values.estrato_aseo;
+            
                             if (estacueducto === 11) {
                                 estacueducto = 'Industria (11)';
                             }
@@ -482,11 +432,11 @@ map.on('singleclick', function (evt) {
                             ig[12] = document.createElement("img");
                             ig[12].src = "./imagenes/streetview.png";
                             var campos = 12;
-                        } else if (modulo === 'catastro') {
+                        } 
+                            else if (modulo === 'catastro') {
                             select[0] = "<b>Codigo Manzana</b>";
                             select[1] = "<b>Codigo Catastral Nuevo</b>";
                             select[2] = "<b>Codigo Catastral Anterior</b>";
-                   
                             select[3] = "<b>Dirección</b>";
                             select[4] = "<b>Código ZHG</b>";
                             select[5] = "<b>Valor m2 ZHG</b>";
@@ -495,11 +445,9 @@ map.on('singleclick', function (evt) {
                             select[8] = "<b>Avalúo Catastral 2017</b>";
                             select[9] = "<b>Impuesto Predial 2017</b>";      
                             select[10] = "<b>Uso Permitido</b>";
-                            select[11] = "<b>Uso Actual</b>";
-                            
+                            select[11] = "<b>Uso Actual</b>"; 
                             select[12] = "<b>Área de Terreno</b>";
-                            select[13] = "<b>Área Construida</b>";
-                            
+                            select[13] = "<b>Área Construida</b>"; 
                             select[14] = "<b>Fotografias</b>";
                             sel[0] = values.manzana_co;
                             sel[1] = values.codigo;
@@ -512,11 +460,9 @@ map.on('singleclick', function (evt) {
                             sel[8] = values.avaluo_hacienda;
                             sel[9] = values.impuesto_hacienda;    
                             sel[10] = values.norma_uso;
-                            sel[11] = values.uso_actual_zhf;
-                            
+                            sel[11] = values.uso_actual_zhf; 
                             sel[12] = values.area_terreno_hacienda;
-                            sel[13] = values.area_construida_hacienda;
-                            
+                            sel[13] = values.area_construida_hacienda; 
                             sel[14] = document.createElement("a");
                             sel[14].id = "img1";
                             sel[14].style = "width: 30px; height: 50px;";
@@ -535,17 +481,19 @@ map.on('singleclick', function (evt) {
                             ig[14] = document.createElement("img");
                             ig[14].src = "./imagenes/streetview.png";
                             var campos = 14;
-                        } else if (modulo === 'hacienda') {
+                        } 
+                            else if (modulo === 'hacienda') {      
                             select[0] = "<b>Codigo Manzana</b>";
                             select[1] = "<b>Codigo Catastral Nuevo</b>";
                             select[2] = "<b>Codigo Catastral Anterior</b>";
                             select[3] = "<b>Dirección</b>";
                             select[4] = "<b>Estrato</b>";
                             select[5] = "<b>Destino</b>";
-                            select[6] = "<b>Avalúo</b>";
-                            //select[7] = "<b>Tarifa</b>";
-                            select[7] = "<b>Impuesto</b>";
-                            select[8] = "<b>Fotografias</b>";
+                            select[6] = "<b>Avalúo Catastral 2017</b>";
+                            select[7] = "<b>Impuesto Predial 2017</b>";
+                            select[8] = "<b>Area de Terreno (m2)</b>";
+                            select[9] = "<b>Area Construida (m2)</b>";
+                            select[10] = "<b>Fotografias</b>";
                             sel[0] = values.manzana_co;
                             sel[1] = values.codigo;
                             sel[2] = values.codigo_ant;
@@ -554,25 +502,26 @@ map.on('singleclick', function (evt) {
                             sel[5] = values.destino_hacienda;
                             sel[6] = values.avaluo_hacienda;
                             sel[7] = values.impuesto_hacienda;
-                            //sel[8] = "";
-                            sel[8] = document.createElement("a");
-                            sel[8].id = "img1";
-                            sel[8].style = "width: 30px; height: 50px;";
-                            sel[8].target = "marco";
-                            sel[8].setAttribute("onclick", "open_streetview()");
-                            sel[8].href = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";
-                            imag[8] = document.createElement("img");
-                            imag[8].id = "im1";
-                            imag[8].className = "pequeña";
-                            imag[8].src = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";
-                            stv[8] = document.createElement("a");
-                            stv[8].id = "imgstreet1";
-                            stv[8].target = "marco";
-                            stv[8].href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
-                            stv[8].setAttribute("onclick", "open_streetview()");
-                            ig[8] = document.createElement("img");
-                            ig[8].src = "./imagenes/streetview.png";
-                            var campos = 8;
+                            sel[8] = values.area_terreno_hacienda;
+                            sel[9] = values.area_construida_hacienda;                        
+                            sel[10] = document.createElement("a");
+                            sel[10].id = "img1";
+                            sel[10].style = "width: 30px; height: 50px;";
+                            sel[10].target = "marco";
+                            sel[10].setAttribute("onclick", "open_streetview()");
+                            sel[10].href = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";
+                            imag[10] = document.createElement("img");
+                            imag[10].id = "im1";
+                            imag[10].className = "pequeña";
+                            imag[10].src = "http://35.184.3.4/gesstor/fotografias/" + codfoto + "/1.jpg";
+                            stv[10] = document.createElement("a");
+                            stv[10].id = "imgstreet1";
+                            stv[10].target = "marco";
+                            stv[10].href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
+                            stv[10].setAttribute("onclick", "open_streetview()");
+                            ig[10] = document.createElement("img");
+                            ig[10].src = "./imagenes/streetview.png";
+                            var campos = 10;
                         } 
                         else if (modulo == 'totem') {
                         var estacueducto = values.estrato_acueducto;

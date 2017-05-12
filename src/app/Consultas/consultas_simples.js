@@ -559,7 +559,6 @@ function addressSelect(event, ui) {
         });
     } else if (modulo === 'catastro') {
         predio.setVisible(true);
-
         $.ajax({
             url: url,
             success: function (data) {
@@ -581,6 +580,20 @@ function addressSelect(event, ui) {
                     var stv = [];
                     var ig = [];
                     var codfoto = values.codigo_ant.substring(0, 17);
+                    var direccion = ui.item.direccionoriginal;
+                    if (values.ph_calc==1){
+                        var datoshaciendaph = search("preproduccion:ConsultaHaciendaPh", direccion);
+                        var areaterreno = datoshaciendaph["0"][0];
+                        var areaconstruida = datoshaciendaph["0"][1];
+                        var impuestopredial = datoshaciendaph["0"][2];
+                        var avaluohacienda = datoshaciendaph["0"][3];   
+                    }
+                    else{
+                        var areaterreno = values.area_terreno_hacienda;
+                        var areaconstruida = values.area_construida_hacienda; 
+                        var impuestopredial = values.impuesto_hacienda; 
+                        var avaluohacienda = values.avaluo_hacienda;
+                    }
                     select[0] = "<b>Codigo Manzana</b>";
                     select[1] = "<b>Codigo Catastral Nuevo</b>";
                     select[2] = "<b>Codigo Catastral Anterior</b>";
@@ -591,13 +604,10 @@ function addressSelect(event, ui) {
                     select[7] = "<b>Destino</b>";
                     select[8] = "<b>Avalúo Catastral 2017</b>";
                     select[9] = "<b>Impuesto Predial 2017</b>";  
-                   
                     select[10] = "<b>Uso Permitido</b>";
-                    select[11] = "<b>Uso Actual</b>";
-                    
+                    select[11] = "<b>Uso Actual</b>"; 
                     select[12] = "<b>Área de Terreno</b>";
-                    select[13] = "<b>Área Construida</b>";
-                    
+                    select[13] = "<b>Área Construida</b>"; 
                     select[14] = "<b>Fotografias</b>";
                     sel[0] = values.manzana_co;
                     sel[1] = values.codigo;
@@ -607,15 +617,12 @@ function addressSelect(event, ui) {
                     sel[5] = values.valor_m2_zhg;
                     sel[6] = values.zhf;
                     sel[7] = values.destino_hacienda;
-                    sel[8] = values.avaluo_hacienda;
-                    sel[9] = values.impuesto_hacienda; 
+                    sel[8] = avaluohacienda;
+                    sel[9] = impuestopredial; 
                     sel[10] = values.norma_uso;
-                    sel[11] = values.uso_actual_zhf;
-                    
-                    
-                    sel[12] = values.area_terreno_hacienda;
-                    sel[13] = values.area_construida_hacienda;
-                    
+                    sel[11] = values.uso_actual_zhf;  
+                    sel[12] = areaterreno;
+                    sel[13] = areaconstruida;     
                     sel[14] = document.createElement("a");
                     sel[14].id = "img1";
                     sel[14].style = "width: 30px; height: 50px;";
@@ -680,6 +687,20 @@ function addressSelect(event, ui) {
                     var stv = [];
                     var ig = [];
                     var codfoto = values.codigo_ant.substring(0, 17);
+                    var direccion = ui.item.direccionoriginal;
+                    if (values.ph_calc==1){
+                        var datoshaciendaph = search("preproduccion:ConsultaHaciendaPh", direccion);
+                        var areaterreno = datoshaciendaph["0"][0];
+                        var areaconstruida = datoshaciendaph["0"][1];
+                        var impuestopredial = datoshaciendaph["0"][2];
+                        var avaluohacienda = datoshaciendaph["0"][3];   
+                    }
+                    else{
+                        var areaterreno = values.area_terreno_hacienda;
+                        var areaconstruida = values.area_construida_hacienda; 
+                        var impuestopredial = values.impuesto_hacienda; 
+                        var avaluohacienda = values.avaluo_hacienda;
+                    }
                     select[0] = "<b>Codigo Manzana</b>";
                     select[1] = "<b>Codigo Catastral Nuevo</b>";
                     select[2] = "<b>Codigo Catastral Anterior</b>";
@@ -697,10 +718,10 @@ function addressSelect(event, ui) {
                     sel[3] = ui.item.direccionoriginal;
                     sel[4] = values.estrato_hacienda;
                     sel[5] = values.destino_hacienda;
-                    sel[6] = values.avaluo_hacienda;
-                    sel[7] = values.impuesto_hacienda; 
-                    sel[8] = values.area_terreno_hacienda;
-                    sel[9] = values.area_construida_hacienda;  
+                    sel[6] = avaluohacienda;
+                    sel[7] = impuestopredial;
+                    sel[8] = areaterreno;
+                    sel[9] = areaconstruida;  
                     sel[10] = document.createElement("a");
                     sel[10].id = "img1";
                     sel[10].style = "width: 30px; height: 50px;";
@@ -1278,9 +1299,8 @@ function predioshasusosSelect(event, ui) {
                 if (features && features.length >= 1 && features[0]) {
                     var feature = features[0];
                     var values = feature.getProperties();
-                    var referencia = "'" + values.referencia + "'";
-                    var grupo = select_query("SELECT actividad FROM predioshasusos where referencia =" + referencia + "");
-                    //var tablahasusos = ("<table max-width=20 border=1>"); 
+                    var referencia = values.referencia;
+                    var grupo = search("preproduccion:PrediosHasUsosReferencia", referencia);
                     var table = document.getElementById("tblatt");
                     table.innerHTML = "";
                     var row = table.insertRow(0);
@@ -1309,26 +1329,16 @@ function predioshasusosSelect(event, ui) {
                     stv[2].target = "marco";
                     stv[2].href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
                     stv[2].setAttribute("onclick", "open_streetview()");
-
                     ig[2] = document.createElement("img");
-
                     ig[2].src = "./imagenes/streetview.png";
-
                     for (i = 0; i < select.length; i++) {
                         row = table.insertRow(i + 1);
                         cell1 = row.insertCell(0);
                         cell2 = row.insertCell(1);
                         cell1.innerHTML = select[i];
-
                         if (i === 2) {
-                            //cell2.appendChild(sel[i]);
-                            //cell2.appendChild(imag[i]);
-                            //sel[i].appendChild(imag[i]);
                             cell2.appendChild(stv[i]);
-                            //cell2.appendChild(ig[i]);
                             stv[i].appendChild(ig[i]);
-
-                            //document.getElementById("ig").onclick=open_streetview();
                         } else {
                             cell2.innerHTML = sel[i];
                         }

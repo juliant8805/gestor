@@ -23,7 +23,6 @@ var BarrioStyle = new ol.style.Style({
     })
 });
 
-
 var PredioStyle = new ol.style.Style({
     stroke: new ol.style.Stroke({
         color: "rgba(0,255,255,1)",

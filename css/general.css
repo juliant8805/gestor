@@ -561,10 +561,19 @@ body{
     bottom:30%;
     left:40%;
 }
+@media handheld, only screen and (min-width: 900px) {
 #barra_codigo{
     position: absolute;
     bottom:30%;
     left:40%;
+ }
+}
+@media handheld, only screen and (max-width: 900px) {
+#barra_codigo{
+    position: absolute;
+    bottom:20%;
+    left:20%;
+ }
 }
 @media handheld, only screen and (min-width: 767px) {
     #barra_alineamiento{
@@ -1434,10 +1443,10 @@ td{
 @media handheld, only screen and (max-width: 900px) {
     #boton_geocoder{
         position:absolute;
-        left:2.5em;
+        left:1em;
         top:5em;
-        height:1em;
-        width:1em;
+        height:3em;
+        width:3em;
   }
 }
 

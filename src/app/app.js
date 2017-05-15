@@ -523,6 +523,7 @@ map.on('singleclick', function (evt) {
                             ig[10].src = "./imagenes/streetview.png";
                             var campos = 10;
                         } 
+                               
                         else if (modulo == 'totem') {
                         var estacueducto = values.estrato_acueducto;
                         var estalcantarillado = values.estrato_alcantarillado;

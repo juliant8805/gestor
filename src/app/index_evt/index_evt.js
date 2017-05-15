@@ -46,6 +46,7 @@ var select = validacionusuarios();
             document.getElementById("predios_actualizacion").style.display = "block";
             document.getElementById("Rango Area Terreno").style.display = "block";
             document.getElementById("Calidad Construcciones").style.display = "block";
+            document.getElementById("boton_geocoder").style.display = "block";
             //document.getElementById("Avaluo Catastral").style.display = "block";
             modulo = "catastro";
             //new
@@ -64,6 +65,14 @@ var select = validacionusuarios();
             var c = document.getElementsByTagName("head")[0];
             c || (c = document.body.parentNode.appendChild(document.createElement("head")));
             c.appendChild(d);
+            
+            var e = document.createElement("script");
+            e.type = "text/javascript";
+            e.charset = "UTF-8";
+            e.src = "gesstor/gesstor.js";
+            var f = document.getElementsByTagName("head")[0];
+            f || (f = document.body.parentNode.appendChild(document.createElement("head")));
+            f.appendChild(e);
             
           /*  var e = document.createElement("script");
             e.type = "text/javascript";
@@ -173,9 +182,10 @@ var select = validacionusuarios();
         } 
         
         else if (select[0][12] === true) {
-            document.getElementById("menu_circular").style.display = "block";
+            
+            //document.getElementById("menu_circular").style.display = "block";
             document.getElementById("tipo_usuario").style.display = "block";
-            document.getElementById("manual").style.display = "block";
+            //document.getElementById("manual").style.display = "block";
             document.getElementById("icono_codigo").style.display = "block";
             //document.getElementById("dir_gestor").style.display = "block";
             document.getElementById("boton_geocoder").style.display = "block";
@@ -432,8 +442,12 @@ function limpiar_consulta() {
     document.getElementById("panel_atributos_ph").style.display = "none";
     document.getElementById("tablaatributosprediosph").style.display = "none";
     document.getElementById("botonmaximizarph").style.display = "none";
+    if (modulo=='gestor'){
+       predio.getSource().updateParams({'STYLES': 'ffsf'}); 
+    }
+    else{
     predio.getSource().updateParams({'STYLES': 'predios_sin_consulta', 'CQL_FILTER': null});
-
+    }
 }
 function busqueda_personalizada() {
     if (document.getElementById('personalizada').style.display === "" || document.getElementById('personalizada').style.display === "none")

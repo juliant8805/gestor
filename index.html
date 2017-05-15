@@ -79,11 +79,11 @@
         </div>
     </div>
     <div class="row" id="barra_codigo" hidden="hidden">
-        <label style="color: black; text-shadow: 2px 2px #ff0000">Buscar Dirección</label>
+        <label style="color: black; text-shadow: 1px 1px 0px #FFFFFF">Buscar Dirección</label>
         <table id="tabladir" hidden="hidden">
         <tr>
             <td style="width:50px;">
-                <select id="dir_g1" class="form-control input-xs">
+                <select id="dir_g1" style="font-weight: bold" class="form-control input-xs">
                     <option value="CALLE">CL</option>
                     <option value="CARRERA">KR</option>
                     <option value="DIAGONAL">DG</option>
@@ -94,7 +94,7 @@
                 <input id="dir1" type="text" class="form-control input-xs" style="border:1px solid" onKeypress="if (event.keyCode === 32) event.returnValue = false;">
             </td>
             <td style="width:50px;">
-                <select id="dir_g2" class="form-control input-xs">
+                <select id="dir_g2" style="font-weight: bold" class="form-control input-xs">
                     <option>CL</option>
                     <option>KR</option>
                     <option>DG</option>
@@ -110,7 +110,7 @@
             </td>
             <td style="width:50px;">
                 <!--<img id="busca_direccion" src="./imagenes/buscar.jpg" onclick="busca_dir()">-->  
-                <input type="image" id="busca_direccion" src="./imagenes/buscar.jpg" onclick="busca_dir()">  
+                <input type="image" id="busca_direccion" src="./imagenes/buscar.png" onclick="busca_dir()">  
             </td>
         </tr>
         </table>

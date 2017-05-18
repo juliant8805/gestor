@@ -886,7 +886,7 @@ function cerrarbarrasconsultas() {
 }
 
 function alertDGC(mensaje) {
-    var dgcTiempo = 500
+    var dgcTiempo = 500;
     var ventanaCS = '<div class="dgcAlert"><div class="dgcVentana"><div class="dgcCerrar"></div><div class="dgcMensaje">' + mensaje + '<br><div class="dgcAceptar">Aceptar</div></div></div></div>';
     $('body').append(ventanaCS);
     var alVentana = $('.dgcVentana').height();
@@ -899,59 +899,6 @@ function alertDGC(mensaje) {
     $('.dgcCerrar,.dgcAceptar').click(function (e) {
         $('.dgcAlert').animate({opacity: 0}, dgcTiempo);
         setTimeout("$('.dgcAlert').remove()", dgcTiempo);
-    });
-}
-
-function wfs() {
-    //var geometry = "63.00,23.00";
-    var postData = '<DescribeFeatureType service="WFS" xmlns="http://www.opengis.net/wfs" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wfs http://35.184.3.4:8080/geoserver/schemas/wfs/1.1.0/wfs.xsd">\
-        <authentication>\
-            <username>desarrollo</username>\
-            <password>produccion2017</password>\
-        </authentication>\
-    </DescribeFeatureType>';
-    /*var postData = '<Transaction service="WFS" xmlns="http://www.opengis.net/wfs" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wfs http://35.184.3.4:8080/geoserver/schemas/wfs/1.1.0/wfs.xsd">\
-        <authentication>\
-            <username>desarrollo</username>\
-            <password>produccion2017</password>\
-        </authentication>\
-        <Insert xmlns="http://www.opengis.net/wfs">\
-            <usuario>\
-                <nombre>popeye</nombre>\
-            </usuario>\
-        </Insert>\
-    </Transaction>';
-    /*var postData =
-     '<Transaction xmlns="http://www.opengis.net/wfs" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:test_wfs_edit="test_wfs" xmlns:gml="http://www.opengis.net/gml" version="1.1.0" service="WFS" xsi:schemaLocation="http://www.domain.com/app">\
-     <Insert xmlns="http://www.opengis.net/wfs">\
-     <test_wfs_edit:wfs_punkt_test >\
-     <test_wfs_edit:geom >\
-     <gml:Point srsName="EPSG:4326">\
-     <gml:coordinates cs="," >' + geometry + '</gml:coordinates>\
-     </gml:Point>\
-     </wfs_edit_test:geom>\
-     <wfs_edit_test:date >' + date + '</wfs_edit_test:date>\
-     <wfs_edit_test:id>' + id + '</wfs_edit_test:id>\
-     </wfs_edit_test:order>\
-     </Insert>\
-     </Transaction>';*/
-    rooturl = 'http://35.184.3.4:8080/geoserver/preproduccion/ows?';
-    /*service = 'wfs';
-     version = '1.1.0';
-     request = 'GetCapabilities';*/
-    $.ajax({
-        type: "POST",
-        url: rooturl,
-        dataType: "xml",
-        contentType: "text/xml",
-        data: postData,
-        success: function (xml) {
-            console.log(xml);
-            //alert('success');
-        },
-        error: function (xml) {
-            console.log('error');
-        }
     });
 }
 

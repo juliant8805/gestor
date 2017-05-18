@@ -1,8 +1,8 @@
 //window.onload = detectarCarga;
-//window.oncontextmenu = function() { return false; };
-$(document).on('ready',function(){
+window.oncontextmenu = function() { return false; };
+$(document).on('ready', function () {
 //codigo aquí
-var select = validacionusuarios();
+    var select = validacionusuarios();
     //console.log(select);
     if (navigator.vendor !== "Google Inc.") {
         location.href = "barranquilla.html?ig=navegador";
@@ -11,21 +11,21 @@ var select = validacionusuarios();
         location.href = "barranquilla.html?ig=error";
     }
     /*registro de inrgeso de usuarios
-    else {
-        try {
-            var select1 = select_query("SELECT count(*) AS count FROM reguser WHERE usuario = '" + ca[0] + "'");
-            if (select1[0][0] === 0) {
-                document.getElementById("completo").style.display = 'block';
-            }
-            var f = new Date();
-            //var hora = f.getHours
-            var fecha = f.getFullYear() + "/" + (f.getMonth() + 1) + "/" + f.getDate() + " " + f.getHours() + ":" + f.getMinutes() + ":" + f.getSeconds();
-            //console.log(fecha);
-            update_query("INSERT INTO reguser (usuario,fecha) VALUES('" + select[0][3] + "','" + fecha + "');");
-            //console.log(arrayResult);
-        } catch (err) {
-        }
-    }*/
+     else {
+     try {
+     var select1 = select_query("SELECT count(*) AS count FROM reguser WHERE usuario = '" + ca[0] + "'");
+     if (select1[0][0] === 0) {
+     document.getElementById("completo").style.display = 'block';
+     }
+     var f = new Date();
+     //var hora = f.getHours
+     var fecha = f.getFullYear() + "/" + (f.getMonth() + 1) + "/" + f.getDate() + " " + f.getHours() + ":" + f.getMinutes() + ":" + f.getSeconds();
+     //console.log(fecha);
+     update_query("INSERT INTO reguser (usuario,fecha) VALUES('" + select[0][3] + "','" + fecha + "');");
+     //console.log(arrayResult);
+     } catch (err) {
+     }
+     }*/
     //console.log(document.getElementById("nombre_usuario").innerHTML);
     //vista de iconos por perfil
     //console.log(select);
@@ -57,7 +57,6 @@ var select = validacionusuarios();
             var a = document.getElementsByTagName("head")[0];
             a || (a = document.body.parentNode.appendChild(document.createElement("head")));
             a.appendChild(b);
-            
             var d = document.createElement("script");
             d.type = "text/javascript";
             d.charset = "UTF-8";
@@ -238,7 +237,7 @@ function validacionusuarios() {
     try {
         //var selec = select_query("SELECT * FROM usuario WHERE usuario ='" + ca[0] + "' AND contrasena ='" + ca[1] + "' AND estado='t';");
         //console.log(selec);
-        var select = search ("preproduccion:ValidateUser", ca[0],ca[1]);
+        var select = search("preproduccion:ValidateUser", ca[0], ca[1]);
         document.getElementById("carga").style.display = "none";
         document.getElementById("nombre_usuario").innerHTML = select[0][0].split(" ", 1);
     } catch (err) {
@@ -247,21 +246,21 @@ function validacionusuarios() {
 }
 changestyles = 0;
 /*passwordchange
-function password() {
-    var ca = document.cookie.split('=');
-    //hex_md5(document.getElementById("p").value);
-    var select = select_query("SELECT * FROM usuario WHERE usuario ='" + ca[0] + "' AND contrasena ='" + hex_md5(document.getElementById('password').value) + "';");
-    //console.log(select);
-    if (select === null) {
-        alert("Contraseña incorrecta");
-    } else if (document.getElementById("newpassword").value === document.getElementById("cpassword").value) {
-        var arrayResult = update_query("UPDATE usuario SET contrasena='" + hex_md5(document.getElementById('newpassword').value) + "' WHERE usuario='" + ca[0] + "';");
-        $('#myModal').modal('hide');
-    } else {
-        alert("La contraseña nueva y su confirmacion no coinciden");
-    }
-    return;
-}*/
+ function password() {
+ var ca = document.cookie.split('=');
+ //hex_md5(document.getElementById("p").value);
+ var select = select_query("SELECT * FROM usuario WHERE usuario ='" + ca[0] + "' AND contrasena ='" + hex_md5(document.getElementById('password').value) + "';");
+ //console.log(select);
+ if (select === null) {
+ alert("Contraseña incorrecta");
+ } else if (document.getElementById("newpassword").value === document.getElementById("cpassword").value) {
+ var arrayResult = update_query("UPDATE usuario SET contrasena='" + hex_md5(document.getElementById('newpassword').value) + "' WHERE usuario='" + ca[0] + "';");
+ $('#myModal').modal('hide');
+ } else {
+ alert("La contraseña nueva y su confirmacion no coinciden");
+ }
+ return;
+ }*/
 function mostrar(consulta) {
     //document.getElementById('barra_direccion').style.display = 'none';
     document.getElementById('barra_sitio').style.display = 'none';
@@ -285,7 +284,6 @@ function mostrar(consulta) {
     document.getElementById('manzana').value = "";
     document.getElementById('matricula').value = "";
     document.getElementById('direccion').value = "";
-
     if (consulta === 'consulta_direccion') {
         document.getElementById('barra_direccion').style.display = 'block';
         localidad.setVisible(false);
@@ -458,7 +456,6 @@ function busqueda_personalizada() {
         document.getElementById('rango_area').style.display = 'block';
         document.getElementById('tipo_construccion').style.display = 'block';
         document.getElementById('estrato').style.display = 'block';
-
     } else
     {
         document.getElementById('personalizada').style.display = 'none';
@@ -519,15 +516,15 @@ function busqueda(id) {
     }
 }
 
-function ocultarpanelatributosaaa(){
-   document.getElementById('mensaje').style.display = 'none'; 
-   document.getElementById('tablaatributospuntosaaa').style.display = 'none'; 
-   document.getElementById('botonmaximizarpuntosaaa').style.display = 'block';   
+function ocultarpanelatributosaaa() {
+    document.getElementById('mensaje').style.display = 'none';
+    document.getElementById('tablaatributospuntosaaa').style.display = 'none';
+    document.getElementById('botonmaximizarpuntosaaa').style.display = 'block';
 }
-function mostrarpanelatributosaaa(){
-   document.getElementById('mensaje').style.display = 'none'; 
-   document.getElementById('tablaatributospuntosaaa').style.display = 'block'; 
-   document.getElementById('botonmaximizarpuntosaaa').style.display = 'none';   
+function mostrarpanelatributosaaa() {
+    document.getElementById('mensaje').style.display = 'none';
+    document.getElementById('tablaatributospuntosaaa').style.display = 'block';
+    document.getElementById('botonmaximizarpuntosaaa').style.display = 'none';
 }
 
 
@@ -557,7 +554,6 @@ $(document).ready(function () {
 function open_streetview() {
     document.getElementById('marco').style.display = 'block';
     document.getElementById('botoncerrarstreetview').style.display = 'block';
-
 }/*
  function close_streetview() {
  console.log(algo);
@@ -606,7 +602,6 @@ window.onclick = function (event) {
         }
     }
 };
-
 function marcado() {
     if (document.getElementById("termin").checked === true) {
         document.getElementById('completo').style.display = 'none';
@@ -904,7 +899,7 @@ function cerrarbarrasconsultas() {
 }
 
 function alertDGC(mensaje) {
-    var dgcTiempo = 500
+    var dgcTiempo = 500;
     var ventanaCS = '<div class="dgcAlert"><div class="dgcVentana"><div class="dgcCerrar"></div><div class="dgcMensaje">' + mensaje + '<br><div class="dgcAceptar">Aceptar</div></div></div></div>';
     $('body').append(ventanaCS);
     var alVentana = $('.dgcVentana').height();
@@ -919,9 +914,10 @@ function alertDGC(mensaje) {
         setTimeout("$('.dgcAlert').remove()", dgcTiempo);
     });
 }
+
 window.alert = function (message) {
     alertDGC(message);
 };
 
 
-   
+
